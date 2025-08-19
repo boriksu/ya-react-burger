@@ -1,0 +1,37 @@
+.listIngridients {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.scrollBar {
+  overflow-y: auto;
+  max-height: 660px;
+  scrollbar-color: #1c1c21;
+}
+
+@media (max-height: 1000px) {
+  .scrollBar {
+    max-height: 550px;
+  }
+}
+
+@media (max-height: 900px) {
+  .scrollBar {
+    max-height: 450px;
+  }
+}
+
+@media (max-height: 800px) {
+  .scrollBar {
+    max-height: 360px;
+  }
+}
+
+@media (max-height: 700px) {
+  .scrollBar {
+    max-height: 260px;
+  }
+}

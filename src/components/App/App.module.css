@@ -1,0 +1,19 @@
+.container {
+  margin: 0 auto;
+  width: 1280px;
+}
+
+.content {
+  margin-right: 20px;
+  margin-left: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.loading {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

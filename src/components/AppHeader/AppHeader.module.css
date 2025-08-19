@@ -1,0 +1,32 @@
+.header {
+  background: #1c1c21;
+}
+
+.headerContainer {
+  display: flex;
+  margin: 0 auto;
+  width: 1280px;
+}
+
+.navigation {
+  flex: 1 0 100px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.navigationItems {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+.logoContainer {
+  flex: 0 0 content;
+}
+
+.profileSection {
+  flex: 1 0 100px;
+  display: flex;
+  justify-content: flex-end;
+}

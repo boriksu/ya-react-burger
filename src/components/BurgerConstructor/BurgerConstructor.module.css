@@ -1,0 +1,34 @@
+.scrollBar {
+  overflow-y: auto;
+  max-height: 465px;
+  scrollbar-color: #1c1c21;
+  padding: 0;
+  list-style: none;
+}
+
+.otherIngredients {
+  display: flex;
+  align-items: center;
+}
+
+.ingredientBackground {
+  background: #1c1c21;
+}
+
+@media (max-height: 1000px) {
+  .scrollBar {
+    max-height: 370px;
+  }
+}
+
+@media (max-height: 900px) {
+  .scrollBar {
+    max-height: 270px;
+  }
+}
+
+@media (max-height: 800px) {
+  .scrollBar {
+    max-height: 175px;
+  }
+}
