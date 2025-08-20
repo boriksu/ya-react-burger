@@ -1,12 +1,11 @@
 import PropTypes from "prop-types";
 import { dataPropTypes } from "../../../../data/dataPropTypes";
 import naming from "../../../../data/ru.json";
-import Modal from "../../../Modal/Modal";
 import styles from "./IngredientDetails.module.css";
 
-const IngredientDetails = ({ item, onClose }) => {
+const IngredientDetails = ({ item }) => {
   return (
-    <Modal title={naming.IngredientDetails.title} onClose={onClose}>
+    <>
       <img
         className={`${styles.image} mb-4`}
         src={item.image_large}
@@ -52,7 +51,7 @@ const IngredientDetails = ({ item, onClose }) => {
           </div>
         </div>
       </div>
-    </Modal>
+    </>
   );
 };
 

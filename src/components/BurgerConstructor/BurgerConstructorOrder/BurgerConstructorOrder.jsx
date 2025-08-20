@@ -5,6 +5,7 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import naming from "../../../data/ru.json";
+import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
 
@@ -23,7 +24,9 @@ const BurgerConstructorOrder = ({ totalPrice, orderNumber }) => {
         {naming.BurgerConstructorOrder.order}
       </Button>
       {isVisible && (
-        <OrderDetails orderNumber={orderNumber} onClose={changeIsVisible} />
+        <Modal onClose={changeIsVisible}>
+          <OrderDetails orderNumber={orderNumber} />
+        </Modal>
       )}
     </div>
   );

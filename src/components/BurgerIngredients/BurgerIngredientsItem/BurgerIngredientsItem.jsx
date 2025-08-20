@@ -5,6 +5,8 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { dataPropTypes } from "../../../data/dataPropTypes";
+import naming from "../../../data/ru.json";
+import Modal from "../../Modal/Modal";
 import styles from "./BurgerIngredientsItem.module.css";
 import IngredientDetails from "./IngredientDetails/IngredientDetails";
 
@@ -39,7 +41,9 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
         <Counter count={count} size="default" extraClass={styles.count} />
       ) : undefined}
       {isVisible && (
-        <IngredientDetails item={ingredient} onClose={changeIsVisible} />
+        <Modal title={naming.IngredientDetails.title} onClose={changeIsVisible}>
+          <IngredientDetails item={ingredient} />
+        </Modal>
       )}
     </li>
   );
