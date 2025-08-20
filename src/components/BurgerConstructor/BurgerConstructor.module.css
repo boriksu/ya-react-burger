@@ -1,3 +1,11 @@
+.container {
+  flex: 0 0 600px;
+}
+
+.cursor {
+  cursor: grabbing;
+}
+
 .scrollBar {
   overflow-y: auto;
   max-height: 465px;

@@ -25,8 +25,8 @@ const BurgerConstructor = ({ data }) => {
   }, [bun, otherIngredients]);
 
   return (
-    <section style={{ flex: "0 0 600px" }}>
-      <div className="mt-25 ml-4" styles={{ padding: 0 }}>
+    <section className={styles.container}>
+      <div className="mt-25 ml-4">
         <ConstructorElement
           type="top"
           isLocked={true}
@@ -41,7 +41,7 @@ const BurgerConstructor = ({ data }) => {
               className={`${styles.otherIngredients} mt-4`}
               key={`${ingredient._id}`}
             >
-              <span style={{ cursor: "grabbing" }}>
+              <span className={styles.cursor}>
                 <DragIcon type="primary" />
               </span>
               <ConstructorElement

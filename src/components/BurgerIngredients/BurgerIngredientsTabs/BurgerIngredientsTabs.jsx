@@ -2,6 +2,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import naming from "../../../data/ru.json";
+import styles from "./BurgerIngredientsTabs.module.css";
 
 const INGREDIENT_TYPES = {
   BUN: "bun",
@@ -18,7 +19,7 @@ const BurgerIngredientsTabs = ({ handleTabChange }) => {
   };
 
   return (
-    <div className="mb-8" style={{ display: "flex" }}>
+    <div className={`${styles.tabsContainer} mb-8`}>
       {Object.entries(INGREDIENT_TYPES).map(([key, type]) => (
         <Tab
           key={type}

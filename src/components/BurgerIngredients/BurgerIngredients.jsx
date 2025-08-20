@@ -34,7 +34,7 @@ const BurgerIngredients = ({ data }) => {
   };
 
   return (
-    <section style={{ flex: "0 0 600px" }}>
+    <section className={styles.container}>
       <h1 className="mt-10 mb-5 text text_type_main-large">
         {naming.BurgerIngredients.combine}
       </h1>

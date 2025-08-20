@@ -12,8 +12,7 @@ const IngredientDetails = ({ item }) => {
         alt="Изображение ингредиента"
       />
       <p
-        style={{ maxWidth: "480px" }}
-        className="mb-8 text-center text text_type_main-medium"
+        className={`${styles.name}mb-8 text-center text text_type_main-medium`}
       >
         {item.name}
       </p>

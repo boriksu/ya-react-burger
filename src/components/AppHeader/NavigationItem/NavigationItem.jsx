@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import styles from "./NavigationItem.module.css";
 
 const NavigationItem = ({ isActive, icon: Icon, title, url }) => {
   const iconCurrentStyle = isActive ? "primary" : "secondary";
@@ -6,11 +7,7 @@ const NavigationItem = ({ isActive, icon: Icon, title, url }) => {
     ? "text_color_primary"
     : "text_color_inactive";
   return (
-    <a
-      href={url}
-      style={{ display: "flex", textDecoration: "none" }}
-      className="pt-4 pr-5 pb-4 pl-5"
-    >
+    <a href={url} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
       <Icon type={iconCurrentStyle} />
       <span className={`text text_type_main-default ml-2 ${textCurrentStyle}`}>
         {title}
