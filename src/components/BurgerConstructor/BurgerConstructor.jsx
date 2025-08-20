@@ -36,15 +36,18 @@ const BurgerConstructor = ({ data }) => {
           extraClass={`${styles.ingredientBackground} ml-8`}
         />
         <ul className={`${styles.scrollBar} mt-4 mb-4`}>
-          {otherIngredients.map((item, index) => (
-            <li className={`${styles.otherIngredients} mt-4`} key={index}>
+          {otherIngredients.map((ingredient, index) => (
+            <li
+              className={`${styles.otherIngredients} mt-4`}
+              key={`${ingredient._id}`}
+            >
               <span style={{ cursor: "grabbing" }}>
                 <DragIcon type="primary" />
               </span>
               <ConstructorElement
-                text={item.name}
-                price={item.price}
-                thumbnail={item.image}
+                text={ingredient.name}
+                price={ingredient.price}
+                thumbnail={ingredient.image}
                 extraClass={`${styles.ingredientBackground} ml-2`}
               />
             </li>
