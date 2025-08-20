@@ -1,5 +1,9 @@
 .container {
   flex: 0 0 600px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .listIngridients {
@@ -12,29 +16,29 @@
 
 .scrollBar {
   overflow-y: auto;
-  max-height: 660px;
+  flex: 1;
   scrollbar-color: #1c1c21;
 }
 
-@media (max-height: 1000px) {
+@media (max-height: 950px) {
   .scrollBar {
-    max-height: 550px;
+    max-height: 560px;
   }
 }
 
-@media (max-height: 900px) {
+@media (max-height: 850px) {
   .scrollBar {
-    max-height: 450px;
+    max-height: 460px;
   }
 }
 
-@media (max-height: 800px) {
+@media (max-height: 750px) {
   .scrollBar {
     max-height: 360px;
   }
 }
 
-@media (max-height: 700px) {
+@media (max-height: 650px) {
   .scrollBar {
     max-height: 260px;
   }
