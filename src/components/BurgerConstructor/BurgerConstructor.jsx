@@ -63,7 +63,7 @@ const BurgerConstructor = ({ data }) => {
         />
       </div>
 
-      <BurgerConstructorOrder totalPrice={totalPrice} orderNumber="034536" />
+      <BurgerConstructorOrder totalPrice={totalPrice} />
     </section>
   );
 };

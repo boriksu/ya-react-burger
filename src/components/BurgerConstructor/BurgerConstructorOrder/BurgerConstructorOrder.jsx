@@ -9,7 +9,7 @@ import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
 
-const BurgerConstructorOrder = ({ totalPrice, orderNumber }) => {
+const BurgerConstructorOrder = ({ totalPrice }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const changeIsVisible = () => setIsVisible((prev) => !prev);
@@ -25,7 +25,7 @@ const BurgerConstructorOrder = ({ totalPrice, orderNumber }) => {
       </Button>
       {isVisible && (
         <Modal onClose={changeIsVisible}>
-          <OrderDetails orderNumber={orderNumber} />
+          <OrderDetails orderNumber="034536" />
         </Modal>
       )}
     </div>
@@ -34,7 +34,6 @@ const BurgerConstructorOrder = ({ totalPrice, orderNumber }) => {
 
 BurgerConstructorOrder.propTypes = {
   totalPrice: PropTypes.number.isRequired,
-  orderNumber: PropTypes.string.isRequired,
 };
 
 export default BurgerConstructorOrder;
