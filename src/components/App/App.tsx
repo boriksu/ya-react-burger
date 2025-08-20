@@ -4,9 +4,14 @@ import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import styles from "./App.module.css";
+import { type Ingredient } from "./types";
+
+type AppState = {
+  data: Ingredient[] | null;
+};
 
 const App = () => {
-  const [state, setState] = useState({
+  const [state, setState] = useState<AppState>({
     data: null,
   });
 
