@@ -48,7 +48,7 @@ const BurgerIngredients = ({ data }) => {
             <ul className={styles.listIngridients}>
               {typeIngredients[type].map((ingredient, index) => (
                 <BurgerIngredientsItem
-                  key={`${type}_${ingredient._id}`}
+                  key={`${ingredient._id}`}
                   ingredient={ingredient}
                   count={index === 0 ? 1 : 0}
                 />
