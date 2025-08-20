@@ -24,7 +24,7 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
       <img
         className={`${styles.image} ml-4 mr-4 mb-1`}
         src={ingredient.image}
-        alt="img"
+        alt="Изображение ингредиента"
       />
       <div className={`${styles.price} mb-1`}>
         <span className="mr-2 text text_type_digits-default">

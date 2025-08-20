@@ -10,7 +10,7 @@ const IngredientDetails = ({ item, onClose }) => {
       <img
         className={`${styles.image} mb-4`}
         src={item.image_large}
-        alt="img"
+        alt="Изображение ингредиента"
       />
       <p
         style={{ maxWidth: "480px" }}
