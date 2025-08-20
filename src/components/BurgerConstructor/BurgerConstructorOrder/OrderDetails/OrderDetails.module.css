@@ -1,0 +1,11 @@
+.image {
+  width: 120px;
+  height: 120px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.orderNumber {
+  text-shadow: #3333ff 1px 0 10px;
+}
