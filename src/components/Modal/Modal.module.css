@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  background: #1c1c21;
+  border-radius: var(--common-border-radius-s);
+  align-items: center;
+}
+
+.headerTitle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  flex: 1 0 100px;
+  min-width: 600px;
+}
+
+.btn {
+  cursor: pointer;
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.children {
+  flex: 1 1 200px;
+  align-items: center;
+}

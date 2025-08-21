@@ -1,0 +1,28 @@
+{
+  "AppHeader": {
+    "constructor": "Конструктор",
+    "lineOrders": "Лента заказов",
+    "profileSection": "Личный кабинет"
+  },
+  "BurgerIngredients": {
+    "bun": "Булки",
+    "sauce": "Соусы",
+    "main": "Начинки",
+    "combine": "Соберите бургер"
+  },
+  "BurgerConstructorOrder": {
+    "order": "Оформить заказ"
+  },
+  "OrderDetails": {
+    "orderNumber": "Идентификатор заказа",
+    "cooking": "Ваш заказ начали готовить",
+    "waiting": "Дождитесь готовности на орбитальной станции"
+  },
+  "IngredientDetails": {
+    "title": "Детали ингредиента",
+    "calories": "Калории,ккал",
+    "proteins": "Белки, г",
+    "fat": "Жиры, г",
+    "carbohydrates": "Углеводы, г"
+  }
+}

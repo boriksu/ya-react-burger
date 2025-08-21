@@ -1,0 +1,48 @@
+.container {
+  flex: 0 0 600px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.cursor {
+  cursor: grabbing;
+}
+
+.scrollBar {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 80px;
+  max-height: 50vh;
+  scrollbar-color: #1c1c21;
+  padding: 0;
+  list-style: none;
+}
+
+.otherIngredients {
+  display: flex;
+  align-items: center;
+}
+
+.ingredientBackground {
+  background: #1c1c21;
+}
+
+@media (max-height: 1000px) {
+  .scrollBar {
+    max-height: 370px;
+  }
+}
+
+@media (max-height: 900px) {
+  .scrollBar {
+    max-height: 270px;
+  }
+}
+
+@media (max-height: 800px) {
+  .scrollBar {
+    max-height: 175px;
+  }
+}
