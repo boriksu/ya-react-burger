@@ -9,7 +9,7 @@ const IngredientDetails = ({ item }) => {
       <img
         className={`${styles.image} mb-4`}
         src={item.image_large}
-        alt="Изображение ингредиента"
+        alt={item.name}
       />
       <p
         className={`${styles.name}mb-8 text-center text text_type_main-medium`}
