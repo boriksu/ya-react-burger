@@ -1,75 +1,122 @@
-import {
-  ConstructorElement,
-  DragIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { useMemo } from "react";
-import { dataPropTypes } from "../../data/dataPropTypes";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
+// import { useMemo } from "react";
+
+import { useEffect } from "react";
+import { useDrop } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
+import naming from "../../data/ru.json";
+import { CONSTRUCTOR_ACTIONS } from "../../services/actions/index";
+
+import { INGREDIENT_TYPES } from "../../data/ingredientType";
 import styles from "./BurgerConstructor.module.css";
+import BurgerConstructorIngredient from "./BurgerConstructorIngredient/BurgerConstructorIngredient";
 import BurgerConstructorOrder from "./BurgerConstructorOrder/BurgerConstructorOrder";
 
-const BurgerConstructor = ({ data }) => {
-  const [bun, otherIngredients] = useMemo(() => {
-    const bunItem = data.find((item) => item.type === "bun");
-    const otherItems = data.filter((item) => item.type !== "bun");
-    return [bunItem, otherItems];
-  }, [data]);
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
-  const totalPrice = useMemo(() => {
-    const bunPrice = bun ? bun.price * 2 : 0;
-    const ingredientsPrice = otherIngredients.reduce(
-      (acc, item) => acc + item.price,
-      0
-    );
-    return bunPrice + ingredientsPrice;
-  }, [bun, otherIngredients]);
+  useEffect(() => {
+    let sum = 0;
+    if (bun) {
+      sum += bun.price * 2;
+    }
+    sum += ingredients.reduce((sum, item) => (sum += item.price), 0);
+    dispatch({ type: CONSTRUCTOR_ACTIONS.UPDATE_TOTAL, sum });
+  }, [bun, ingredients, dispatch]);
+
+  const [, dropTargetBunUp] = useDrop({
+    accept: INGREDIENT_TYPES.BUN,
+    drop(item) {
+      dispatch({ type: CONSTRUCTOR_ACTIONS.SELECT_BUN, item: item });
+    },
+  });
+
+  const [, dropTargetBunDown] = useDrop({
+    accept: INGREDIENT_TYPES.BUN,
+    drop(item) {
+      dispatch({ type: CONSTRUCTOR_ACTIONS.SELECT_BUN, item: item });
+    },
+  });
+
+  const [, dropTargetIngredient] = useDrop({
+    accept: [INGREDIENT_TYPES.SAUCE, INGREDIENT_TYPES.MAIN],
+    drop(item) {
+      dispatch({ type: CONSTRUCTOR_ACTIONS.ADD_INGREDIENT, item: item });
+    },
+  });
+
+  function removeIngredient(index) {
+    dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });
+  }
 
   return (
     <section className={styles.container}>
       <div className="mt-25 ml-4">
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${bun.name} (верх)`}
-          price={bun.price}
-          thumbnail={bun.image}
-          extraClass={`${styles.ingredientBackground} ml-8`}
-        />
-        <ul className={`${styles.scrollBar} mt-4 mb-4`}>
-          {otherIngredients.map((ingredient, index) => (
-            <li
-              className={`${styles.otherIngredients} mt-4`}
-              key={`${ingredient._id}`}
+        <div ref={dropTargetBunUp}>
+          {bun ? (
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+              extraClass={`${styles.ingredient} ml-8`}
+            />
+          ) : (
+            <div
+              className={`${styles.addElement} constructor-element constructor-element_pos_top ml-8`}
             >
-              <span className={styles.cursor}>
-                <DragIcon type="primary" />
-              </span>
-              <ConstructorElement
-                text={ingredient.name}
-                price={ingredient.price}
-                thumbnail={ingredient.image}
-                extraClass={`${styles.ingredientBackground} ml-2`}
+              <div className={`${styles.add} text text_type_main-default`}>
+                {naming.BurgerConstructor.addBun}
+              </div>
+            </div>
+          )}
+        </div>
+        <ul className={`${styles.scroll} mt-4 mb-4`} ref={dropTargetIngredient}>
+          {ingredients && ingredients.length > 0 ? (
+            ingredients.map((item, index) => (
+              <BurgerConstructorIngredient
+                key={uuid()}
+                item={item}
+                index={index}
+                onRemove={removeIngredient}
               />
-            </li>
-          ))}
+            ))
+          ) : (
+            <div className={`${styles.addElement} constructor-element ml-8`}>
+              <div className={`${styles.add} text text_type_main-default`}>
+                {naming.BurgerConstructor.addIngredient}
+              </div>
+            </div>
+          )}
         </ul>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${bun.name} (низ)`}
-          price={bun.price}
-          thumbnail={bun.image}
-          extraClass={`${styles.ingredientBackground} ml-8`}
-        />
+        <div ref={dropTargetBunDown}>
+          {bun ? (
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name} (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
+              extraClass={`${styles.ingredient} ml-8`}
+            />
+          ) : (
+            <div
+              className={`${styles.addElement} constructor-element constructor-element_pos_bottom ml-8`}
+            >
+              <div className={`${styles.add} text text_type_main-default`}>
+                {naming.BurgerConstructor.addBun}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
-      <BurgerConstructorOrder totalPrice={totalPrice} />
+      <BurgerConstructorOrder />
     </section>
   );
-};
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(dataPropTypes.isRequired).isRequired,
 };
 
 export default BurgerConstructor;

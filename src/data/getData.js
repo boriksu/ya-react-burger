@@ -1,29 +1,30 @@
-const BASE_URL = "https://norma.nomoreparties.space/api";
-const INGREDIENTS_URL = `${BASE_URL}/ingredients`;
+const DOMAIN = "https://norma.nomoreparties.space";
+const STATUS_OK = 200;
+const API_LOAD = "/api/ingredients";
 
-export const getData = async () => {
-  return fetch(INGREDIENTS_URL)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          `HTTP error: ${response.status} ${response.statusText}`
-        );
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (!data.success) {
-        throw new Error("Server responded with success: false");
-      }
+export async function loadIngredients() {
+  try {
+    const response = await fetch(`${DOMAIN}${API_LOAD}`);
 
-      if (!data.data || data.data.length === 0) {
-        throw new Error("Received empty data array");
-      }
+    if (response.status !== STATUS_OK) {
+      const errorMessage = `HTTP Error: ${response.status} - ${response.statusText}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
 
-      return data.data;
-    })
-    .catch((error) => {
-      console.error("Data loading failed:", error);
-      throw error;
-    });
-};
+    const data = await response.json();
+
+    if (!data.success) {
+      throw new Error("Server responded with success: false");
+    }
+
+    if (!data.data || !Array.isArray(data.data) || data.data.length === 0) {
+      throw new Error("Returned empty or invalid dataset");
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error("Ingredients loading failed:", error.message);
+    throw error;
+  }
+}

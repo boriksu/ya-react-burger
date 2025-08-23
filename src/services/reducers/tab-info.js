@@ -1,14 +1,13 @@
-import { SET_TAB } from "../actions/index";
-
-const BUN = "bun";
+import { INGREDIENT_TYPES } from "../../data/ingredientType";
+import { TAB_ACTIONS } from "../actions/index";
 
 const initialState = {
-  tab: BUN,
+  tab: INGREDIENT_TYPES.BUN,
 };
 
 export function tabInfoReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_TAB:
+    case TAB_ACTIONS.CHANGE_TAB:
       return { ...state, tab: action.tab };
     default:
       return state;

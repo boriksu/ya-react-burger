@@ -6,7 +6,9 @@ import styles from "./OrderDetails.module.css";
 const OrderDetails = ({ orderNumber }) => {
   return (
     <>
-      <p className={`${styles.orderNumber} text text_type_digits-large mb-8`}>
+      <p
+        className={`${styles.orderNumber} text text_type_digits-large mb-8 text-center`}
+      >
         {orderNumber}
       </p>
       <p className="mb-15 text-center text text_type_main-medium">
@@ -29,7 +31,6 @@ const OrderDetails = ({ orderNumber }) => {
 
 OrderDetails.propTypes = {
   orderNumber: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default OrderDetails;

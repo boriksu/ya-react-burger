@@ -1,10 +1,4 @@
-import {
-  SET_BUN,
-  ADD_INGREDIENT,
-  DELETE_INGREDIENT,
-  SWAP_INGREDIENTS,
-  SET_SUM,
-} from "../actions/index";
+import { CONSTRUCTOR_ACTIONS } from "../actions/index";
 
 const initialState = {
   bun: null,
@@ -14,18 +8,18 @@ const initialState = {
 
 export function burgerConstructorReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_BUN:
+    case CONSTRUCTOR_ACTIONS.SELECT_BUN:
       return { ...state, bun: action.item };
-    case ADD_INGREDIENT:
+    case CONSTRUCTOR_ACTIONS.ADD_INGREDIENT:
       return { ...state, ingredients: [...state.ingredients, action.item] };
-    case DELETE_INGREDIENT:
+    case CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT:
       return {
         ...state,
         ingredients: [...state.ingredients].filter(
           (_item, index) => index !== action.index
         ),
       };
-    case SWAP_INGREDIENTS:
+    case CONSTRUCTOR_ACTIONS.REORDER_INGREDIENTS:
       const newState = { ...state, ingredients: [...state.ingredients] };
       [
         newState.ingredients[action.index1],
@@ -35,7 +29,7 @@ export function burgerConstructorReducer(state = initialState, action) {
         newState.ingredients[action.index1],
       ];
       return newState;
-    case SET_SUM:
+    case CONSTRUCTOR_ACTIONS.UPDATE_TOTAL:
       return { ...state, sum: action.sum };
 
     default:

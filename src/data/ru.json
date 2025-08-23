@@ -10,8 +10,13 @@
     "main": "Начинки",
     "combine": "Соберите бургер"
   },
+  "BurgerConstructor": {
+    "addBun": "Добавьте булку",
+    "addIngredient": "Добавьте ингредиенты"
+  },
   "BurgerConstructorOrder": {
-    "order": "Оформить заказ"
+    "order": "Оформить заказ",
+    "error": "Ошибка при создании заказа"
   },
   "OrderDetails": {
     "orderNumber": "Идентификатор заказа",

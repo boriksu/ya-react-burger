@@ -16,8 +16,9 @@
 
 .scrollBar {
   overflow-y: auto;
-  flex: 1;
+  max-height: calc(100vh - 300px);
   scrollbar-color: #1c1c21;
+  position: relative;
 }
 
 @media (max-height: 950px) {

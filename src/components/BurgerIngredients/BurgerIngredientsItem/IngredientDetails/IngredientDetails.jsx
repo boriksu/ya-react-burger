@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { dataPropTypes } from "../../../../data/dataPropTypes";
 import naming from "../../../../data/ru.json";
 import styles from "./IngredientDetails.module.css";
@@ -12,12 +11,12 @@ const IngredientDetails = ({ item }) => {
         alt={item.name}
       />
       <p
-        className={`${styles.name}mb-8 text-center text text_type_main-medium`}
+        className={`${styles.name} mb-8 text-center text text_type_main-medium`}
       >
         {item.name}
       </p>
       <div className={`${styles.container} mb-15`}>
-        <div className={styles["detail-item"]}>
+        <div className={styles["container-item"]}>
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.calories}
           </div>
@@ -25,7 +24,7 @@ const IngredientDetails = ({ item }) => {
             {item.calories}
           </div>
         </div>
-        <div>
+        <div className={styles["container-item"]}>
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.proteins}
           </div>
@@ -33,7 +32,7 @@ const IngredientDetails = ({ item }) => {
             {item.proteins}
           </div>
         </div>
-        <div>
+        <div className={styles["container-item"]}>
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.fat}
           </div>
@@ -41,7 +40,7 @@ const IngredientDetails = ({ item }) => {
             {item.fat}
           </div>
         </div>
-        <div>
+        <div className={styles["container-item"]}>
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.carbohydrates}
           </div>
@@ -56,7 +55,6 @@ const IngredientDetails = ({ item }) => {
 
 IngredientDetails.propTypes = {
   item: dataPropTypes.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default IngredientDetails;

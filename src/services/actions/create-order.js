@@ -1,19 +1,21 @@
-import { orderCreate } from "../../utils/orderCreate";
-import {
-  CREATE_ORDER_ERROR,
-  CREATE_ORDER_START,
-  CREATE_ORDER_SUCCESS,
-} from "./index";
+import { createOrder } from "../../data/orderCreate";
 
-export function createOrderAction(ingredients) {
+export const ORDER_ACTIONS = {
+  CREATE_REQUEST: "CREATE_REQUEST",
+  CREATE_SUCCESS: "CREATE_SUCCESS",
+  CREATE_FAILURE: "CREATE_FAILURE",
+  RESET: "RESET",
+};
+
+export function orderAction(ingredients) {
   return function (dispatch) {
-    dispatch({ type: CREATE_ORDER_START });
-    orderCreate(ingredients)
+    dispatch({ type: ORDER_ACTIONS.CREATE_REQUEST });
+    createOrder(ingredients)
       .then((data) => {
-        dispatch({ type: CREATE_ORDER_SUCCESS, orderNumber: data });
+        dispatch({ type: ORDER_ACTIONS.CREATE_SUCCESS, orderNumber: data });
       })
       .catch((err) => {
-        dispatch({ type: CREATE_ORDER_ERROR });
+        dispatch({ type: ORDER_ACTIONS.CREATE_FAILURE });
       });
   };
 }

@@ -1,8 +1,4 @@
-import {
-  LOAD_DATA_ERROR,
-  LOAD_DATA_START,
-  LOAD_DATA_SUCCESS,
-} from "../actions/index";
+import { INGREDIENTS_ACTIONS } from "../actions/load-ingredients";
 
 const initialState = {
   dataLoading: false,
@@ -12,16 +8,16 @@ const initialState = {
 
 export function loadIngredientsReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_DATA_START:
+    case INGREDIENTS_ACTIONS.FETCH_REQUEST:
       return { ...state, dataLoading: true, dataHasErrors: false };
-    case LOAD_DATA_SUCCESS:
+    case INGREDIENTS_ACTIONS.FETCH_SUCCESS:
       return {
         ...state,
         dataLoading: false,
         dataHasErrors: false,
         data: action.data,
       };
-    case LOAD_DATA_ERROR:
+    case INGREDIENTS_ACTIONS.FETCH_FAILURE:
       return {
         ...state,
         dataLoading: false,

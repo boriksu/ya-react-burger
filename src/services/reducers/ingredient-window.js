@@ -1,4 +1,4 @@
-import { SET_DISPLAYED_INGREDIENT } from "../actions/index";
+import { INGREDIENTS_ACTIONS } from "../actions/load-ingredients";
 
 const initialState = {
   displayedIngredient: null,
@@ -6,7 +6,7 @@ const initialState = {
 
 export function ingredientWindowReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_DISPLAYED_INGREDIENT:
+    case INGREDIENTS_ACTIONS.SHOW_DETAILS:
       return { ...state, displayedIngredient: action.item };
     default:
       return state;

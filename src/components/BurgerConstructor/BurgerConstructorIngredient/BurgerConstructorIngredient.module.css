@@ -1,0 +1,9 @@
+.ingredientList {
+  display: flex;
+  align-items: center;
+  cursor: move;
+}
+
+.ingredient {
+  background: #1c1c21;
+}
