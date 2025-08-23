@@ -1,13 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ingredientsAction } from "../../services/actions/load-ingredients";
+import { ingredientsAction } from "../../services/actions/ingredients-action";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
 import styles from "./App.module.css";
 
 const App = () => {
-  const { data, dataLoading, dataHasErrors } = useSelector(
+  const { data, dataLoading, dataErrors } = useSelector(
     (state) => state.loadIngredients
   );
 
@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <>
-      {dataLoading || dataHasErrors ? (
+      {dataLoading || dataErrors ? (
         <main className={styles.loading}>
           <p className="text text_type_main-large">LOADING...</p>
         </main>

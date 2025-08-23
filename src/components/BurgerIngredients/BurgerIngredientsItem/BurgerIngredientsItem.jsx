@@ -8,7 +8,7 @@ import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { dataPropTypes } from "../../../data/dataPropTypes";
 import naming from "../../../data/ru.json";
-import { INGREDIENTS_ACTIONS } from "../../../services/actions/load-ingredients";
+import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerIngredientsItem.module.css";
 import IngredientDetails from "./IngredientDetails/IngredientDetails";

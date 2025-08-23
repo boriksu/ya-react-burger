@@ -12,21 +12,21 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   ORDER_ACTIONS,
   orderAction,
-} from "../../../services/actions/create-order";
+} from "../../../services/actions/order-action";
 
 const BurgerConstructorOrder = () => {
-  const { bun, ingredients, sum } = useSelector(
+  const { bun, ingredients, totalPrice } = useSelector(
     (state) => state.burgerConstructor
   );
-  const { orderNumber, orderLoading, orderHasErrors } = useSelector(
+  const { orderNumber, orderLoading, orderErrors } = useSelector(
     (state) => state.createOrder
   );
 
   useEffect(() => {
-    if (orderHasErrors) {
+    if (orderErrors) {
       alert(naming.BurgerConstructorOrder.error);
     }
-  }, [orderHasErrors]);
+  }, [orderErrors]);
 
   const disabled = useMemo(() => {
     let hasIngredient = (ingredients && ingredients.length > 0) || bun;
@@ -50,7 +50,7 @@ const BurgerConstructorOrder = () => {
 
   return (
     <div className={`${styles.totalPrice} mr-4 mt-10`}>
-      <div className="mr-2 mb-1 text text_type_digits-medium">{sum}</div>
+      <div className="mr-2 mb-1 text text_type_digits-medium">{totalPrice}</div>
       <div className={`${styles.currency} mr-10`}>
         <CurrencyIcon type="primary" />
       </div>

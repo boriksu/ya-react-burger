@@ -3,7 +3,7 @@ import { CONSTRUCTOR_ACTIONS } from "../actions/index";
 const initialState = {
   bun: null,
   ingredients: [],
-  sum: 0,
+  totalPrice: 0,
 };
 
 export function burgerConstructorReducer(state = initialState, action) {
@@ -30,7 +30,7 @@ export function burgerConstructorReducer(state = initialState, action) {
       ];
       return newState;
     case CONSTRUCTOR_ACTIONS.UPDATE_TOTAL:
-      return { ...state, sum: action.sum };
+      return { ...state, totalPrice: action.totalPrice };
 
     default:
       return state;

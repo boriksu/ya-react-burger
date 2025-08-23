@@ -18,12 +18,15 @@ const BurgerConstructor = () => {
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
   useEffect(() => {
-    let sum = 0;
+    let totalPrice = 0;
     if (bun) {
-      sum += bun.price * 2;
+      totalPrice += bun.price * 2;
     }
-    sum += ingredients.reduce((sum, item) => (sum += item.price), 0);
-    dispatch({ type: CONSTRUCTOR_ACTIONS.UPDATE_TOTAL, sum });
+    totalPrice += ingredients.reduce(
+      (totalPrice, item) => (totalPrice += item.price),
+      0
+    );
+    dispatch({ type: CONSTRUCTOR_ACTIONS.UPDATE_TOTAL, totalPrice });
   }, [bun, ingredients, dispatch]);
 
   const [, dropTargetBunUp] = useDrop({

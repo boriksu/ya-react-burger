@@ -1,4 +1,4 @@
-import { INGREDIENTS_ACTIONS } from "../actions/load-ingredients";
+import { INGREDIENTS_ACTIONS } from "../actions/ingredients-action";
 
 const initialState = {
   displayedIngredient: null,
