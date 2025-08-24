@@ -1,10 +1,7 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-// import { useMemo } from "react";
-
 import { useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuid } from "uuid";
 import naming from "../../data/ru.json";
 import { CONSTRUCTOR_ACTIONS } from "../../services/actions/index";
 
@@ -79,10 +76,10 @@ const BurgerConstructor = () => {
         </div>
         <ul className={`${styles.scroll} mt-4 mb-4`} ref={dropTargetIngredient}>
           {ingredients && ingredients.length > 0 ? (
-            ingredients.map((item, index) => (
+            ingredients.map((ingredient, index) => (
               <BurgerConstructorIngredient
-                key={uuid()}
-                item={item}
+                key={`${ingredient._id}`}
+                item={ingredient}
                 index={index}
                 onRemove={removeIngredient}
               />
