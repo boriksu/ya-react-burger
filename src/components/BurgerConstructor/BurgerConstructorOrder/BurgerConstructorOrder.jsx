@@ -6,10 +6,12 @@ import PropTypes from "prop-types";
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import naming from "../../../data/ru.json";
+import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
 import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
+
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
@@ -44,6 +46,7 @@ const BurgerConstructorOrder = ({ totalPrice }) => {
 
   function hideOrderDetails() {
     dispatch({ type: ORDER_ACTIONS.RESET });
+    dispatch({ type: CONSTRUCTOR_ACTIONS.CLEAN_ORDER });
   }
 
   return (

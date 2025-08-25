@@ -32,6 +32,8 @@ export function burgerConstructorReducer(state = initialState, action) {
         newState.ingredients[action.index1],
       ];
       return newState;
+    case CONSTRUCTOR_ACTIONS.CLEAN_ORDER:
+      return initialState;
 
     default:
       return state;
