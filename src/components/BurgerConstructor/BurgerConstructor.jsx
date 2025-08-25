@@ -1,5 +1,5 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect } from "react";
+import { useMemo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import naming from "../../data/ru.json";
@@ -14,17 +14,14 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
 
-  useEffect(() => {
-    let totalPrice = 0;
+  const totalPrice = useMemo(() => {
+    let price = 0;
     if (bun) {
-      totalPrice += bun.price * 2;
+      price += bun.price * 2;
     }
-    totalPrice += ingredients.reduce(
-      (totalPrice, item) => (totalPrice += item.price),
-      0
-    );
-    dispatch({ type: CONSTRUCTOR_ACTIONS.UPDATE_TOTAL, totalPrice });
-  }, [bun, ingredients, dispatch]);
+    price += ingredients.reduce((sum, item) => sum + item.price, 0);
+    return price;
+  }, [bun, ingredients]);
 
   const [, dropTargetBunUp] = useDrop({
     accept: INGREDIENT_TYPES.BUN,
@@ -78,7 +75,7 @@ const BurgerConstructor = () => {
           {ingredients && ingredients.length > 0 ? (
             ingredients.map((ingredient, index) => (
               <BurgerConstructorIngredient
-                key={`${ingredient._id}`}
+                key={ingredient.id}
                 item={ingredient}
                 index={index}
                 onRemove={removeIngredient}
@@ -114,7 +111,7 @@ const BurgerConstructor = () => {
         </div>
       </div>
 
-      <BurgerConstructorOrder />
+      <BurgerConstructorOrder totalPrice={totalPrice} />
     </section>
   );
 };

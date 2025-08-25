@@ -2,22 +2,20 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import naming from "../../../data/ru.json";
-import Modal from "../../Modal/Modal";
-import styles from "./BurgerConstructorOrder.module.css";
-import OrderDetails from "./OrderDetails/OrderDetails";
-
+import PropTypes from "prop-types";
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import naming from "../../../data/ru.json";
 import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
+import Modal from "../../Modal/Modal";
+import styles from "./BurgerConstructorOrder.module.css";
+import OrderDetails from "./OrderDetails/OrderDetails";
 
-const BurgerConstructorOrder = () => {
-  const { bun, ingredients, totalPrice } = useSelector(
-    (state) => state.burgerConstructor
-  );
+const BurgerConstructorOrder = ({ totalPrice }) => {
+  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
   const { orderNumber, orderLoading, orderErrors } = useSelector(
     (state) => state.createOrder
   );
@@ -69,6 +67,10 @@ const BurgerConstructorOrder = () => {
       )}
     </div>
   );
+};
+
+BurgerConstructorOrder.propTypes = {
+  totalPrice: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructorOrder;
