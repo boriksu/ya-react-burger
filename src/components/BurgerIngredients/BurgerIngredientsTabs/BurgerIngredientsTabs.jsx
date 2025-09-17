@@ -1,25 +1,22 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { INGREDIENT_TYPES } from "../../../data/ingredientType";
 import naming from "../../../data/ru.json";
+import { TAB_ACTIONS } from "../../../services/actions/index";
 import styles from "./BurgerIngredientsTabs.module.css";
 
-const INGREDIENT_TYPES = {
-  BUN: "bun",
-  SAUCE: "sauce",
-  MAIN: "main",
-};
-
 const BurgerIngredientsTabs = ({ handleTabChange }) => {
-  const [activeTab, setActiveTab] = useState(INGREDIENT_TYPES.BUN);
+  const activeTab = useSelector((state) => state.tabInfo.tab);
+  const dispatch = useDispatch();
 
-  const handleTabClick = (type) => {
-    setActiveTab(type);
+  function handleTabClick(type) {
+    dispatch({ type: TAB_ACTIONS.CHANGE_TAB, tab: type });
     handleTabChange(type);
-  };
+  }
 
   return (
-    <div className={`${styles.tabsContainer} mb-8`}>
+    <div className={`${styles.tabsContainer} mb-2`}>
       {Object.entries(INGREDIENT_TYPES).map(([key, type]) => (
         <Tab
           key={type}

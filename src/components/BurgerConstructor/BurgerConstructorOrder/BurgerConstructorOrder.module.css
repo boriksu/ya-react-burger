@@ -3,3 +3,10 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.currency {
+  transform: scale(1.5);
+  transform-origin: top left;
+  width: 36px;
+  height: 32px;
+}

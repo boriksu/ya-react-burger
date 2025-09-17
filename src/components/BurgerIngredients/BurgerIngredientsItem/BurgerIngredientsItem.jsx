@@ -3,30 +3,46 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useState } from "react";
+import React from "react";
+import { useDrag } from "react-dnd";
+import { useDispatch, useSelector } from "react-redux";
 import { dataPropTypes } from "../../../data/dataPropTypes";
 import naming from "../../../data/ru.json";
+import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerIngredientsItem.module.css";
 import IngredientDetails from "./IngredientDetails/IngredientDetails";
 
 const BurgerIngredientItem = ({ ingredient, count }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const displayedIngredient = useSelector(
+    (state) => state.ingredientWindow.displayedIngredient
+  );
 
-  const changeIsVisible = (e) => {
-    setIsVisible((prev) => !prev);
+  const dispatch = useDispatch();
+
+  function showIngredientDetails() {
+    dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
+  }
+  const [, dragRef] = useDrag({
+    type: ingredient.type,
+    item: ingredient,
+  });
+
+  function hideIngredientDetails(e) {
+    dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
     e.stopPropagation();
-  };
+  }
 
   return (
     <li
       className={`${styles.container} mt-6 mb-8 ml-3 mr-2`}
-      onClick={changeIsVisible}
+      onClick={showIngredientDetails}
+      ref={dragRef}
     >
       <img
         className={`${styles.image} ml-4 mr-4 mb-1`}
         src={ingredient.image}
-        alt="Изображение ингредиента"
+        alt={ingredient.name}
       />
       <div className={`${styles.price} mb-1`}>
         <span className="mr-2 text text_type_digits-default">
@@ -37,12 +53,15 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
       <div className={`${styles.name} text text_type_main-default`}>
         {ingredient.name}
       </div>
-      {count && count > 0 ? (
+      {count > 0 && (
         <Counter count={count} size="default" extraClass={styles.count} />
-      ) : undefined}
-      {isVisible && (
-        <Modal title={naming.IngredientDetails.title} onClose={changeIsVisible}>
-          <IngredientDetails item={ingredient} />
+      )}
+      {displayedIngredient && (
+        <Modal
+          title={naming.IngredientDetails.title}
+          onClose={hideIngredientDetails}
+        >
+          <IngredientDetails item={displayedIngredient} />
         </Modal>
       )}
     </li>
@@ -54,4 +73,4 @@ BurgerIngredientItem.propTypes = {
   count: PropTypes.number,
 };
 
-export default BurgerIngredientItem;
+export default React.memo(BurgerIngredientItem);

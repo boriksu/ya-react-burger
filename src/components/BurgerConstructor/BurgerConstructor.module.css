@@ -29,6 +29,21 @@
   background: #1c1c21;
 }
 
+.addElement {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: #1c1c21;
+}
+
+.add {
+  flex: 1;
+}
+
+.ingredient {
+  background: #1c1c21;
+}
+
 @media (max-height: 1000px) {
   .scrollBar {
     max-height: 370px;
