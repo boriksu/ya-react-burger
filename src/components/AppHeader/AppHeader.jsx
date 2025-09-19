@@ -4,6 +4,7 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { URL_PROFILE, URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
 import styles from "./AppHeader.module.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
@@ -15,13 +16,12 @@ const AppHeader = () => {
         <nav className={styles.navigation}>
           <div className={styles.navigationItems}>
             <NavigationItem
-              url="/"
+              url={URL_ROOT}
               icon={BurgerIcon}
-              isActive
               title={naming.AppHeader.constructor}
             />
             <NavigationItem
-              url="/"
+              url={URL_ROOT}
               icon={ListIcon}
               title={naming.AppHeader.lineOrders}
             />
@@ -34,7 +34,7 @@ const AppHeader = () => {
 
         <div className={styles.profileSection}>
           <NavigationItem
-            url="/"
+            url={URL_PROFILE}
             icon={ProfileIcon}
             title={naming.AppHeader.profileSection}
           />
