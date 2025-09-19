@@ -3,10 +3,12 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useCallback } from "react";
 import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { dataPropTypes } from "../../../data/dataPropTypes";
+import { URL_INGREDIENTS } from "../../../data/routes";
 import naming from "../../../data/ru.json";
 import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
 import Modal from "../../Modal/Modal";
@@ -19,10 +21,21 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  function showIngredientDetails() {
+  // function showIngredientDetails() {
+  //   dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
+  // }
+
+  const showIngredientDetails = useCallback(() => {
+    navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
+      replace: true,
+      state: { location: location, item: ingredient },
+    });
     dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
-  }
+  }, [dispatch, navigate, location, ingredient]);
+
   const [, dragRef] = useDrag({
     type: ingredient.type,
     item: ingredient,
