@@ -4,6 +4,7 @@ import { ingredientsAction } from "../../services/actions/ingredients-action";
 import AppHeader from "../AppHeader/AppHeader";
 import BurgerConstructor from "../BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../BurgerIngredients/BurgerIngredients";
+import Loader from "../Loader/Loader";
 import styles from "./App.module.css";
 
 const App = () => {
@@ -20,9 +21,7 @@ const App = () => {
   return (
     <>
       {dataLoading || dataErrors ? (
-        <main className={styles.loading}>
-          <p className="text text_type_main-large">LOADING...</p>
-        </main>
+        <Loader />
       ) : data && data.length > 0 ? (
         <>
           <AppHeader />
