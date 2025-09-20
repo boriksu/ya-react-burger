@@ -12,27 +12,17 @@ export const API_USER = "/api/auth/user";
 export const API_FORGOT_PASSWORD = "/api/password-reset";
 export const API_RESET_PASSWORD = "/api/password-reset/reset";
 
-export function request(url, options) {
+export const request = (url, options) => {
   return fetch(url, options).then(checkResponse);
-}
+};
 
-function checkResponse(res) {
-  // if (!res.ok) {
-  //   const errorMessage = `HTTP Error: ${res.status} - ${res.statusText}`;
-  //   console.error(errorMessage);
-  //   throw new Error(errorMessage);
-  // }
-
+const checkResponse = (res) => {
   return res.json().then((data) => {
-    // if (!data.success) {
-    //   throw new Error("Server responded with success: false");
-    // }
-
     return data;
   });
-}
+};
 
-export function requestWithRefresh(url, options) {
+export const requestWithRefresh = (url, options) => {
   return fetch(url, options)
     .then(checkResponse)
     .catch((error) => {
@@ -59,4 +49,4 @@ export function requestWithRefresh(url, options) {
         return request(url, newOptions);
       });
     });
-}
+};

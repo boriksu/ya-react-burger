@@ -1,4 +1,3 @@
-// src/services/reducers/auth.js
 import { AUTH_ACTIONS } from "../actions/auth/auth-helper";
 
 const initialState = {
@@ -24,7 +23,6 @@ export function authReducer(state = initialState, action) {
         authSuccess: false,
       };
 
-      // Специфичные сбросы для разных операций
       if (operation === AUTH_ACTIONS.FORGOT_PASSWORD) {
         startUpdates.forgotPassword = false;
       }
@@ -41,7 +39,6 @@ export function authReducer(state = initialState, action) {
         authSuccess: true,
       };
 
-      // Специфичная логика для разных операций
       switch (operation) {
         case AUTH_ACTIONS.REGISTER:
         case AUTH_ACTIONS.LOGIN:
@@ -85,7 +82,6 @@ export function authReducer(state = initialState, action) {
         authSuccess: false,
       };
 
-      // Специфичная логика для ошибок
       switch (operation) {
         case AUTH_ACTIONS.LOGOUT:
         case AUTH_ACTIONS.GET_USER:

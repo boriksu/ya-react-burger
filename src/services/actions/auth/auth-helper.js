@@ -1,4 +1,4 @@
-import { setCookie, getCookie } from "../../../data/api/useCookie";
+import { getCookie, setCookie } from "../../../data/api/useCookie";
 
 export const AUTH_ACTIONS = {
   START: "AUTH_START",
@@ -33,7 +33,6 @@ export const createAuthAction =
   (data = {}) =>
   async (dispatch) => {
     try {
-      // 🔥 ДОБАВЬТЕ ЭТУ ПРОВЕРКУ ДО dispatch(START)
       if (
         actionType === AUTH_ACTIONS.GET_USER ||
         actionType === AUTH_ACTIONS.PATCH_USER
@@ -42,17 +41,10 @@ export const createAuthAction =
         const refreshToken = localStorage.getItem("refreshToken");
 
         if (!accessToken || !refreshToken) {
-          console.log(
-            "🚫 Blocked auth check: no tokens available for",
-            actionType
-          );
-          return; // ← ПРЕРЫВАЕМ ВЫПОЛНЕНИЕ!
+          return;
         }
 
-        // Дополнительная проверка валидности
         if (accessToken.length < 10 || refreshToken.length < 10) {
-          console.log("🚫 Blocked auth check: invalid tokens for", actionType);
-          // Очищаем поврежденные токены
           localStorage.removeItem("refreshToken");
           document.cookie =
             "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
@@ -67,10 +59,6 @@ export const createAuthAction =
 
       const result = await apiCall(data);
 
-      if (!result.success) {
-        throw new Error(result.message || "Operation failed");
-      }
-
       const processedResult = tokenHandler ? handleTokens(result) : result;
 
       dispatch({
@@ -84,13 +72,11 @@ export const createAuthAction =
       const errorMessage =
         error?.message || error?.toString() || "Неизвестная ошибка";
 
-      // 🔥 АВТООЧИСТКА ПРИ ОШИБКАХ АУТЕНТИКАЦИИ
       if (
         errorMessage.includes("jwt") ||
         errorMessage.includes("token") ||
         errorMessage.includes("403")
       ) {
-        console.log("🧹 Auto-clearing tokens due to auth error");
         localStorage.removeItem("refreshToken");
         document.cookie =
           "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";

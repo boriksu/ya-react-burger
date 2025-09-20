@@ -1,5 +1,3 @@
-// const DOMAIN = "https://norma.nomoreparties.space";
-
 import { API_ORDER, DOMAIN, request } from "./api-data";
 
 export const createOrder = (ingredients) => {

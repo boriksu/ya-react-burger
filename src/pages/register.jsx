@@ -20,8 +20,6 @@ import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
 const Register = () => {
-  console.log("authRegisterAction is:", typeof authRegisterAction);
-  console.log("authRegisterAction:", authRegisterAction);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -51,12 +49,9 @@ const Register = () => {
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
-      // console.log("✅ Form submitted, dispatching authRegisterAction");
       setWasSubmitted(true);
 
       const action = authRegisterAction(formData);
-      // console.log("🔄 Action created:", action);
-      // console.log("Type of action:", typeof action);
 
       dispatch(action);
     },
@@ -67,15 +62,6 @@ const Register = () => {
     (state) => state.auth
   );
 
-  // useEffect(() => {
-  //   if (authLogIn) {
-  //     navigate(URL_ROOT, { replace: true });
-  //   } else if (wasSubmitted && authError) {
-  //     dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-  //     setWasSubmitted(false);
-  //   }
-  // }, [dispatch, wasSubmitted, authLogIn, navigate, authError]);
-
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
@@ -84,7 +70,6 @@ const Register = () => {
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
-      // Успешная регистрация
       alert("Регистрация успешна! Выполняется вход...");
       dispatch(authGetUserAction());
     }

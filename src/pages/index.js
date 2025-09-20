@@ -2,7 +2,7 @@ import ForgotPassword from "./forgot-password.jsx";
 import IngredientPage from "./ingredient.jsx";
 import Login from "./login.jsx";
 import MainPage from "./main.jsx";
-import NotFound404 from "./page404.jsx";
+import Page404 from "./page404.jsx";
 import ProfileEdit from "./profile-edit.jsx";
 import ProfileLogout from "./profile-logout.jsx";
 import ProfileOrders from "./profile-orders.jsx";
@@ -15,7 +15,7 @@ export {
   IngredientPage,
   Login,
   MainPage,
-  NotFound404,
+  Page404,
   Profile,
   ProfileEdit,
   ProfileLogout,

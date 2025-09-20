@@ -23,18 +23,15 @@ export const authLoginAction = createAuthAction(
   true
 );
 export const authLogoutAction = (data) => async (dispatch) => {
-  console.log("authLogoutAction");
   try {
     dispatch({
       type: AUTH_ACTIONS.START,
       meta: { operation: AUTH_ACTIONS.LOGOUT },
     });
 
-    // Сначала очищаем токены
     localStorage.removeItem("refreshToken");
     deleteCookie("accessToken");
 
-    // Затем делаем запрос на сервер
     await logoutUser(data);
 
     dispatch({

@@ -21,7 +21,7 @@ import {
   IngredientPage,
   Login,
   MainPage,
-  NotFound404,
+  Page404,
   Profile,
   ProfileEdit,
   ProfileLogout,
@@ -57,9 +57,9 @@ const App = () => {
             <Route index element={<ProfileEdit />} />
             <Route path={URL_PROFILE_ORDERS} element={<ProfileOrders />} />
             <Route path={URL_PROFILE_LOGOUT} element={<ProfileLogout />} />
-            <Route path={URL_ANY} element={<NotFound404 />} />
+            <Route path={URL_ANY} element={<Page404 />} />
           </Route>
-          <Route path={URL_ANY} element={<NotFound404 />} />
+          <Route path={URL_ANY} element={<Page404 />} />
         </Routes>
       </div>
     </div>
