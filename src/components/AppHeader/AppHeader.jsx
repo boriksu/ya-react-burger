@@ -4,7 +4,7 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { URL_PROFILE, URL_ROOT } from "../../data/routes";
+import { URL_ANY, URL_PROFILE, URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
 import styles from "./AppHeader.module.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
@@ -21,7 +21,7 @@ const AppHeader = () => {
               title={naming.AppHeader.constructor}
             />
             <NavigationItem
-              url={URL_ROOT}
+              url={URL_ANY}
               icon={ListIcon}
               title={naming.AppHeader.lineOrders}
             />

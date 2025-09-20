@@ -1,5 +1,5 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import naming from "../../data/ru.json";
@@ -44,9 +44,16 @@ const BurgerConstructor = () => {
     },
   });
 
-  function removeIngredient(index) {
-    dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });
-  }
+  // function removeIngredient(index) {
+  //   dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });
+  // }
+
+  const removeIngredient = useCallback(
+    (index) => {
+      dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });
+    },
+    [dispatch]
+  );
 
   return (
     <section className={styles.container}>

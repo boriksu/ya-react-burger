@@ -30,30 +30,36 @@ const handleTokens = (result) => {
 
 export const createAuthAction =
   (apiCall, actionType, tokenHandler = false) =>
-  (data) =>
+  (data = {}) =>
   async (dispatch) => {
-    try {
-      dispatch({
-        type: AUTH_ACTIONS.AUTH_START,
-        meta: { operation: actionType },
-      });
+    console.log("createAuthAction called with:", { actionType, data });
 
-      const result = await apiCall(data);
-      const processedResult = tokenHandler ? handleTokens(result) : result;
+    return async (dispatch) => {
+      console.log("Thunk executing with actionType:", actionType);
 
-      dispatch({
-        type: AUTH_ACTIONS.AUTH_SUCCESS,
-        payload: processedResult,
-        meta: { operation: actionType },
-      });
+      try {
+        dispatch({
+          type: AUTH_ACTIONS.AUTH_START,
+          meta: { operation: actionType },
+        });
 
-      return processedResult;
-    } catch (error) {
-      dispatch({
-        type: AUTH_ACTIONS.AUTH_ERROR,
-        payload: error.message,
-        meta: { operation: actionType },
-      });
-      throw error;
-    }
+        const result = await apiCall();
+        const processedResult = tokenHandler ? handleTokens(result) : result;
+
+        dispatch({
+          type: AUTH_ACTIONS.AUTH_SUCCESS,
+          payload: processedResult,
+          meta: { operation: actionType },
+        });
+
+        return processedResult;
+      } catch (error) {
+        dispatch({
+          type: AUTH_ACTIONS.AUTH_ERROR,
+          payload: error.message,
+          meta: { operation: actionType },
+        });
+        throw error;
+      }
+    };
   };

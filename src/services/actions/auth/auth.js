@@ -12,22 +12,6 @@ import { deleteCookie } from "../../../data/api/useCookie";
 
 import { AUTH_ACTIONS, createAuthAction } from "./auth-helper";
 
-// // Action types
-// export const AUTH_START = "AUTH_START";
-// export const AUTH_SUCCESS = "AUTH_SUCCESS";
-// export const AUTH_ERROR = "AUTH_ERROR";
-// export const AUTH_CLEAR_ERRORS = "AUTH_CLEAR_ERRORS";
-
-// // Specific action types для разных операций
-// export const AUTH_REGISTER = "AUTH_REGISTER";
-// export const AUTH_LOGIN = "AUTH_LOGIN";
-// export const AUTH_LOGOUT = "AUTH_LOGOUT";
-// export const AUTH_TOKEN = "AUTH_TOKEN";
-// export const AUTH_FORGOT_PASSWORD = "AUTH_FORGOT_PASSWORD";
-// export const AUTH_RESET_PASSWORD = "AUTH_RESET_PASSWORD";
-// export const AUTH_GET_USER = "AUTH_GET_USER";
-// export const AUTH_PATCH_USER = "AUTH_PATCH_USER";
-
 export const authRegisterAction = createAuthAction(
   registerUser,
   AUTH_ACTIONS.AUTH_REGISTER,

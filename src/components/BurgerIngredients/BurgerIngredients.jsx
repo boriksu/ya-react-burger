@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import naming from "../../data/ru.json";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "./BurgerIngredientsItem/BurgerIngredientsItem";
@@ -29,6 +30,7 @@ const BurgerIngredients = () => {
   }, [bun, ingredients]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sectionRefs = useRef({
     [INGREDIENT_TYPES.BUN]: null,
