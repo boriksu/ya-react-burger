@@ -7,68 +7,60 @@ import {
   URL_PROFILE_LOGOUT,
   URL_PROFILE_ORDERS,
 } from "../data/routes";
+import naming from "../data/ru.json";
 import { authGetUserAction } from "../services/actions/auth/auth";
+import styles from "./page.module.css";
 
-function Profile() {
+const Profile = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { requestStart, user } = useSelector((state) => state.auth);
+  const { authLoading, user } = useSelector((state) => state.auth);
 
   const navLinkClass = ({ isActive }) =>
     `text text_type_main-medium ${
       isActive ? "text_color_primary" : "text_color_inactive"
     }`;
 
-  // // Проверяем авторизацию при монтировании
-  // useEffect(() => {
-  //   if (!user.name) {
-  //     dispatch(authGetUserAction());
-  //   }
-  // }, [dispatch, user.name]);
-
   useEffect(() => {
     if (!user.name) {
-      // authGetUserAction - это уже функция, которую нужно вызвать
-      const action = authGetUserAction(); // ← Добавьте скобки!
+      const action = authGetUserAction();
       dispatch(action);
     }
   }, [dispatch, user.name]);
 
-  // Перенаправляем если пользователь не авторизован
   useEffect(() => {
-    if (!requestStart && !user.name) {
+    if (!authLoading && !user.name) {
       navigate(URL_LOGIN, { replace: true });
     }
-  }, [requestStart, user.name, navigate]);
+  }, [authLoading, user.name, navigate]);
 
-  // Показываем лоадер пока проверяем авторизацию
-  if (requestStart || !user.name) {
+  if (authLoading || !user.name) {
     return <Loader />;
   }
 
   return (
-    <main className="page-container page-container-profile">
-      <div className="page-container-profile-wrapper">
-        <nav className="page-container-profile-sidebar ml-5 mr-15">
+    <main className={`${styles.container} ${styles.containerProfile} `}>
+      <div className={styles.containerProfileContent}>
+        <nav className={`${styles.menu} ml-5 mr-15 `}>
           <ul>
             <li>
               <NavLink to="" end className={navLinkClass}>
-                Профиль
+                {naming.Profile.profile}
               </NavLink>
             </li>
             <li>
               <NavLink to={URL_PROFILE_ORDERS} className={navLinkClass}>
-                История заказов
+                {naming.Profile.history}
               </NavLink>
             </li>
             <li>
               <NavLink to={URL_PROFILE_LOGOUT} className={navLinkClass}>
-                Выход
+                {naming.Profile.exit}
               </NavLink>
             </li>
           </ul>
           <p className="text text_type_main-default text_color_dark mt-20">
-            В этом разделе вы можете изменить свои персональные данные
+            {naming.Profile.changeProfileData}
           </p>
         </nav>
 
@@ -76,6 +68,6 @@ function Profile() {
       </div>
     </main>
   );
-}
+};
 
 export default Profile;

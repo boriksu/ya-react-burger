@@ -16,8 +16,12 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
+import naming from "../data/ru.json";
+import styles from "./page.module.css";
 
-function Register() {
+const Register = () => {
+  console.log("authRegisterAction is:", typeof authRegisterAction);
+  console.log("authRegisterAction:", authRegisterAction);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -32,7 +36,6 @@ function Register() {
     dispatch(authGetUserAction());
   }, [dispatch]);
 
-  // Обработчики изменений полей
   const handleNameChange = useCallback((e) => {
     setFormData((prev) => ({ ...prev, name: e.target.value }));
   }, []);
@@ -45,44 +48,64 @@ function Register() {
     setFormData((prev) => ({ ...prev, password: e.target.value }));
   }, []);
 
-  // Отправка формы
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
+      // console.log("✅ Form submitted, dispatching authRegisterAction");
       setWasSubmitted(true);
-      dispatch(authRegisterAction(formData));
+
+      const action = authRegisterAction(formData);
+      // console.log("🔄 Action created:", action);
+      // console.log("Type of action:", typeof action);
+
+      dispatch(action);
     },
     [dispatch, formData]
   );
 
-  const { requestStart, requestError, userLoggedIn } = useSelector(
+  const { authLoading, authError, authSuccess, authLogIn } = useSelector(
     (state) => state.auth
   );
 
+  // useEffect(() => {
+  //   if (authLogIn) {
+  //     navigate(URL_ROOT, { replace: true });
+  //   } else if (wasSubmitted && authError) {
+  //     dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+  //     setWasSubmitted(false);
+  //   }
+  // }, [dispatch, wasSubmitted, authLogIn, navigate, authError]);
+
   useEffect(() => {
-    if (userLoggedIn) {
+    if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && requestError) {
-      alert(`[Регистрация] ${requestError}`);
+    } else if (wasSubmitted && authError) {
+      alert(`Ошибка регистрации: ${authError}`);
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
+    } else if (wasSubmitted && authSuccess) {
+      // Успешная регистрация
+      alert("Регистрация успешна! Выполняется вход...");
+      dispatch(authGetUserAction());
     }
-  }, [dispatch, wasSubmitted, userLoggedIn, navigate, requestError]);
+  }, [dispatch, wasSubmitted, authLogIn, authError, authSuccess, navigate]);
 
   const isSubmitDisabled =
     formData.name === "" || formData.email === "" || formData.password === "";
 
   return (
-    <main className="page-container">
-      <form className="page-container-inner" onSubmit={handleSubmit}>
-        {requestStart || userLoggedIn ? (
+    <main className={styles.container}>
+      <form className={styles.content} onSubmit={handleSubmit}>
+        {authLoading || authLogIn ? (
           <Loader />
         ) : (
           <>
-            <h1 className="text text_type_main-medium mb-6">Регистрация</h1>
+            <h1 className="text text_type_main-medium mb-6">
+              {naming.Register.registry}
+            </h1>
 
             <Input
-              placeholder="Имя"
+              placeholder={naming.Register.name}
               extraClass="mb-6"
               name="name"
               value={formData.name}
@@ -103,7 +126,7 @@ function Register() {
               onChange={handlePasswordChange}
             />
 
-            {requestStart ? (
+            {authLoading ? (
               <Loader />
             ) : (
               <Button
@@ -112,14 +135,14 @@ function Register() {
                 htmlType="submit"
                 disabled={isSubmitDisabled}
               >
-                Зарегистрироваться
+                {naming.Register.register}
               </Button>
             )}
 
             <p className="text text_type_main-default text_color_inactive mb-4">
-              Уже зарегистрированы?{" "}
-              <Link className="page-link" to={URL_LOGIN}>
-                Войти
+              {naming.Register.alreadyRedister}{" "}
+              <Link className={styles.link} to={URL_LOGIN}>
+                {naming.Register.login}
               </Link>
             </p>
           </>
@@ -127,6 +150,6 @@ function Register() {
       </form>
     </main>
   );
-}
+};
 
 export default Register;

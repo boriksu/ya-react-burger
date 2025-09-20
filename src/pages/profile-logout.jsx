@@ -6,38 +6,63 @@ import { authLogoutAction } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import Loader from "../components/Loader/Loader";
+import styles from "./page.module.css";
 
-function ProfileLogout() {
+const ProfileLogout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { requestError, requestSuccess, userLoggedIn } = useSelector(
+  const { authError, authSuccess, authLogIn } = useSelector(
     (state) => state.auth
   );
   const [logoutStarted, setLogoutStarted] = useState(false);
 
-  // Запуск выхода при монтировании, если пользователь авторизован
   useEffect(() => {
-    if (userLoggedIn && !logoutStarted) {
-      dispatch(authLogoutAction());
+    // Выходим только если пользователь был авторизован И выход еще не начат
+    if (authLogIn && !logoutStarted) {
+      console.log("Starting logout process");
       setLogoutStarted(true);
+      dispatch(authLogoutAction());
     }
-  }, [userLoggedIn, logoutStarted, dispatch]);
 
-  // Обработка результатов выхода
-  useEffect(() => {
-    if (logoutStarted && requestError) {
-      alert(`[Выход] ${requestError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setLogoutStarted(false);
-    } else if (logoutStarted && requestSuccess) {
+    // Если пользователь уже не авторизован, перенаправляем сразу
+    if (!authLogIn && !logoutStarted) {
+      console.log("User already logged out, redirecting");
       navigate(URL_LOGIN, { replace: true });
     }
-  }, [dispatch, logoutStarted, requestError, requestSuccess, navigate]);
+  }, [authLogIn, logoutStarted, dispatch, navigate]);
+
+  useEffect(() => {
+    if (logoutStarted && authError) {
+      console.error("Logout error:", authError);
+      // При ошибке выхода все равно очищаем и перенаправляем
+      localStorage.removeItem("refreshToken");
+      document.cookie =
+        "accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+      navigate(URL_LOGIN, { replace: true });
+    }
+
+    if (logoutStarted && authSuccess) {
+      console.log("Logout successful, redirecting");
+      navigate(URL_LOGIN, { replace: true });
+    }
+  }, [dispatch, logoutStarted, authError, authSuccess, navigate]);
+
+  // Если пользователь не авторизован, показываем ничего или редирект
+  if (!authLogIn) {
+    return null;
+  }
 
   return (
-    <div className="page-container-inner">{logoutStarted && <Loader />}</div>
+    <div className={styles.content}>
+      {logoutStarted && <Loader />}
+      {authError && (
+        <div className={styles.error}>Ошибка при выходе: {authError}</div>
+      )}
+    </div>
   );
-}
+};
 
 export default ProfileLogout;

@@ -10,11 +10,13 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
+import naming from "../data/ru.json";
+import styles from "./page.module.css";
 
-function ProfileEdit() {
+const ProfileEdit = () => {
   const dispatch = useDispatch();
 
-  const { requestStart, requestError, requestSuccess, user } = useSelector(
+  const { authLoading, authError, authSuccess, user } = useSelector(
     (state) => state.auth
   );
 
@@ -24,7 +26,6 @@ function ProfileEdit() {
     password: "",
   });
 
-  // Инициализация формы данными пользователя
   useEffect(() => {
     if (user) {
       setFormData({
@@ -35,7 +36,6 @@ function ProfileEdit() {
     }
   }, [user]);
 
-  // Обработчики изменений полей
   const handleNameChange = useCallback((e) => {
     setFormData((prev) => ({ ...prev, name: e.target.value }));
   }, []);
@@ -48,7 +48,6 @@ function ProfileEdit() {
     setFormData((prev) => ({ ...prev, password: e.target.value }));
   }, []);
 
-  // Отправка формы
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -57,7 +56,6 @@ function ProfileEdit() {
     [dispatch, formData]
   );
 
-  // Сброс формы к исходным значениям
   const handleReset = useCallback(
     (e) => {
       e.preventDefault();
@@ -70,36 +68,32 @@ function ProfileEdit() {
     [user]
   );
 
-  // Проверка, были ли изменения
   const hasChanges =
     user &&
     (formData.name !== user.name ||
       formData.email !== user.email ||
       formData.password.length > 0);
 
-  // Обработка ошибок и успешных операций
   useEffect(() => {
-    if (requestError) {
-      alert(`[Профиль сохранение] ${requestError}`);
+    if (authError) {
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
     }
 
-    // После успешного сохранения сбрасываем пароль
-    if (requestSuccess) {
+    if (authSuccess) {
       setFormData((prev) => ({ ...prev, password: "" }));
     }
-  }, [dispatch, requestError, requestSuccess]);
+  }, [dispatch, authError, authSuccess]);
 
   return (
     <form
-      className="page-container-inner"
+      className={styles.content}
       onSubmit={handleSubmit}
       onReset={handleReset}
     >
       <Input
         extraClass="mb-6"
         name="name"
-        placeholder="Имя"
+        placeholder={naming.ProfileEdit.name}
         value={formData.name}
         onChange={handleNameChange}
         icon="EditIcon"
@@ -117,23 +111,23 @@ function ProfileEdit() {
         value={formData.password}
         onChange={handlePasswordChange}
         icon="EditIcon"
-        placeholder="Новый пароль"
+        placeholder={naming.ProfileEdit.newPassword}
       />
 
-      {requestStart ? (
+      {authLoading ? (
         <Loader />
       ) : hasChanges ? (
         <div>
           <Button type="primary" htmlType="reset">
-            Отмена
+            {naming.ProfileEdit.cancel}
           </Button>
           <Button type="primary" extraClass="ml-5" htmlType="submit">
-            Сохранить
+            {naming.ProfileEdit.save}
           </Button>
         </div>
       ) : null}
     </form>
   );
-}
+};
 
 export default ProfileEdit;

@@ -17,16 +17,16 @@ export function request(url, options) {
 }
 
 function checkResponse(res) {
-  if (!res.ok) {
-    const errorMessage = `HTTP Error: ${res.status} - ${res.statusText}`;
-    console.error(errorMessage);
-    throw new Error(errorMessage);
-  }
+  // if (!res.ok) {
+  //   const errorMessage = `HTTP Error: ${res.status} - ${res.statusText}`;
+  //   console.error(errorMessage);
+  //   throw new Error(errorMessage);
+  // }
 
   return res.json().then((data) => {
-    if (!data.success) {
-      throw new Error("Server responded with success: false");
-    }
+    // if (!data.success) {
+    //   throw new Error("Server responded with success: false");
+    // }
 
     return data;
   });

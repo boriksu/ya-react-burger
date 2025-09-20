@@ -31,12 +31,12 @@ export function setCookie(name, value, options = {}) {
 }
 
 export function getCookie(name) {
-  const pattern = new RegExp(
-    `(?:^|; )${name.replace(/([.$?*|{}()\[\]\\/+^])/g, "\\$1")}=([^;]*)`
+  const matches = document.cookie.match(
+    new RegExp(
+      "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
+    )
   );
-  const match = document.cookie.match(pattern);
-
-  return match ? decodeURIComponent(match[1]) : undefined;
+  return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
 export function deleteCookie(name) {

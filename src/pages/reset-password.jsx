@@ -13,8 +13,10 @@ import {
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
+import naming from "../data/ru.json";
+import styles from "./page.module.css";
 
-function ResetPassword() {
+const ResetPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,15 +26,9 @@ function ResetPassword() {
   });
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
-  const {
-    requestStart,
-    requestError,
-    requestSuccess,
-    userLoggedIn,
-    forgotPassword,
-  } = useSelector((state) => state.auth);
+  const { authLoading, authError, authSuccess, authLogIn, forgotPassword } =
+    useSelector((state) => state.auth);
 
-  // Обработчики изменений полей
   const handlePasswordChange = useCallback((e) => {
     setFormData((prev) => ({ ...prev, password: e.target.value }));
   }, []);
@@ -41,7 +37,6 @@ function ResetPassword() {
     setFormData((prev) => ({ ...prev, token: e.target.value }));
   }, []);
 
-  // Отправка формы
   const handleSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -51,40 +46,38 @@ function ResetPassword() {
     [dispatch, formData]
   );
 
-  // Проверки и перенаправления
   useEffect(() => {
-    if (userLoggedIn) {
+    if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
     } else if (!forgotPassword) {
       navigate(URL_FORGOT_PASSWORD, { replace: true });
-    } else if (wasSubmitted && requestError) {
-      alert(`[Сброс пароля] ${requestError}`);
+    } else if (wasSubmitted && authError) {
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
-    } else if (wasSubmitted && requestSuccess) {
+    } else if (wasSubmitted && authSuccess) {
       navigate(URL_LOGIN, { replace: true });
     }
   }, [
     dispatch,
     wasSubmitted,
-    userLoggedIn,
+    authLogIn,
     forgotPassword,
-    requestError,
-    requestSuccess,
+    authError,
+    authSuccess,
     navigate,
   ]);
 
   const isSubmitDisabled = formData.password === "" || formData.token === "";
 
   return (
-    <main className="page-container">
-      <form className="page-container-inner" onSubmit={handleSubmit}>
+    <main className={styles.container}>
+      <form className={styles.content} onSubmit={handleSubmit}>
         <h1 className="text text_type_main-medium mb-6">
-          Восстановление пароля
+          {naming.ResetPassword.passwordRecovery}
         </h1>
 
         <PasswordInput
-          placeholder="Введите новый пароль"
+          placeholder={naming.ResetPassword.newPassword}
           name="password"
           value={formData.password}
           onChange={handlePasswordChange}
@@ -92,14 +85,14 @@ function ResetPassword() {
         />
 
         <Input
-          placeholder="Введите код из письма"
+          placeholder={naming.ResetPassword.code}
           name="token"
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
         />
 
-        {requestStart ? (
+        {authLoading ? (
           <Loader />
         ) : (
           <Button
@@ -108,19 +101,19 @@ function ResetPassword() {
             htmlType="submit"
             disabled={isSubmitDisabled}
           >
-            Сохранить
+            {naming.ResetPassword.save}
           </Button>
         )}
 
         <p className="text text_type_main-default text_color_inactive">
-          Вспомнили пароль?{" "}
-          <Link className="page-link" to={URL_LOGIN}>
-            Войти
+          {naming.ResetPassword.rememberPassword}{" "}
+          <Link className={styles.link} to={URL_LOGIN}>
+            {naming.ResetPassword.login}
           </Link>
         </p>
       </form>
     </main>
   );
-}
+};
 
 export default ResetPassword;

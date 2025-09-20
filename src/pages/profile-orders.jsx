@@ -1,12 +1,16 @@
-function ProfileOrders() {
+import naming from "../data/ru.json";
+
+const ProfileOrders = () => {
   return (
     <div>
-      <h1 className="text text_type_main-medium mb-4 mt-4">История заказов</h1>
+      <h1 className="text text_type_main-medium mb-4 mt-4">
+        {naming.ProfileOrders.history}
+      </h1>
       <p className="text text_type_main-default text_color_inactive">
-        История заказов пуста
+        {naming.ProfileOrders.emptyHistory}
       </p>
     </div>
   );
-}
+};
 
 export default ProfileOrders;

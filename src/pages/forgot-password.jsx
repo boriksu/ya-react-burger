@@ -14,6 +14,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
+import styles from "./page.module.css";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -39,34 +40,28 @@ const ForgotPassword = () => {
     [dispatch, email]
   );
 
-  const { requestStart, requestError, requestSuccess, userLoggedIn } =
-    useSelector((state) => state.auth);
+  const { authLoading, authError, authSuccess, authLogIn } = useSelector(
+    (state) => state.auth
+  );
 
   useEffect(() => {
-    if (userLoggedIn) {
+    if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && requestError) {
-      alert(`${naming.ForgotPassword.passwordRecovery} ${requestError}`);
+    } else if (wasSubmitted && authError) {
+      alert(`${naming.ForgotPassword.passwordRecovery} ${authError}`);
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
-    } else if (wasSubmitted && requestSuccess) {
+    } else if (wasSubmitted && authSuccess) {
       navigate(URL_RESET_PASSWORD, { replace: true });
     }
-  }, [
-    dispatch,
-    wasSubmitted,
-    userLoggedIn,
-    requestError,
-    requestSuccess,
-    navigate,
-  ]);
+  }, [dispatch, wasSubmitted, authLogIn, authError, authSuccess, navigate]);
 
   const isSubmitDisabled = email === "";
 
   return (
-    <main className="page-container">
-      <form className="page-container-inner" onSubmit={handleSubmit}>
-        {requestStart || userLoggedIn ? (
+    <main className={styles.container}>
+      <form className={styles.content} onSubmit={handleSubmit}>
+        {authLoading || authLogIn ? (
           <Loader />
         ) : (
           <>
@@ -80,7 +75,7 @@ const ForgotPassword = () => {
               value={email}
               onChange={handleEmailChange}
             />
-            {requestStart ? (
+            {authLoading ? (
               <Loader />
             ) : (
               <Button
@@ -94,8 +89,8 @@ const ForgotPassword = () => {
             )}
             <p className="text text_type_main-default text_color_inactive">
               {naming.ForgotPassword.rememberPassword}{" "}
-              <Link className="page-link" to={URL_LOGIN}>
-                {naming.ForgotPassword.logIn}
+              <Link className={styles.link} to={URL_LOGIN}>
+                {naming.ForgotPassword.login}
               </Link>
             </p>
           </>

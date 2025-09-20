@@ -14,13 +14,15 @@ import {
   URL_REGISTER,
   URL_ROOT,
 } from "../data/routes";
+import naming from "../data/ru.json";
 import {
   authGetUserAction,
   authLoginAction,
 } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import styles from "./page.module.css";
 
-function Login() {
+const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,41 +54,36 @@ function Login() {
     [dispatch, formData]
   );
 
-  const { requestStart, requestError, userLoggedIn } = useSelector(
+  const { authLoading, authError, authLogIn } = useSelector(
     (state) => state.auth
   );
 
   useEffect(() => {
-    if (userLoggedIn) {
+    if (authLogIn) {
       const { from } = location.state || { from: { pathname: "/" } };
       if (from.pathname === `${URL_PROFILE}/${URL_PROFILE_LOGOUT}`) {
         from.pathname = URL_ROOT;
       }
       navigate(from.pathname, { replace: true });
-    } else if (wasSubmitted && requestError) {
-      alert(`[Вход] ${requestError}`);
+    } else if (wasSubmitted && authError) {
+      alert(`[Вход] ${authError}`);
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
     }
-  }, [
-    dispatch,
-    location.state,
-    wasSubmitted,
-    userLoggedIn,
-    navigate,
-    requestError,
-  ]);
+  }, [dispatch, location.state, wasSubmitted, authLogIn, navigate, authError]);
 
   const isFormValid = formData.email !== "" && formData.password !== "";
 
   return (
-    <main className="page-container">
-      <form className="page-container-inner" onSubmit={handleSubmit}>
-        {requestStart || userLoggedIn ? (
+    <main className={styles.container}>
+      <form className={styles.content} onSubmit={handleSubmit}>
+        {authLoading || authLogIn ? (
           <Loader />
         ) : (
           <>
-            <h1 className="text text_type_main-medium mb-6">Вход</h1>
+            <h1 className="text text_type_main-medium mb-6">
+              {naming.Login.entry}
+            </h1>
             <EmailInput
               extraClass="mb-6"
               name="email"
@@ -99,7 +96,7 @@ function Login() {
               value={formData.password}
               onChange={handleInputChange}
             />
-            {requestStart ? (
+            {authLoading ? (
               <Loader />
             ) : (
               <Button
@@ -108,19 +105,19 @@ function Login() {
                 htmlType="submit"
                 disabled={!isFormValid}
               >
-                Войти
+                {naming.Login.login}
               </Button>
             )}
             <p className="text text_type_main-default text_color_inactive mb-4">
-              Вы — новый пользователь?
-              <Link className="page-link" to={URL_REGISTER}>
-                Зарегистрироваться
+              {naming.Login.newUser}{" "}
+              <Link className={styles.link} to={URL_REGISTER}>
+                {naming.Login.register}
               </Link>
             </p>
             <p className="text text_type_main-default text_color_inactive">
-              Забыли пароль?
-              <Link className="page-link" to={URL_FORGOT_PASSWORD}>
-                Восстановить пароль
+              {naming.Login.fogetPassword}{" "}
+              <Link className={styles.link} to={URL_FORGOT_PASSWORD}>
+                {naming.Login.recoverPassword}
               </Link>
             </p>
           </>
@@ -128,6 +125,6 @@ function Login() {
       </form>
     </main>
   );
-}
+};
 
 export default Login;
