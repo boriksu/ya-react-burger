@@ -59,6 +59,15 @@ export const createAuthAction =
 
       const result = await apiCall(data);
 
+      if (!result.success) {
+        dispatch({
+          type: AUTH_ACTIONS.ERROR,
+          payload: result.message,
+          meta: { operation: actionType },
+        });
+        return;
+      }
+
       const processedResult = tokenHandler ? handleTokens(result) : result;
 
       dispatch({
