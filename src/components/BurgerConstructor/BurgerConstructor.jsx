@@ -3,7 +3,10 @@ import { useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import naming from "../../data/ru.json";
-import { CONSTRUCTOR_ACTIONS } from "../../services/actions/index";
+import {
+  CONSTRUCTOR_ACTIONS,
+  addIngredient,
+} from "../../services/actions/index";
 
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
 import styles from "./BurgerConstructor.module.css";
@@ -40,7 +43,7 @@ const BurgerConstructor = () => {
   const [, dropTargetIngredient] = useDrop({
     accept: [INGREDIENT_TYPES.SAUCE, INGREDIENT_TYPES.MAIN],
     drop(item) {
-      dispatch({ type: CONSTRUCTOR_ACTIONS.ADD_INGREDIENT, item: item });
+      dispatch(addIngredient(item));
     },
   });
 

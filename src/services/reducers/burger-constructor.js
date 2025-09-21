@@ -1,4 +1,3 @@
-import { v4 as uuid } from "uuid";
 import { CONSTRUCTOR_ACTIONS } from "../actions/index";
 
 const initialState = {
@@ -13,7 +12,7 @@ export const burgerConstructorReducer = (state = initialState, action) => {
     case CONSTRUCTOR_ACTIONS.ADD_INGREDIENT:
       return {
         ...state,
-        ingredients: [...state.ingredients, { ...action.item, id: uuid() }],
+        ingredients: [...state.ingredients, action.item],
       };
     case CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT:
       return {
