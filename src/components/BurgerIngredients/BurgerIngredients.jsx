@@ -1,8 +1,14 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import { URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
+import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
+import Modal from "../Modal/Modal";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "./BurgerIngredientsItem/BurgerIngredientsItem";
+import IngredientDetails from "./BurgerIngredientsItem/IngredientDetails/IngredientDetails";
 import BurgerIngredientsTabs from "./BurgerIngredientsTabs/BurgerIngredientsTabs";
 
 import { TAB_ACTIONS } from "../../services/actions/index";
@@ -13,6 +19,9 @@ const BurgerIngredients = () => {
   const { data } = useSelector((state) => state.loadIngredients);
   const tab = useSelector((state) => state.tabInfo.tab);
   const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
+  const displayedIngredient = useSelector(
+    (state) => state.ingredientWindow.displayedIngredient
+  );
 
   const ingredientsCount = useMemo(() => {
     const countMap = {};
@@ -29,6 +38,7 @@ const BurgerIngredients = () => {
   }, [bun, ingredients]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const sectionRefs = useRef({
     [INGREDIENT_TYPES.BUN]: null,
@@ -76,6 +86,15 @@ const BurgerIngredients = () => {
     [tab, dispatch]
   );
 
+  const hideIngredientDetails = useCallback(
+    (e) => {
+      navigate(URL_ROOT, { replace: true });
+      dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
+      e.stopPropagation();
+    },
+    [dispatch, navigate]
+  );
+
   return (
     <section className={styles.container}>
       <h1 className="mt-10 mb-5 text text_type_main-large">
@@ -100,6 +119,14 @@ const BurgerIngredients = () => {
           </section>
         ))}
       </div>
+      {displayedIngredient && (
+        <Modal
+          title={naming.IngredientDetails.title}
+          onClose={hideIngredientDetails}
+        >
+          <IngredientDetails item={displayedIngredient} />
+        </Modal>
+      )}
     </section>
   );
 };
