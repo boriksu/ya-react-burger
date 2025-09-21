@@ -12,7 +12,7 @@ const initialState = {
   },
 };
 
-export function authReducer(state = initialState, action) {
+export const authReducer = (state = initialState, action) => {
   const operation = action.meta?.operation;
 
   switch (action.type) {
@@ -115,4 +115,4 @@ export function authReducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};

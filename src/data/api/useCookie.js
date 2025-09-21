@@ -1,4 +1,4 @@
-export function setCookie(name, value, options = {}) {
+export const setCookie = (name, value, options = {}) => {
   const settings = {
     path: "/",
     ...options,
@@ -28,20 +28,20 @@ export function setCookie(name, value, options = {}) {
   }
 
   document.cookie = cookieString;
-}
+};
 
-export function getCookie(name) {
+export const getCookie = (name) => {
   const matches = document.cookie.match(
     new RegExp(
       "(?:^|; )" + name.replace(/([.$?*|{}()[\]\\/+^])/g, "\\$1") + "=([^;]*)"
     )
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
-}
+};
 
-export function deleteCookie(name) {
+export const deleteCookie = (name) => {
   setCookie(name, "", {
     "max-age": -1,
     expires: new Date(0),
   });
-}
+};

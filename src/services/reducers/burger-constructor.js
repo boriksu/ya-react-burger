@@ -6,7 +6,7 @@ const initialState = {
   ingredients: [],
 };
 
-export function burgerConstructorReducer(state = initialState, action) {
+export const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTRUCTOR_ACTIONS.SELECT_BUN:
       return { ...state, bun: action.item };
@@ -38,4 +38,4 @@ export function burgerConstructorReducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};

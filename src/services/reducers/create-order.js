@@ -6,7 +6,7 @@ const initialState = {
   orderNumber: null,
 };
 
-export function createOrderReducer(state = initialState, action) {
+export const createOrderReducer = (state = initialState, action) => {
   switch (action.type) {
     case ORDER_ACTIONS.CREATE_REQUEST:
       return { ...state, orderLoading: true, orderErrors: false };
@@ -30,4 +30,4 @@ export function createOrderReducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};
