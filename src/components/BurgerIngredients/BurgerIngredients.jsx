@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
 import naming from "../../data/ru.json";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "./BurgerIngredientsItem/BurgerIngredientsItem";
@@ -30,7 +29,6 @@ const BurgerIngredients = () => {
   }, [bun, ingredients]);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const sectionRefs = useRef({
     [INGREDIENT_TYPES.BUN]: null,
@@ -61,7 +59,6 @@ const BurgerIngredients = () => {
       let closestTab = tab;
       let minDistance = Infinity;
 
-      // Ищем ближайшую секцию
       Object.entries(sectionRefs.current).forEach(([type, ref]) => {
         if (ref) {
           const distance = Math.abs(scrollTop - ref.offsetTop);
@@ -72,7 +69,6 @@ const BurgerIngredients = () => {
         }
       });
 
-      // Обновляем таб если нужно
       if (tab !== closestTab) {
         dispatch({ type: TAB_ACTIONS.CHANGE_TAB, tab: closestTab });
       }

@@ -8,7 +8,7 @@ import { useDrag } from "react-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { dataPropTypes } from "../../../data/dataPropTypes";
-import { URL_INGREDIENTS } from "../../../data/routes";
+import { URL_INGREDIENTS, URL_ROOT } from "../../../data/routes";
 import naming from "../../../data/ru.json";
 import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
 import Modal from "../../Modal/Modal";
@@ -24,10 +24,6 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // function showIngredientDetails() {
-  //   dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
-  // }
-
   const showIngredientDetails = useCallback(() => {
     navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
       replace: true,
@@ -41,10 +37,14 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
     item: ingredient,
   });
 
-  function hideIngredientDetails(e) {
-    dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
-    e.stopPropagation();
-  }
+  const hideIngredientDetails = useCallback(
+    (e) => {
+      navigate(URL_ROOT, { replace: true });
+      dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
+      e.stopPropagation();
+    },
+    [dispatch, navigate]
+  );
 
   return (
     <li

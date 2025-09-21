@@ -1,8 +1,38 @@
+import { useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { dataPropTypes } from "../../../../data/dataPropTypes";
 import naming from "../../../../data/ru.json";
+import { ingredientsAction } from "../../../../services/actions/ingredients-action";
+import Loader from "../../../Loader/Loader";
 import styles from "./IngredientDetails.module.css";
 
 const IngredientDetails = ({ item }) => {
+  const dispatch = useDispatch();
+  const params = useParams();
+  const { data, dataLoading, dataErrors } = useSelector(
+    (state) => state.loadIngredients
+  );
+
+  const currentItem = useMemo(() => {
+    if (item) {
+      return item;
+    } else if (params.id && data && data.length > 0) {
+      return data.find((ingredient) => ingredient._id === params.id);
+    }
+    return null;
+  }, [item, params.id, data]);
+
+  useEffect(() => {
+    if (!currentItem && !dataLoading && !dataErrors && params.id) {
+      dispatch(ingredientsAction());
+    }
+  }, [currentItem, dataLoading, dataErrors, params.id, dispatch]);
+
+  if (!currentItem) {
+    return <Loader />;
+  }
+
   return (
     <>
       <img

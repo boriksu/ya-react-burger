@@ -44,10 +44,6 @@ const BurgerConstructor = () => {
     },
   });
 
-  // function removeIngredient(index) {
-  //   dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });
-  // }
-
   const removeIngredient = useCallback(
     (index) => {
       dispatch({ type: CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT, index: index });

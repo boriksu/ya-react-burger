@@ -10,7 +10,7 @@ import { dataPropTypes } from "../../../data/dataPropTypes";
 import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
 import styles from "./BurgerConstructorIngredient.module.css";
 
-function BurgerConstructorIngredient({ item, index, onRemove }) {
+const BurgerConstructorIngredient = ({ item, index, onRemove }) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
 
@@ -46,7 +46,7 @@ function BurgerConstructorIngredient({ item, index, onRemove }) {
       />
     </li>
   );
-}
+};
 
 BurgerConstructorIngredient.propTypes = {
   item: dataPropTypes.isRequired,
