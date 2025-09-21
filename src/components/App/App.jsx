@@ -30,6 +30,7 @@ import {
   ResetPassword,
 } from "../../pages";
 import AppHeader from "../AppHeader/AppHeader";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import styles from "./App.module.css";
 
 const App = () => {
@@ -53,7 +54,14 @@ const App = () => {
           <Route path={URL_REGISTER} element={<Register />} />
           <Route path={URL_RESET_PASSWORD} element={<ResetPassword />} />
           <Route path={URL_FORGOT_PASSWORD} element={<ForgotPassword />} />
-          <Route path={URL_PROFILE} element={<Profile />}>
+          <Route
+            path={URL_PROFILE}
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<ProfileEdit />} />
             <Route path={URL_PROFILE_ORDERS} element={<ProfileOrders />} />
             <Route path={URL_PROFILE_LOGOUT} element={<ProfileLogout />} />
