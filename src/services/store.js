@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 
+import { authReducer } from "../services/reducers/auth";
 import { burgerConstructorReducer } from "../services/reducers/burger-constructor";
 import { createOrderReducer } from "../services/reducers/create-order";
 import { ingredientWindowReducer } from "../services/reducers/ingredient-window";
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   ingredientWindow: ingredientWindowReducer,
   createOrder: createOrderReducer,
   tabInfo: tabInfoReducer,
+  auth: authReducer,
 });
 
 export default configureStore({

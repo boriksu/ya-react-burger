@@ -3,35 +3,32 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useCallback } from "react";
 import { useDrag } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { dataPropTypes } from "../../../data/dataPropTypes";
-import naming from "../../../data/ru.json";
+import { URL_INGREDIENTS } from "../../../data/routes";
 import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
-import Modal from "../../Modal/Modal";
 import styles from "./BurgerIngredientsItem.module.css";
-import IngredientDetails from "./IngredientDetails/IngredientDetails";
 
 const BurgerIngredientItem = ({ ingredient, count }) => {
-  const displayedIngredient = useSelector(
-    (state) => state.ingredientWindow.displayedIngredient
-  );
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  function showIngredientDetails() {
+  const showIngredientDetails = useCallback(() => {
+    navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
+      replace: true,
+      state: { location: location, item: ingredient },
+    });
     dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
-  }
+  }, [dispatch, navigate, location, ingredient]);
+
   const [, dragRef] = useDrag({
     type: ingredient.type,
     item: ingredient,
   });
-
-  function hideIngredientDetails(e) {
-    dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
-    e.stopPropagation();
-  }
 
   return (
     <li
@@ -55,14 +52,6 @@ const BurgerIngredientItem = ({ ingredient, count }) => {
       </div>
       {count > 0 && (
         <Counter count={count} size="default" extraClass={styles.count} />
-      )}
-      {displayedIngredient && (
-        <Modal
-          title={naming.IngredientDetails.title}
-          onClose={hideIngredientDetails}
-        >
-          <IngredientDetails item={displayedIngredient} />
-        </Modal>
       )}
     </li>
   );

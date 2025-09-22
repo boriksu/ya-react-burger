@@ -1,4 +1,3 @@
-import { v4 as uuid } from "uuid";
 import { CONSTRUCTOR_ACTIONS } from "../actions/index";
 
 const initialState = {
@@ -6,14 +5,14 @@ const initialState = {
   ingredients: [],
 };
 
-export function burgerConstructorReducer(state = initialState, action) {
+export const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case CONSTRUCTOR_ACTIONS.SELECT_BUN:
       return { ...state, bun: action.item };
     case CONSTRUCTOR_ACTIONS.ADD_INGREDIENT:
       return {
         ...state,
-        ingredients: [...state.ingredients, { ...action.item, id: uuid() }],
+        ingredients: [...state.ingredients, action.item],
       };
     case CONSTRUCTOR_ACTIONS.REMOVE_INGREDIENT:
       return {
@@ -38,4 +37,4 @@ export function burgerConstructorReducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};

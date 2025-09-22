@@ -29,5 +29,54 @@
     "proteins": "Белки, г",
     "fat": "Жиры, г",
     "carbohydrates": "Углеводы, г"
+  },
+  "ForgotPassword": {
+    "passwordRecovery": "Восстановление пароля",
+    "enterEmail": "Укажите e-mail",
+    "recover": "Восстановить",
+    "rememberPassword": "Вспомнили пароль?",
+    "login": "Войти"
+  },
+  "Login": {
+    "entry": "Вход",
+    "login": "Войти",
+    "newUser": "Вы — новый пользователь?",
+    "register": "Зарегистрироваться",
+    "fogetPassword": "Забыли пароль?",
+    "recoverPassword": "Восстановить пароль"
+  },
+  "Pade404": {
+    "error": "404 Страница не найдена"
+  },
+  "ProfileEdit": {
+    "name": "Имя",
+    "newPassword": "Новый пароль",
+    "cancel": "Отмена",
+    "save": "Сохранить"
+  },
+  "ProfileOrders": {
+    "history": "История заказов",
+    "emptyHistory": "История заказов пуста"
+  },
+  "Profile": {
+    "profile": "Профиль",
+    "history": "История заказов",
+    "exit": "Выход",
+    "changeProfileData": "В этом разделе вы можете изменить свои персональные данные"
+  },
+  "Register": {
+    "registry": "Регистрация",
+    "name": "Имя",
+    "register": "Зарегистрироваться",
+    "alreadyRedister": "Уже зарегистрированы?",
+    "login": "Войти"
+  },
+  "ResetPassword": {
+    "passwordRecovery": "Восстановление пароля",
+    "newPassword": "Введите новый пароль",
+    "code": "Введите код из письма",
+    "save": "Сохранить",
+    "rememberPassword": "Вспомнили пароль?",
+    "login": "Войти"
   }
 }

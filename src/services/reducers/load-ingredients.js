@@ -6,7 +6,7 @@ const initialState = {
   data: [],
 };
 
-export function loadIngredientsReducer(state = initialState, action) {
+export const loadIngredientsReducer = (state = initialState, action) => {
   switch (action.type) {
     case INGREDIENTS_ACTIONS.FETCH_REQUEST:
       return { ...state, dataLoading: true, dataErrors: false };
@@ -28,4 +28,4 @@ export function loadIngredientsReducer(state = initialState, action) {
     default:
       return state;
   }
-}
+};

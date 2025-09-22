@@ -3,15 +3,17 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
-import { useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { URL_LOGIN } from "../../../data/routes";
 import naming from "../../../data/ru.json";
+import { authGetUserAction } from "../../../services/actions/auth/auth";
 import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
 import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
-
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
@@ -36,18 +38,35 @@ const BurgerConstructorOrder = ({ totalPrice }) => {
 
   const dispatch = useDispatch();
 
-  function showOrderDetails() {
-    const orderIngredients = [...ingredients];
-    if (bun) {
-      orderIngredients.push(bun, bun);
-    }
-    dispatch(orderAction(orderIngredients));
-  }
+  const navigate = useNavigate();
+  const { authLogIn, authLoading } = useSelector((state) => state.auth);
 
-  function hideOrderDetails() {
+  useEffect(() => {
+    if (!authLogIn) {
+      dispatch(authGetUserAction());
+    }
+  }, [authLogIn, dispatch]);
+
+  const showOrderDetails = useCallback(() => {
+    if (authLoading) {
+      return;
+    }
+
+    if (!authLogIn) {
+      navigate(URL_LOGIN, { replace: true });
+    } else {
+      const orderIngredients = [...ingredients];
+      if (bun) {
+        orderIngredients.push(bun, bun);
+      }
+      dispatch(orderAction(orderIngredients));
+    }
+  }, [authLoading, authLogIn, navigate, ingredients, bun, dispatch]);
+
+  const hideOrderDetails = () => {
     dispatch({ type: ORDER_ACTIONS.RESET });
     dispatch({ type: CONSTRUCTOR_ACTIONS.CLEAN_ORDER });
-  }
+  };
 
   return (
     <div className={`${styles.totalPrice} mr-4 mt-10`}>

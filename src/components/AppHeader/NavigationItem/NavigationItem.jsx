@@ -1,18 +1,23 @@
 import PropTypes from "prop-types";
+import { NavLink } from "react-router-dom";
 import styles from "./NavigationItem.module.css";
 
-const NavigationItem = ({ isActive, icon: Icon, title, url }) => {
-  const iconCurrentStyle = isActive ? "primary" : "secondary";
-  const textCurrentStyle = isActive
-    ? "text_color_primary"
-    : "text_color_inactive";
+const NavigationItem = ({ icon: Icon, title, url }) => {
   return (
-    <a href={url} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
-      <Icon type={iconCurrentStyle} />
-      <span className={`text text_type_main-default ml-2 ${textCurrentStyle}`}>
-        {title}
-      </span>
-    </a>
+    <NavLink to={url} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
+      {({ isActive }) => (
+        <>
+          <Icon type={isActive ? "primary" : "secondary"} />
+          <span
+            className={`text text_type_main-default ml-2 ${
+              isActive ? "text_color_primary" : "text_color_inactive"
+            }`}
+          >
+            {title}
+          </span>
+        </>
+      )}
+    </NavLink>
   );
 };
 

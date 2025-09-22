@@ -1,4 +1,4 @@
-import { loadIngredients } from "../../data/getData";
+import { loadIngredients } from "../../data/api/loadIngredients";
 
 export const INGREDIENTS_ACTIONS = {
   FETCH_REQUEST: "FETCH_REQUEST",
@@ -12,7 +12,7 @@ export function ingredientsAction() {
     dispatch({ type: INGREDIENTS_ACTIONS.FETCH_REQUEST });
     loadIngredients()
       .then((data) => {
-        dispatch({ type: INGREDIENTS_ACTIONS.FETCH_SUCCESS, data: data });
+        dispatch({ type: INGREDIENTS_ACTIONS.FETCH_SUCCESS, data: data.data });
       })
       .catch((err) => {
         dispatch({ type: INGREDIENTS_ACTIONS.FETCH_FAILURE });

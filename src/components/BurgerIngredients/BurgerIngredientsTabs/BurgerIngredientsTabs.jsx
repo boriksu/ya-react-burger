@@ -10,10 +10,10 @@ const BurgerIngredientsTabs = ({ handleTabChange }) => {
   const activeTab = useSelector((state) => state.tabInfo.tab);
   const dispatch = useDispatch();
 
-  function handleTabClick(type) {
+  const handleTabClick = (type) => {
     dispatch({ type: TAB_ACTIONS.CHANGE_TAB, tab: type });
     handleTabChange(type);
-  }
+  };
 
   return (
     <div className={`${styles.tabsContainer} mb-2`}>

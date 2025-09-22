@@ -1,19 +1,12 @@
 .container {
-  margin: 0 auto;
-  width: 1280px;
-}
-
-.content {
-  margin-right: 20px;
-  margin-left: 20px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.loading {
+  justify-content: stretch;
+  flex-direction: column;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+}
+
+.main {
+  flex-grow: 1;
+  margin: 0 auto;
+  width: var(--width-outer);
 }
