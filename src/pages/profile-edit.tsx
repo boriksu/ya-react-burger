@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+// FIXME
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { authPatchUserAction } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
@@ -6,19 +13,19 @@ import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import {
   Button,
   EmailInput,
-  Input,
+  // Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
+import { getAuth } from "../services/selectors";
+
 const ProfileEdit = () => {
   const dispatch = useDispatch();
 
-  const { authLoading, authError, authSuccess, user } = useSelector(
-    (state) => state.auth
-  );
+  const { authLoading, authError, authSuccess, user } = useSelector(getAuth);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -36,28 +43,31 @@ const ProfileEdit = () => {
     }
   }, [user]);
 
-  const handleNameChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, name: e.target.value }));
-  }, []);
+  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
+  // }, []);
 
-  const handleEmailChange = useCallback((e) => {
+  const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
   }, []);
 
-  const handlePasswordChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, password: e.target.value }));
-  }, []);
+  const handlePasswordChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, password: e.target.value }));
+    },
+    []
+  );
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
-      dispatch(authPatchUserAction(formData));
+      dispatch(authPatchUserAction(formData) as any);
     },
     [dispatch, formData]
   );
 
   const handleReset = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setFormData({
         name: user?.name || "",
@@ -84,26 +94,39 @@ const ProfileEdit = () => {
     }
   }, [dispatch, authError, authSuccess]);
 
+  // const [nameDisabled, setNameDisabled] = useState<boolean>(true);
+  // const nameRef = useRef<HTMLInputElement>(null);
+
+  // const nameClick = useCallback(() => {
+  //   setNameDisabled(false);
+  //   setTimeout(() => {
+  //     nameRef.current?.focus();
+  //   }, 0);
+  // }, [setNameDisabled, nameRef]);
+
   return (
     <form
       className={styles.content}
       onSubmit={handleSubmit}
       onReset={handleReset}
     >
-      <Input
+      {/* <Input
         extraClass="mb-6"
         name="name"
         placeholder={naming.ProfileEdit.name}
         value={formData.name}
         onChange={handleNameChange}
         icon="EditIcon"
-      />
+        disabled={nameDisabled}
+        onIconClick={nameClick}
+        ref={nameRef}
+      /> */}
       <EmailInput
         extraClass="mb-6"
         name="email"
         value={formData.email}
         onChange={handleEmailChange}
-        icon="EditIcon"
+        isIcon
       />
       <PasswordInput
         extraClass="mb-6"
