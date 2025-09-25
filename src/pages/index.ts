@@ -1,5 +1,5 @@
 import ForgotPassword from "./forgot-password";
-import IngredientPage from "./ingredient.jsx";
+import IngredientPage from "./ingredient";
 import Login from "./login";
 import MainPage from "./main.jsx";
 import Page404 from "./page404";
