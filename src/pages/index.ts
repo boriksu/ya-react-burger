@@ -8,7 +8,7 @@ import ProfileEdit from "./profile-edit";
 import ProfileLogout from "./profile-logout";
 import ProfileOrders from "./profile-orders";
 import Register from "./register";
-import ResetPassword from "./reset-password.jsx";
+import ResetPassword from "./reset-password";
 
 export {
   ForgotPassword,

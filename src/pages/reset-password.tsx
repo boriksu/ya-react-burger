@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+// FIXME
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,11 +16,12 @@ import { URL_FORGOT_PASSWORD, URL_LOGIN, URL_ROOT } from "../data/routes";
 
 import {
   Button,
-  Input,
+  // Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
+import { getAuth } from "../services/selectors";
 import styles from "./page.module.css";
 
 const ResetPassword = () => {
@@ -27,21 +35,24 @@ const ResetPassword = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   const { authLoading, authError, authSuccess, authLogIn, forgotPassword } =
-    useSelector((state) => state.auth);
+    useSelector(getAuth);
 
-  const handlePasswordChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, password: e.target.value }));
-  }, []);
+  const handlePasswordChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, password: e.target.value }));
+    },
+    []
+  );
 
-  const handleTokenChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, token: e.target.value }));
-  }, []);
+  // const handleTokenChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  //   setFormData((prev) => ({ ...prev, token: e.target.value }));
+  // }, []);
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
-      dispatch(authResetPasswordAction(formData));
+      dispatch(authResetPasswordAction(formData) as any);
     },
     [dispatch, formData]
   );
@@ -84,13 +95,13 @@ const ResetPassword = () => {
           extraClass="mb-6"
         />
 
-        <Input
+        {/* <Input
           placeholder={naming.ResetPassword.code}
           name="token"
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
-        />
+        /> */}
 
         {authLoading ? (
           <Loader />
