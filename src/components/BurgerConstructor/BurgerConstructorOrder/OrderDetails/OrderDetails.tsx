@@ -1,9 +1,13 @@
-import PropTypes from "prop-types";
+import { FC } from "react";
 import naming from "../../../../data/ru.json";
 import check from "../../../../images/check.svg";
 import styles from "./OrderDetails.module.css";
 
-const OrderDetails = ({ orderNumber }) => {
+type TProps = {
+  orderNumber: number;
+};
+
+const OrderDetails: FC<TProps> = ({ orderNumber }) => {
   return (
     <>
       <p
@@ -27,10 +31,6 @@ const OrderDetails = ({ orderNumber }) => {
       </p>
     </>
   );
-};
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired,
 };
 
 export default OrderDetails;

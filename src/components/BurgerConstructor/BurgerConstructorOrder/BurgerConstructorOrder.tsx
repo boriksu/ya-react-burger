@@ -2,8 +2,7 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import { useCallback, useEffect, useMemo } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { URL_LOGIN } from "../../../data/routes";
@@ -14,15 +13,18 @@ import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
+import { getAuth, getConstructor, getOrder } from "../../../services/selectors";
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
 
-const BurgerConstructorOrder = ({ totalPrice }) => {
-  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
-  const { orderNumber, orderLoading, orderErrors } = useSelector(
-    (state) => state.createOrder
-  );
+type TProps = {
+  totalPrice: number;
+};
+
+const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
+  const { bun, ingredients } = useSelector(getConstructor);
+  const { orderNumber, orderLoading, orderErrors } = useSelector(getOrder);
 
   useEffect(() => {
     if (orderErrors) {
@@ -39,11 +41,11 @@ const BurgerConstructorOrder = ({ totalPrice }) => {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  const { authLogIn, authLoading } = useSelector((state) => state.auth);
+  const { authLogIn, authLoading } = useSelector(getAuth);
 
   useEffect(() => {
     if (!authLogIn) {
-      dispatch(authGetUserAction());
+      dispatch(authGetUserAction() as any);
     }
   }, [authLogIn, dispatch]);
 
@@ -59,7 +61,7 @@ const BurgerConstructorOrder = ({ totalPrice }) => {
       if (bun) {
         orderIngredients.push(bun, bun);
       }
-      dispatch(orderAction(orderIngredients));
+      dispatch(orderAction(orderIngredients) as any);
     }
   }, [authLoading, authLogIn, navigate, ingredients, bun, dispatch]);
 
@@ -89,10 +91,6 @@ const BurgerConstructorOrder = ({ totalPrice }) => {
       )}
     </div>
   );
-};
-
-BurgerConstructorOrder.propTypes = {
-  totalPrice: PropTypes.number.isRequired,
 };
 
 export default BurgerConstructorOrder;
