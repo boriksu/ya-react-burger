@@ -4,8 +4,7 @@ import { NavLink } from "react-router-dom";
 import styles from "./NavigationItem.module.css";
 
 type TProps = {
-  isActive: boolean;
-  icon: TIconProps; // FIXME  icon: ({ type }: TIconProps) => JSX.Element;
+  icon: FC<TIconProps>;
   title: string;
   url: string;
 };
@@ -15,7 +14,7 @@ const NavigationItem: FC<TProps> = ({ icon: Icon, title, url }) => {
     <NavLink to={url} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
       {({ isActive }) => (
         <>
-          {/* <Icon type={isActive ? "primary" : "secondary"} /> */}
+          <Icon type={isActive ? "primary" : "secondary"} />
           <span
             className={`text text_type_main-default ml-2 ${
               isActive ? "text_color_primary" : "text_color_inactive"
