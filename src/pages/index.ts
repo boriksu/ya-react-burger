@@ -1,4 +1,4 @@
-import ForgotPassword from "./forgot-password.jsx";
+import ForgotPassword from "./forgot-password";
 import IngredientPage from "./ingredient.jsx";
 import Login from "./login.jsx";
 import MainPage from "./main.jsx";

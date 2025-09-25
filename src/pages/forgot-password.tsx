@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { URL_LOGIN, URL_RESET_PASSWORD, URL_ROOT } from "../data/routes";
@@ -16,6 +22,8 @@ import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
+import { getAuth } from "../services/selectors";
+
 const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,25 +32,24 @@ const ForgotPassword = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction());
+    dispatch(authGetUserAction() as any);
   }, [dispatch]);
 
-  const handleEmailChange = useCallback((e) => {
+  const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   }, []);
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
-      dispatch(authForgotPasswordAction({ email }));
+      dispatch(authForgotPasswordAction({ email }) as any);
     },
     [dispatch, email]
   );
 
-  const { authLoading, authError, authSuccess, authLogIn } = useSelector(
-    (state) => state.auth
-  );
+  const { authLoading, authError, authSuccess, authLogIn } =
+    useSelector(getAuth);
 
   useEffect(() => {
     if (authLogIn) {
