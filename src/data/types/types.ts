@@ -17,3 +17,29 @@ export type TIngredientConstructor = TIngredient & {
   id: string;
   index: number;
 };
+
+export type TForgotPassword = {
+  email: string;
+};
+
+export type TLoginUser = {
+  email: string;
+  password: string;
+};
+
+export type TPatchUser = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type TRegisterUser = {
+  name: string;
+  email: string;
+  password: string;
+};
+
+export type TResetPassword = {
+  password: string;
+  token: string;
+};

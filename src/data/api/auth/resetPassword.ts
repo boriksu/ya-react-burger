@@ -1,6 +1,7 @@
+import { TResetPassword } from "../../types/types";
 import { API_RESET_PASSWORD, DOMAIN, request } from "../api-data";
 
-export const resetPassword = (form) => {
+export const resetPassword = (form: TResetPassword) => {
   return request(`${DOMAIN}${API_RESET_PASSWORD}`, {
     method: "POST",
     headers: {
