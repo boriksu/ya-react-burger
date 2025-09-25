@@ -2,15 +2,20 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import propTypes from "prop-types";
-import { useRef } from "react";
+import { FC, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { useDispatch } from "react-redux";
-import { dataPropTypes } from "../../../data/dataPropTypes";
+import { TIngredientConstructor } from "../../../data/types/types";
 import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
 import styles from "./BurgerConstructorIngredient.module.css";
 
-const BurgerConstructorIngredient = ({ item, index, onRemove }) => {
+type TProps = {
+  item: TIngredientConstructor;
+  index: number;
+  onRemove: (index: number) => void;
+};
+
+const BurgerConstructorIngredient: FC<TProps> = ({ item, index, onRemove }) => {
   const ref = useRef(null);
   const dispatch = useDispatch();
 
@@ -19,7 +24,7 @@ const BurgerConstructorIngredient = ({ item, index, onRemove }) => {
     item: { index },
   });
 
-  const [, drop] = useDrop({
+  const [, drop] = useDrop<TIngredientConstructor>({
     accept: "sort",
     drop(item) {
       if (index !== item.index) {
@@ -46,12 +51,6 @@ const BurgerConstructorIngredient = ({ item, index, onRemove }) => {
       />
     </li>
   );
-};
-
-BurgerConstructorIngredient.propTypes = {
-  item: dataPropTypes.isRequired,
-  index: propTypes.number,
-  onRemove: propTypes.func.isRequired,
 };
 
 export default BurgerConstructorIngredient;

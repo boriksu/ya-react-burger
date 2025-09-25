@@ -4,12 +4,13 @@ import {
   Logo,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FC } from "react";
 import { URL_ANY, URL_PROFILE, URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
 import styles from "./AppHeader.module.css";
 import NavigationItem from "./NavigationItem/NavigationItem";
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className={`${styles.header} pt-4 pb-4`}>
       <div className={styles.headerContainer}>

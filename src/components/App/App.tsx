@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
 
 import { useDispatch } from "react-redux";
 import { Route, Routes, useLocation } from "react-router-dom";
@@ -33,7 +33,7 @@ import AppHeader from "../AppHeader/AppHeader";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import styles from "./App.module.css";
 
-const App = () => {
+const App: FC = () => {
   const dispatch = useDispatch();
 
   const location = useLocation();
