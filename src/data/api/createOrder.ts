@@ -1,6 +1,7 @@
+import { TIngredientConstructor } from "../types/types";
 import { API_ORDER, DOMAIN, request } from "./api-data";
 
-export const createOrder = (ingredients) => {
+export const createOrder = (ingredients: Array<TIngredientConstructor>) => {
   return request(`${DOMAIN}${API_ORDER}`, {
     method: "POST",
     headers: {
