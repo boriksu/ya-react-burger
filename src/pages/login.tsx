@@ -3,7 +3,13 @@ import {
   EmailInput,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
@@ -22,6 +28,8 @@ import {
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import styles from "./page.module.css";
 
+import { getAuth } from "../services/selectors";
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,10 +42,10 @@ const Login = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction());
+    dispatch(authGetUserAction() as any);
   }, [dispatch]);
 
-  const handleInputChange = useCallback((e) => {
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -46,17 +54,15 @@ const Login = () => {
   }, []);
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
-      dispatch(authLoginAction(formData));
+      dispatch(authLoginAction(formData) as any);
     },
     [dispatch, formData]
   );
 
-  const { authLoading, authError, authLogIn } = useSelector(
-    (state) => state.auth
-  );
+  const { authLoading, authError, authLogIn } = useSelector(getAuth);
 
   useEffect(() => {
     if (authLogIn) {
