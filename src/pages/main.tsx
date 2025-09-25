@@ -6,15 +6,15 @@ import Loader from "../components/Loader/Loader";
 import { ingredientsAction } from "../services/actions/ingredients-action";
 import styles from "./main.module.css";
 
+import { getIngredients } from "../services/selectors";
+
 const Main = () => {
-  const { data, dataLoading, dataErrors } = useSelector(
-    (state) => state.loadIngredients
-  );
+  const { data, dataLoading, dataErrors } = useSelector(getIngredients);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(ingredientsAction());
+    dispatch(ingredientsAction() as any);
   }, [dispatch]);
 
   return (
