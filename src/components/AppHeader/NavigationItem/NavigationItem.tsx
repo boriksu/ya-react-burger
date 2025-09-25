@@ -1,13 +1,21 @@
-import PropTypes from "prop-types";
+import { TIconProps } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils";
+import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./NavigationItem.module.css";
 
-const NavigationItem = ({ icon: Icon, title, url }) => {
+type TProps = {
+  isActive: boolean;
+  icon: TIconProps; // FIXME  icon: ({ type }: TIconProps) => JSX.Element;
+  title: string;
+  url: string;
+};
+
+const NavigationItem: FC<TProps> = ({ icon: Icon, title, url }) => {
   return (
     <NavLink to={url} className={`${styles.link} pt-4 pr-5 pb-4 pl-5`}>
       {({ isActive }) => (
         <>
-          <Icon type={isActive ? "primary" : "secondary"} />
+          {/* <Icon type={isActive ? "primary" : "secondary"} /> */}
           <span
             className={`text text_type_main-default ml-2 ${
               isActive ? "text_color_primary" : "text_color_inactive"
@@ -20,12 +28,4 @@ const NavigationItem = ({ icon: Icon, title, url }) => {
     </NavLink>
   );
 };
-
-NavigationItem.propTypes = {
-  isActive: PropTypes.bool,
-  icon: PropTypes.elementType.isRequired,
-  title: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-};
-
 export default NavigationItem;
