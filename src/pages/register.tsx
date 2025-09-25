@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+// FIXME
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -12,11 +19,12 @@ import { URL_LOGIN, URL_ROOT } from "../data/routes";
 import {
   Button,
   EmailInput,
-  Input,
+  // Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
+import { getAuth } from "../services/selectors";
 import styles from "./page.module.css";
 
 const Register = () => {
@@ -31,36 +39,36 @@ const Register = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction());
+    dispatch(authGetUserAction() as any);
   }, [dispatch]);
 
-  const handleNameChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, name: e.target.value }));
-  }, []);
+  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
+  // }, []);
 
-  const handleEmailChange = useCallback((e) => {
+  const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
   }, []);
 
-  const handlePasswordChange = useCallback((e) => {
-    setFormData((prev) => ({ ...prev, password: e.target.value }));
-  }, []);
+  const handlePasswordChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setFormData((prev) => ({ ...prev, password: e.target.value }));
+    },
+    []
+  );
 
   const handleSubmit = useCallback(
-    (e) => {
+    (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
 
-      const action = authRegisterAction(formData);
-
-      dispatch(action);
+      dispatch(authRegisterAction(formData) as any);
     },
     [dispatch, formData]
   );
 
-  const { authLoading, authError, authSuccess, authLogIn } = useSelector(
-    (state) => state.auth
-  );
+  const { authLoading, authError, authSuccess, authLogIn } =
+    useSelector(getAuth);
 
   useEffect(() => {
     if (authLogIn) {
@@ -71,7 +79,7 @@ const Register = () => {
       setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       alert("Регистрация успешна! Выполняется вход...");
-      dispatch(authGetUserAction());
+      dispatch(authGetUserAction() as any);
     }
   }, [dispatch, wasSubmitted, authLogIn, authError, authSuccess, navigate]);
 
@@ -89,13 +97,13 @@ const Register = () => {
               {naming.Register.registry}
             </h1>
 
-            <Input
+            {/* <Input
               placeholder={naming.Register.name}
               extraClass="mb-6"
               name="name"
               value={formData.name}
               onChange={handleNameChange}
-            />
+            /> */}
 
             <EmailInput
               extraClass="mb-6"
