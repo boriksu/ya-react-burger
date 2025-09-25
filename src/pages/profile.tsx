@@ -4,7 +4,7 @@ import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
 const Profile = () => {
-  const navLinkClass = ({ isActive }) =>
+  const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `text text_type_main-medium ${
       isActive ? "text_color_primary" : "text_color_inactive"
     }`;
