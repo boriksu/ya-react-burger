@@ -6,20 +6,19 @@ import { authLogoutAction } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import Loader from "../components/Loader/Loader";
+import { getAuth } from "../services/selectors";
 import styles from "./page.module.css";
 
 const ProfileLogout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { authError, authSuccess, authLogIn } = useSelector(
-    (state) => state.auth
-  );
+  const { authError, authSuccess, authLogIn } = useSelector(getAuth);
   const [logoutStarted, setLogoutStarted] = useState(false);
 
   useEffect(() => {
     if (authLogIn && !logoutStarted) {
-      dispatch(authLogoutAction());
+      dispatch(authLogoutAction() as any);
       setLogoutStarted(true);
     }
   }, [authLogIn, logoutStarted, dispatch]);
