@@ -12,17 +12,17 @@ export const API_USER = "/api/auth/user";
 export const API_FORGOT_PASSWORD = "/api/password-reset";
 export const API_RESET_PASSWORD = "/api/password-reset/reset";
 
-export const request = (url, options) => {
+export const request = (url: string, options?: any) => {
   return fetch(url, options).then(checkResponse);
 };
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
   return res.json().then((data) => {
     return data;
   });
 };
 
-export const requestWithRefresh = (url, options) => {
+export const requestWithRefresh = (url: string, options: any) => {
   return fetch(url, options)
     .then(checkResponse)
     .catch((error) => {
