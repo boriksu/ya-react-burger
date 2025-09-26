@@ -1,36 +1,40 @@
-import { useCallback, useMemo, useRef } from "react";
+import { FC, useCallback, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
+import { TAB_ACTIONS } from "../../services/actions/index";
 import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
+import {
+  getConstructor,
+  getDisplayedIngredient,
+  getIngredients,
+  getTab,
+} from "../../services/selectors";
 import Modal from "../Modal/Modal";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "./BurgerIngredientsItem/BurgerIngredientsItem";
 import IngredientDetails from "./BurgerIngredientsItem/IngredientDetails/IngredientDetails";
 import BurgerIngredientsTabs from "./BurgerIngredientsTabs/BurgerIngredientsTabs";
 
-import { TAB_ACTIONS } from "../../services/actions/index";
-
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
+import { TIngredient } from "../../data/types/types";
 
-const BurgerIngredients = () => {
-  const { data } = useSelector((state) => state.loadIngredients);
-  const tab = useSelector((state) => state.tabInfo.tab);
-  const { bun, ingredients } = useSelector((state) => state.burgerConstructor);
-  const displayedIngredient = useSelector(
-    (state) => state.ingredientWindow.displayedIngredient
-  );
+const BurgerIngredients: FC = () => {
+  const { data } = useSelector(getIngredients);
+  const tab = useSelector(getTab);
+  const { bun, ingredients } = useSelector(getConstructor);
+  const displayedIngredient = useSelector(getDisplayedIngredient);
 
   const ingredientsCount = useMemo(() => {
-    const countMap = {};
+    const countMap: Record<string, number> = {};
 
     if (bun) {
       countMap[bun._id] = 2;
     }
 
-    ingredients.forEach((ingredient) => {
+    ingredients.forEach((ingredient: TIngredient) => {
       countMap[ingredient._id] = (countMap[ingredient._id] || 0) + 1;
     });
 
@@ -40,20 +44,25 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const sectionRefs = useRef({
+  const sectionRefs = useRef<Record<string, HTMLElement | null>>({
     [INGREDIENT_TYPES.BUN]: null,
     [INGREDIENT_TYPES.SAUCE]: null,
     [INGREDIENT_TYPES.MAIN]: null,
   });
 
   const typeIngredients = useMemo(() => {
-    return Object.values(INGREDIENT_TYPES).reduce((acc, type) => {
-      acc[type] = data.filter((ingredient) => ingredient.type === type);
-      return acc;
-    }, {});
+    return Object.values(INGREDIENT_TYPES).reduce(
+      (acc: Record<string, TIngredient[]>, type) => {
+        acc[type] = data.filter(
+          (ingredient: TIngredient) => ingredient.type === type
+        );
+        return acc;
+      },
+      {}
+    );
   }, [data]);
 
-  const handleTabChange = (type) => {
+  const handleTabChange = (type: string) => {
     const ref = sectionRefs.current[type];
     if (ref) {
       ref.scrollIntoView({
@@ -64,7 +73,7 @@ const BurgerIngredients = () => {
   };
 
   const handleScroll = useCallback(
-    (e) => {
+    (e: React.UIEvent<HTMLDivElement>) => {
       const scrollTop = e.currentTarget.scrollTop;
       let closestTab = tab;
       let minDistance = Infinity;
@@ -87,10 +96,12 @@ const BurgerIngredients = () => {
   );
 
   const hideIngredientDetails = useCallback(
-    (e) => {
+    (e?: KeyboardEvent) => {
       navigate(URL_ROOT, { replace: true });
       dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
-      e.stopPropagation();
+      if (e) {
+        e.stopPropagation();
+      }
     },
     [dispatch, navigate]
   );

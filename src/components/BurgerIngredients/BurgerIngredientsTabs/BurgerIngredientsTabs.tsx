@@ -1,16 +1,21 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { INGREDIENT_TYPES } from "../../../data/ingredientType";
 import naming from "../../../data/ru.json";
 import { TAB_ACTIONS } from "../../../services/actions/index";
 import styles from "./BurgerIngredientsTabs.module.css";
+import { getTab } from "../../../services/selectors";
+import { FC } from "react";
 
-const BurgerIngredientsTabs = ({ handleTabChange }) => {
-  const activeTab = useSelector((state) => state.tabInfo.tab);
+type TProps = {
+  handleTabChange: (type: string) => void;
+};
+
+const BurgerIngredientsTabs: FC<TProps> = ({ handleTabChange }) => {
+  const activeTab = useSelector(getTab);
   const dispatch = useDispatch();
 
-  const handleTabClick = (type) => {
+  const handleTabClick = (type: string) => {
     dispatch({ type: TAB_ACTIONS.CHANGE_TAB, tab: type });
     handleTabChange(type);
   };
@@ -29,10 +34,6 @@ const BurgerIngredientsTabs = ({ handleTabChange }) => {
       ))}
     </div>
   );
-};
-
-BurgerIngredientsTabs.propTypes = {
-  handleTabChange: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredientsTabs;
