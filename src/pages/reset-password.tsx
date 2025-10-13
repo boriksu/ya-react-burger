@@ -1,4 +1,3 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
@@ -16,7 +15,7 @@ import { URL_FORGOT_PASSWORD, URL_LOGIN, URL_ROOT } from "../data/routes";
 
 import {
   Button,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
@@ -44,9 +43,9 @@ const ResetPassword = () => {
     []
   );
 
-  // const handleTokenChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, token: e.target.value }));
-  // }, []);
+  const handleTokenChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, token: e.target.value }));
+  }, []);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -95,13 +94,13 @@ const ResetPassword = () => {
           extraClass="mb-6"
         />
 
-        {/* <Input
+        <Input
           placeholder={naming.ResetPassword.code}
           name="token"
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
-        /> */}
+        />
 
         {authLoading ? (
           <Loader />

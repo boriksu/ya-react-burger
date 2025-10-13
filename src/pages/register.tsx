@@ -1,4 +1,3 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
@@ -19,7 +18,7 @@ import { URL_LOGIN, URL_ROOT } from "../data/routes";
 import {
   Button,
   EmailInput,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
@@ -42,9 +41,9 @@ const Register = () => {
     dispatch(authGetUserAction() as any);
   }, [dispatch]);
 
-  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
-  // }, []);
+  const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, name: e.target.value }));
+  }, []);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
@@ -97,13 +96,13 @@ const Register = () => {
               {naming.Register.registry}
             </h1>
 
-            {/* <Input
+            <Input
               placeholder={naming.Register.name}
               extraClass="mb-6"
               name="name"
               value={formData.name}
               onChange={handleNameChange}
-            /> */}
+            />
 
             <EmailInput
               extraClass="mb-6"

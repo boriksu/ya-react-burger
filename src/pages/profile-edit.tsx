@@ -1,4 +1,3 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
@@ -13,7 +12,7 @@ import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import {
   Button,
   EmailInput,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
@@ -43,9 +42,9 @@ const ProfileEdit = () => {
     }
   }, [user]);
 
-  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
-  // }, []);
+  const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, name: e.target.value }));
+  }, []);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
@@ -94,33 +93,20 @@ const ProfileEdit = () => {
     }
   }, [dispatch, authError, authSuccess]);
 
-  // const [nameDisabled, setNameDisabled] = useState<boolean>(true);
-  // const nameRef = useRef<HTMLInputElement>(null);
-
-  // const nameClick = useCallback(() => {
-  //   setNameDisabled(false);
-  //   setTimeout(() => {
-  //     nameRef.current?.focus();
-  //   }, 0);
-  // }, [setNameDisabled, nameRef]);
-
   return (
     <form
       className={styles.content}
       onSubmit={handleSubmit}
       onReset={handleReset}
     >
-      {/* <Input
+      <Input
         extraClass="mb-6"
         name="name"
         placeholder={naming.ProfileEdit.name}
         value={formData.name}
         onChange={handleNameChange}
         icon="EditIcon"
-        disabled={nameDisabled}
-        onIconClick={nameClick}
-        ref={nameRef}
-      /> */}
+      />
       <EmailInput
         extraClass="mb-6"
         name="email"
