@@ -1,4 +1,5 @@
-import { TOrder } from "../../data/types/types";
+import { ORDERS_ALL_ACTIONS } from "../../services/actions";
+import { TOrder } from "./types";
 
 type TOrdersList = {
   orders: Array<TOrder>;
@@ -6,17 +7,6 @@ type TOrdersList = {
   totalToday: number;
 };
 
-export enum ORDERS_ALL_ACTIONS {
-  START = "ORDERS_ALL_START",
-  OPEN = "ORDERS_ALL_OPEN",
-  END = "ORDERS_ALL_END",
-  SUCCESS = "ORDERS_ALL_SUCCESS",
-  ERROR = "ORDERS_ALL_ERROR",
-  CLOSED = "ORDERS_ALL_CLOSED",
-  MESSAGE = "ORDERS_ALL_MESSAGE",
-}
-
-// Action interfaces
 export interface IOrdersAllStartAction {
   readonly type: typeof ORDERS_ALL_ACTIONS.START;
   readonly url: string;

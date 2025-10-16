@@ -1,6 +1,7 @@
-import { TOrdersAllActions } from "../../data/types/order-all";
 import { TOrder } from "../../data/types/types";
-import { ORDERS_ALL_ACTIONS } from "../actions";
+
+import { TOrdersUserActions } from "../../data/types/orders-user";
+import { ORDERS_USER_ACTIONS } from "../actions";
 
 type TOrdersList = {
   orders: Array<TOrder>;
@@ -8,35 +9,31 @@ type TOrdersList = {
   totalToday: number;
 };
 
-type TOrdersAllState = {
+type TOrdersUserState = {
   connected: boolean;
   message: TOrdersList | null;
   error: string | null;
 };
 
-const initialState: TOrdersAllState = {
+const initialState: TOrdersUserState = {
   connected: false,
   message: null,
   error: null,
 };
 
-export function ordersAllReducer(
+export function ordersUserReducer(
   state = initialState,
-  action: TOrdersAllActions
-): TOrdersAllState {
+  action: TOrdersUserActions
+): TOrdersUserState {
   switch (action.type) {
-    case ORDERS_ALL_ACTIONS.SUCCESS:
+    case ORDERS_USER_ACTIONS.SUCCESS:
       return { ...state, error: null, connected: true };
-
-    case ORDERS_ALL_ACTIONS.ERROR:
+    case ORDERS_USER_ACTIONS.ERROR:
       return { ...state, error: action.error, connected: false };
-
-    case ORDERS_ALL_ACTIONS.CLOSED:
+    case ORDERS_USER_ACTIONS.CLOSED:
       return { ...state, error: null, connected: false };
-
-    case ORDERS_ALL_ACTIONS.MESSAGE:
+    case ORDERS_USER_ACTIONS.MESSAGE:
       return { ...state, error: null, message: action.message };
-
     default:
       return state;
   }
