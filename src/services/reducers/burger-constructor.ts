@@ -1,11 +1,24 @@
-import { CONSTRUCTOR_ACTIONS } from "../actions/index";
+import { TIngredient, TIngredientConstructor } from "../../data/types/types";
+import {
+  CONSTRUCTOR_ACTIONS,
+  TBurgerConstructorActions,
+} from "../actions/index";
 
-const initialState = {
+export type TBurgerConstructorState = {
+  bun: TIngredient | null;
+  ingredients: Array<TIngredientConstructor>;
+  // sum: number;
+};
+
+const initialState: TBurgerConstructorState = {
   bun: null,
   ingredients: [],
 };
 
-export const burgerConstructorReducer = (state = initialState, action) => {
+export const burgerConstructorReducer = (
+  state = initialState,
+  action: TBurgerConstructorActions
+): TBurgerConstructorState => {
   switch (action.type) {
     case CONSTRUCTOR_ACTIONS.SELECT_BUN:
       return { ...state, bun: action.item };

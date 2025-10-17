@@ -9,7 +9,10 @@ import {
   TLoadIngredientsActions,
 } from "../../services/actions/ingredients-action";
 
-import { TTabInfoActions } from "../../services/actions/index";
+import {
+  TBurgerConstructorActions,
+  TTabInfoActions,
+} from "../../services/actions/index";
 
 import { TCreateOrderActions } from "../../services/actions/order-action";
 
