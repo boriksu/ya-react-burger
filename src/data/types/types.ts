@@ -1,3 +1,18 @@
+import { Action, ActionCreator } from "redux";
+import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import store from "../../services/store";
+import { TOrdersAllActions, TWebSocketOrdersAllActions } from "./order-all";
+import { TOrdersUserActions, TwsOrdersUserActions } from "./orders-user";
+
+import {
+  TIngredientWindowActions,
+  TLoadIngredientsActions,
+} from "../../services/actions/ingredients-action";
+
+import { TTabInfoActions } from "../../services/actions/index";
+
+import { TCreateOrderActions } from "../../services/actions/order-action";
+
 export type TIngredient = {
   _id: string;
   name: string;
@@ -43,3 +58,36 @@ export type TResetPassword = {
   password: string;
   token: string;
 };
+
+export type TOrder = {
+  ingredients: Array<string>;
+  _id: string;
+  status: string;
+  name: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type TDispatch = typeof store.dispatch;
+
+export type TApplicationActions =
+  | TAuthActions
+  | TBurgerConstructorActions
+  | TCreateOrderActions
+  | TIngredientWindowActions
+  | TLoadIngredientsActions
+  | TTabInfoActions
+  | TOrdersAllActions
+  | TOrdersUserActions
+  | TGetOrderActions;
+
+export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, RootState, Action, TApplicationActions>
+>;
+
+export type wsActionsTypes = TWebSocketOrdersAllActions | TwsOrdersUserActions;
