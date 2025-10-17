@@ -1,12 +1,25 @@
-import { INGREDIENTS_ACTIONS } from "../actions/ingredients-action";
+import { TIngredient } from "../../data/types/types";
+import {
+  INGREDIENTS_ACTIONS,
+  TLoadIngredientsActions,
+} from "../actions/ingredients-action";
 
-const initialState = {
+type TLoadIngredientsState = {
+  dataLoading: boolean;
+  dataErrors: boolean;
+  data: Array<TIngredient>;
+};
+
+const initialState: TLoadIngredientsState = {
   dataLoading: false,
   dataErrors: false,
   data: [],
 };
 
-export const loadIngredientsReducer = (state = initialState, action) => {
+export const loadIngredientsReducer = (
+  state = initialState,
+  action: TLoadIngredientsActions
+) => {
   switch (action.type) {
     case INGREDIENTS_ACTIONS.FETCH_REQUEST:
       return { ...state, dataLoading: true, dataErrors: false };
