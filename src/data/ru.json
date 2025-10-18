@@ -47,6 +47,9 @@
     "fat": "Жиры, г",
     "carbohydrates": "Углеводы, г"
   },
+  "FeedPage": {
+    "feed": "Лента заказов"
+  },
   "ForgotPassword": {
     "passwordRecovery": "Восстановление пароля",
     "enterEmail": "Укажите e-mail",
@@ -73,7 +76,8 @@
   },
   "ProfileOrders": {
     "history": "История заказов",
-    "emptyHistory": "История заказов пуста"
+    "emptyHistory": "История заказов пуста",
+    "loadingHistory": "Загрузка истории заказов..."
   },
   "Profile": {
     "profile": "Профиль",

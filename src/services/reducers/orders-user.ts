@@ -10,13 +10,13 @@ type TOrdersList = {
 };
 
 type TOrdersUserState = {
-  connected: boolean;
+  isLoadedData: boolean;
   message: TOrdersList | null;
   error: string | null;
 };
 
 const initialState: TOrdersUserState = {
-  connected: false,
+  isLoadedData: false,
   message: null,
   error: null,
 };
@@ -27,11 +27,11 @@ export function ordersUserReducer(
 ): TOrdersUserState {
   switch (action.type) {
     case ORDERS_USER_ACTIONS.SUCCESS:
-      return { ...state, error: null, connected: true };
+      return { ...state, error: null, isLoadedData: true };
     case ORDERS_USER_ACTIONS.ERROR:
-      return { ...state, error: action.error, connected: false };
+      return { ...state, error: action.error, isLoadedData: false };
     case ORDERS_USER_ACTIONS.CLOSED:
-      return { ...state, error: null, connected: false };
+      return { ...state, error: null, isLoadedData: false };
     case ORDERS_USER_ACTIONS.MESSAGE:
       return { ...state, error: null, message: action.message };
     default:

@@ -7,9 +7,11 @@ import {
 } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { URL_LOGIN, URL_RESET_PASSWORD, URL_ROOT } from "../data/routes";
-import { authForgotPasswordAction } from "../services/actions/auth/auth";
-// import { authGetUserAction} from "../services/actions/auth/auth";
-// import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import {
+  authForgotPasswordAction,
+  authGetUserAction,
+} from "../services/actions/auth/auth";
+import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
 
 import {
@@ -29,9 +31,9 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(authGetUserAction() as any);
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(authGetUserAction());
+  }, [dispatch]);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -52,10 +54,10 @@ const ForgotPassword = () => {
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-      // } else if (wasSubmitted && authError) {
-      //   // alert(`${naming.ForgotPassword.passwordRecovery} ${authError}`);
-      //   dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      //   setWasSubmitted(false);
+    } else if (wasSubmitted && authError) {
+      alert(`${naming.ForgotPassword.passwordRecovery} ${authError}`);
+      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       navigate(URL_RESET_PASSWORD, { replace: true });
     }
@@ -66,39 +68,40 @@ const ForgotPassword = () => {
   return (
     <main className={styles.container}>
       <form className={styles.content} onSubmit={handleSubmit}>
-        <h1 className="text text_type_main-medium mb-6">
-          {naming.ForgotPassword.passwordRecovery}
-        </h1>
-        <EmailInput
-          extraClass="mb-6"
-          placeholder={naming.ForgotPassword.enterEmail}
-          name="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-        {!!authError && wasSubmitted && (
-          <p className={`mb-2 error-text text text_type_main-default`}>
-            {authError}
-          </p>
-        )}
-        {authLoading ? (
+        {authLoading || authLogIn ? (
           <Loader />
         ) : (
-          <Button
-            type="primary"
-            extraClass="mb-20"
-            htmlType="submit"
-            disabled={isSubmitDisabled}
-          >
-            {naming.ForgotPassword.recover}
-          </Button>
+          <>
+            <h1 className="text text_type_main-medium mb-6">
+              {naming.ForgotPassword.passwordRecovery}
+            </h1>
+            <EmailInput
+              extraClass="mb-6"
+              placeholder={naming.ForgotPassword.enterEmail}
+              name="email"
+              value={email}
+              onChange={handleEmailChange}
+            />
+            {authLoading ? (
+              <Loader />
+            ) : (
+              <Button
+                type="primary"
+                extraClass="mb-20"
+                htmlType="submit"
+                disabled={isSubmitDisabled}
+              >
+                {naming.ForgotPassword.recover}
+              </Button>
+            )}
+            <p className="text text_type_main-default text_color_inactive">
+              {naming.ForgotPassword.rememberPassword}{" "}
+              <Link className={styles.link} to={URL_LOGIN}>
+                {naming.ForgotPassword.login}
+              </Link>
+            </p>
+          </>
         )}
-        <p className="text text_type_main-default text_color_inactive">
-          {naming.ForgotPassword.rememberPassword}{" "}
-          <Link className={styles.link} to={URL_LOGIN}>
-            {naming.ForgotPassword.login}
-          </Link>
-        </p>
       </form>
     </main>
   );

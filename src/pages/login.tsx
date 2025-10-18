@@ -20,7 +20,10 @@ import {
   URL_ROOT,
 } from "../data/routes";
 import naming from "../data/ru.json";
-import { authLoginAction } from "../services/actions/auth/auth";
+import {
+  authGetUserAction,
+  authLoginAction,
+} from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
 import styles from "./page.module.css";
@@ -38,9 +41,9 @@ const Login = () => {
   });
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
-  // useEffect(() => {
-  //   dispatch(authGetUserAction() as any);
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(authGetUserAction() as any);
+  }, [dispatch]);
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -69,7 +72,7 @@ const Login = () => {
       }
       navigate(from.pathname, { replace: true });
     } else if (wasSubmitted && authError) {
-      // alert(`[Вход] ${authError}`);
+      alert(`${naming.Login.entry} ${authError}`);
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
     }

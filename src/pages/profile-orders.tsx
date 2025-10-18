@@ -6,7 +6,6 @@ import { ORDERS_USER_ACTIONS } from "../services/actions";
 import { useDispatch, useSelector } from "../services/hook";
 import { getOrdersUser } from "../services/selectors";
 
-import Loader from "../components/Loader/Loader";
 import OrdersList from "../components/OrderList/OrderList";
 import { TOrder } from "../data/types/types";
 import styles from "./profile-order.module.css";
@@ -19,9 +18,8 @@ type TOrdersList = {
 
 const ProfileOrders = () => {
   const dispatch = useDispatch();
-  const { connected, error, message } = useSelector(getOrdersUser);
+  const { isLoadedData, message } = useSelector(getOrdersUser);
 
-  // Сортировка заказов в обратном порядке (новые сверху)
   const messageSorted: TOrdersList | null = useMemo(() => {
     if (!message) {
       return null;
@@ -31,14 +29,12 @@ const ProfileOrders = () => {
   }, [message]);
 
   useEffect(() => {
-    // Запуск WebSocket соединения для заказов пользователя
     dispatch({
       type: ORDERS_USER_ACTIONS.START,
       url: `${WSS_URL}/orders`,
       addToken: true,
     });
 
-    // Очистка при размонтировании
     return () => {
       dispatch({ type: ORDERS_USER_ACTIONS.END });
     };
@@ -50,14 +46,15 @@ const ProfileOrders = () => {
         {naming.ProfileOrders.history}
       </h1>
 
-      {!connected && <Loader />}
-      {!!error && (
-        <p className={`mb-2 error-text text text_type_main-default`}>{error}</p>
+      {!isLoadedData && (
+        <p className="text text_type_main-default text_color_inactive">
+          {naming.ProfileOrders.loadingHistory}
+        </p>
       )}
 
-      {connected && !!messageSorted && messageSorted.orders.length > 0 ? (
+      {isLoadedData && !!messageSorted && messageSorted.orders.length > 0 ? (
         <OrdersList orders={messageSorted.orders} />
-      ) : connected && messageSorted?.orders.length === 0 ? (
+      ) : isLoadedData && messageSorted?.orders.length === 0 ? (
         <p className="text text_type_main-default text_color_inactive">
           {naming.ProfileOrders.emptyHistory}
         </p>

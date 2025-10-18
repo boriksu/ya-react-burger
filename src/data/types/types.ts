@@ -3,7 +3,7 @@ import { ThunkAction, ThunkDispatch } from "redux-thunk";
 import { TGetOrderActions } from "../../services/actions/get-order";
 import store from "../../services/store";
 import { TOrdersAllActions, TWebSocketOrdersAllActions } from "./order-all";
-import { TOrdersUserActions, TwsOrdersUserActions } from "./orders-user";
+import { TOrdersUserActions, TWebSocketOrdersUserActions } from "./orders-user";
 
 import { TAuthActions } from "../../services/actions/auth/auth-helper";
 import {
@@ -85,7 +85,7 @@ export type RootState = ReturnType<typeof store.getState>;
 
 export type TDispatch = typeof store.dispatch;
 
-export type TApplicationActions =
+export type TAllActions =
   | TAuthActions
   | TBurgerConstructorActions
   | TCreateOrderActions
@@ -96,10 +96,12 @@ export type TApplicationActions =
   | TOrdersUserActions
   | TGetOrderActions;
 
-export type AppDispatch = ThunkDispatch<RootState, never, TApplicationActions>;
+export type AppDispatch = ThunkDispatch<RootState, never, TAllActions>;
 
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, RootState, Action, TApplicationActions>
+  ThunkAction<ReturnType, RootState, Action, TAllActions>
 >;
 
-export type wsActionsTypes = TWebSocketOrdersAllActions | TwsOrdersUserActions;
+export type webSocketActionsTypes =
+  | TWebSocketOrdersAllActions
+  | TWebSocketOrdersUserActions;

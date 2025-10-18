@@ -4,7 +4,7 @@ import { getCookie } from "../data/api/useCookie";
 import type {
   AppDispatch,
   RootState,
-  wsActionsTypes,
+  webSocketActionsTypes,
 } from "../data/types/types";
 
 interface WebSocketState {
@@ -32,7 +32,9 @@ const getEventMessage = (e: Event) => {
   )}`;
 };
 
-export const socketMiddleware = (wsActions: wsActionsTypes): Middleware => {
+export const socketMiddleware = (
+  wsActions: webSocketActionsTypes
+): Middleware => {
   return (store: MiddlewareAPI<AppDispatch, RootState>) => {
     const state: WebSocketState = {
       socket: null,

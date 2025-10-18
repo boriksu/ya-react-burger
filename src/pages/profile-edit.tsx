@@ -7,8 +7,8 @@ import {
   useState,
 } from "react";
 import { authPatchUserAction } from "../services/actions/auth/auth";
+import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
-// import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import {
   Button,
@@ -26,7 +26,7 @@ import { getAuth } from "../services/selectors";
 const ProfileEdit = () => {
   const dispatch = useDispatch();
 
-  const { authLoading, authSuccess, user } = useSelector(getAuth);
+  const { authLoading, authSuccess, authError, user } = useSelector(getAuth);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -38,7 +38,6 @@ const ProfileEdit = () => {
   const [nameDisabled, setNameDisabled] = useState(true);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  // Загрузка данных пользователя при монтировании
   useEffect(() => {
     dispatch(authGetUserAction() as any);
   }, [dispatch]);
@@ -110,15 +109,15 @@ const ProfileEdit = () => {
       formData.email !== user.email ||
       formData.password.length > 0);
 
-  // useEffect(() => {
-  //   if (authError) {
-  //     dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-  //   }
+  useEffect(() => {
+    if (authError) {
+      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+    }
 
-  //   if (authSuccess) {
-  //     setFormData((prev) => ({ ...prev, password: "" }));
-  //   }
-  // }, [dispatch, authError, authSuccess]);
+    if (authSuccess) {
+      setFormData((prev) => ({ ...prev, password: "" }));
+    }
+  }, [dispatch, authError, authSuccess]);
 
   return (
     <form

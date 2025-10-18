@@ -47,7 +47,7 @@ export type TOrdersUserActions =
   | IOrdersUserClosedAction
   | IOrdersUserMessageAction;
 
-export type TwsOrdersUserActions = {
+export type TWebSocketOrdersUserActions = {
   onStart: typeof ORDERS_USER_ACTIONS.START;
   onOpen: typeof ORDERS_USER_ACTIONS.OPEN;
   onSuccess: typeof ORDERS_USER_ACTIONS.SUCCESS;
@@ -57,7 +57,7 @@ export type TwsOrdersUserActions = {
   onMessage: typeof ORDERS_USER_ACTIONS.MESSAGE;
 };
 
-export const wsOrdersUserActions: TwsOrdersUserActions = {
+export const wsOrdersUserActions: TWebSocketOrdersUserActions = {
   onStart: ORDERS_USER_ACTIONS.START,
   onOpen: ORDERS_USER_ACTIONS.OPEN,
   onSuccess: ORDERS_USER_ACTIONS.SUCCESS,

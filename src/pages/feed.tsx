@@ -7,11 +7,12 @@ import { getOrdersAll } from "../services/selectors";
 import Loader from "../components/Loader/Loader";
 import OrdersList from "../components/OrderList/OrderList";
 import OrdersStatus from "../components/OrdersStatus/OrdersStatus";
+import naming from "../data/ru.json";
 import styles from "./feed.module.css";
 
 const FeedPage = () => {
   const dispatch = useDispatch();
-  const { connected, error, message } = useSelector(getOrdersAll);
+  const { isLoadedData, error, message } = useSelector(getOrdersAll);
 
   useEffect(() => {
     const websocketUrl = `${WSS_URL}/orders/all`;
@@ -22,8 +23,8 @@ const FeedPage = () => {
     };
   }, [dispatch]);
 
-  const isLoading = !connected && !error;
-  const hasData = connected && message;
+  const isLoading = !isLoadedData && !error;
+  const hasData = isLoadedData && message;
 
   return (
     <div className="feed">
@@ -36,7 +37,9 @@ const FeedPage = () => {
       {hasData && (
         <main className={styles.content}>
           <section className={styles.orders_section}>
-            <h1 className="text text_type_main-large mt-6">Лента заказов</h1>
+            <h1 className="text text_type_main-large mt-6">
+              {naming.FeedPage.feed}
+            </h1>
             <OrdersList orders={message.orders} />
           </section>
 

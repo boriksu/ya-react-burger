@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "../services/hook";
 
 import { authResetPasswordAction } from "../services/actions/auth/auth";
-// import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import { URL_FORGOT_PASSWORD, URL_LOGIN, URL_ROOT } from "../data/routes";
 
@@ -61,9 +61,9 @@ const ResetPassword = () => {
       navigate(URL_ROOT, { replace: true });
     } else if (!forgotPassword) {
       navigate(URL_FORGOT_PASSWORD, { replace: true });
-      // } else if (wasSubmitted && authError) {
-      //   dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      //   setWasSubmitted(false);
+    } else if (wasSubmitted && authError) {
+      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       navigate(URL_LOGIN, { replace: true });
     }
