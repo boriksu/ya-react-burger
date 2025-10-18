@@ -120,51 +120,53 @@ const ProfileEdit = () => {
   }, [dispatch, authError, authSuccess]);
 
   return (
-    <form
-      className={styles.content}
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-    >
-      <Input
-        extraClass="mb-6"
-        name="name"
-        placeholder={naming.ProfileEdit.name}
-        value={formData.name}
-        onChange={handleNameChange}
-        icon="EditIcon"
-        disabled={nameDisabled}
-        onIconClick={nameClick}
-        ref={nameRef}
-      />
-      <EmailInput
-        extraClass="mb-6"
-        name="email"
-        value={formData.email}
-        onChange={handleEmailChange}
-        isIcon
-      />
-      <PasswordInput
-        extraClass="mb-6"
-        name="password"
-        value={formData.password}
-        onChange={handlePasswordChange}
-        icon="EditIcon"
-        placeholder={naming.ProfileEdit.newPassword}
-      />
+    <div className={styles.containerRight}>
+      <form
+        className={styles.content}
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      >
+        <Input
+          extraClass="mb-6"
+          name="name"
+          placeholder={naming.ProfileEdit.name}
+          value={formData.name}
+          onChange={handleNameChange}
+          icon="EditIcon"
+          disabled={nameDisabled}
+          onIconClick={nameClick}
+          ref={nameRef}
+        />
+        <EmailInput
+          extraClass="mb-6"
+          name="email"
+          value={formData.email}
+          onChange={handleEmailChange}
+          isIcon
+        />
+        <PasswordInput
+          extraClass="mb-6"
+          name="password"
+          value={formData.password}
+          onChange={handlePasswordChange}
+          icon="EditIcon"
+          placeholder={naming.ProfileEdit.newPassword}
+        />
 
-      {authLoading ? (
-        <Loader />
-      ) : hasChanges ? (
-        <div>
-          <Button type="primary" htmlType="reset">
-            {naming.ProfileEdit.cancel}
-          </Button>
-          <Button type="primary" extraClass="ml-5" htmlType="submit">
-            {naming.ProfileEdit.save}
-          </Button>
-        </div>
-      ) : null}
-    </form>
+        {authLoading ? (
+          <Loader />
+        ) : hasChanges ? (
+          <div>
+            <Button type="primary" htmlType="reset">
+              {naming.ProfileEdit.cancel}
+            </Button>
+            <Button type="primary" extraClass="ml-5" htmlType="submit">
+              {naming.ProfileEdit.save}
+            </Button>
+          </div>
+        ) : null}
+      </form>
+    </div>
   );
 };
 

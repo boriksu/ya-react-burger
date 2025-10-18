@@ -1,8 +1,8 @@
 import { matchPath, NavLink, Outlet, useLocation } from "react-router-dom";
 import {
+  URL_PROFILE,
   URL_PROFILE_LOGOUT,
   URL_PROFILE_ORDERS,
-  URL_PROFILE,
 } from "../data/routes";
 import naming from "../data/ru.json";
 import styles from "./page.module.css";

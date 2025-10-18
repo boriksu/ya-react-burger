@@ -5,7 +5,8 @@ import { authLogoutAction } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
 
-import Loader from "../components/Loader/Loader";
+import naming from "../data/ru.json";
+
 import { getAuth } from "../services/selectors";
 import styles from "./page.module.css";
 
@@ -34,7 +35,15 @@ const ProfileLogout = () => {
     }
   }, [dispatch, logoutStarted, authError, authSuccess, navigate]);
 
-  return <div className={styles.content}>{logoutStarted && <Loader />}</div>;
+  return (
+    <div className={styles.content}>
+      {logoutStarted && (
+        <p className="text text_type_main-default text_color_inactive">
+          {naming.ProfileLogout.logout}
+        </p>
+      )}
+    </div>
+  );
 };
 
 export default ProfileLogout;
