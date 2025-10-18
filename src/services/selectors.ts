@@ -9,3 +9,4 @@ export const getDisplayedIngredient = (state: RootState) =>
 export const getTab = (state: RootState) => state.tabInfo.tab;
 export const getOrdersAll = (state: RootState) => state.ordersAll;
 export const getOrdersUser = (state: RootState) => state.ordersUser;
+export const getOrderOne = (state: RootState) => state.getOrder;

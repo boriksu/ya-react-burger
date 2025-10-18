@@ -1,18 +1,28 @@
-import { AUTH_ACTIONS } from "../actions/auth/auth-helper";
+import { AUTH_ACTIONS, TAuthActions } from "../actions/auth/auth-helper";
+import { TUser } from "../../data/types/types";
 
-const initialState = {
+type TAuthState = {
+  authLoading: boolean;
+  authError: string | null;
+  authSuccess: boolean;
+  authLogIn: boolean;
+  user: TUser | null;
+  forgotPassword: boolean;
+};
+
+const initialState: TAuthState = {
   authLoading: false,
   authError: null,
   authSuccess: false,
   authLogIn: false,
   forgotPassword: false,
-  user: {
-    name: "",
-    email: "",
-  },
+  user: null,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (
+  state = initialState,
+  action: TAuthActions
+): TAuthState => {
   const operation = action.meta?.operation;
 
   switch (action.type) {

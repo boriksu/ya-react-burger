@@ -1,4 +1,5 @@
 import { getCookie, setCookie } from "../../../data/api/useCookie";
+import { TUser } from "../../../data/types/types";
 
 export const AUTH_ACTIONS = {
   START: "AUTH_START",
@@ -13,7 +14,42 @@ export const AUTH_ACTIONS = {
   RESET_PASSWORD: "AUTH_RESET_PASSWORD",
   GET_USER: "AUTH_GET_USER",
   PATCH_USER: "AUTH_PATCH_USER",
-};
+} as const;
+
+interface IAuthStartAction {
+  type: typeof AUTH_ACTIONS.START;
+  meta?: {
+    operation: string;
+  };
+}
+
+interface IAuthSuccessAction {
+  type: typeof AUTH_ACTIONS.SUCCESS;
+  payload: {
+    user?: TUser;
+  };
+  meta?: {
+    operation: string;
+  };
+}
+
+interface IAuthErrorAction {
+  type: typeof AUTH_ACTIONS.ERROR;
+  payload: string;
+  meta?: {
+    operation: string;
+  };
+}
+
+interface IAuthClearErrorsAction {
+  type: typeof AUTH_ACTIONS.CLEAR_ERRORS;
+}
+
+export type TAuthActions =
+  | IAuthStartAction
+  | IAuthSuccessAction
+  | IAuthErrorAction
+  | IAuthClearErrorsAction;
 
 const handleTokens = (result) => {
   if (result.accessToken) {

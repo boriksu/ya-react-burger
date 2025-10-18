@@ -4,6 +4,7 @@ import { combineReducers } from "redux";
 import { authReducer } from "./reducers/auth";
 import { burgerConstructorReducer } from "./reducers/burger-constructor";
 import { createOrderReducer } from "./reducers/create-order";
+import { getOrderReducer } from "./reducers/get-order";
 import { ingredientWindowReducer } from "./reducers/ingredient-window";
 import { loadIngredientsReducer } from "./reducers/load-ingredients";
 import { ordersAllReducer } from "./reducers/orders-all";
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   burgerConstructor: burgerConstructorReducer,
   ingredientWindow: ingredientWindowReducer,
   createOrder: createOrderReducer,
+  getOrder: getOrderReducer,
   tabInfo: tabInfoReducer,
   auth: authReducer,
   ordersAll: ordersAllReducer,
