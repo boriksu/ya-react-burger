@@ -1,6 +1,7 @@
 import { FC, useMemo } from "react";
-import { Link, useLocation } from "react-router-dom";
+import naming from "../../data/ru.json";
 import { TOrder } from "../../data/types/types";
+import OrderColumn from "./OrderColumn/OrdersColumn";
 import styles from "./OrdersStatus.module.css";
 
 interface TProps {
@@ -10,8 +11,7 @@ interface TProps {
 }
 
 const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
-  const location = useLocation();
-  const ordersPerColumn = 10;
+  const ordersPerColumn = 5;
 
   const { completedOrders, inProgressOrders } = useMemo(() => {
     const completed = orders
@@ -49,42 +49,22 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
     [completedOrders, inProgressOrders]
   );
 
-  const OrderNumbersColumn = ({
-    orderNumbers,
-    linkStyle,
-  }: {
-    orderNumbers: number[];
-    linkStyle: string;
-  }) => (
-    <ul className={styles.orders_list}>
-      {orderNumbers.map((orderNumber, index) => (
-        <li key={index} className="mt-2 mr-8">
-          <Link
-            to={`${orderNumber}`}
-            state={{ location }}
-            className={linkStyle}
-          >
-            <span className="text text_type_digits-default">{orderNumber}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <>
       <div className={styles.orders_container}>
         {/* Завершенные заказы */}
-        <section className={styles.section}>
-          <p className="text text_type_main-medium">Готовы:</p>
+        <section>
+          <p className="text text_type_main-medium">
+            {naming.OrderStatus.ready}
+          </p>
           <div
             className={`${styles.numbers_container} ${styles.completed_orders}`}
           >
-            <OrderNumbersColumn
+            <OrderColumn
               orderNumbers={completedFirstColumn}
               linkStyle={styles.completed_order_link}
             />
-            <OrderNumbersColumn
+            <OrderColumn
               orderNumbers={completedSecondColumn}
               linkStyle={styles.completed_order_link}
             />
@@ -92,14 +72,16 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
         </section>
 
         {/* Заказы в процессе выполнения */}
-        <section className={styles.section}>
-          <p className="text text_type_main-medium">В работе:</p>
+        <section>
+          <p className="text text_type_main-medium">
+            {naming.OrderStatus.process}
+          </p>
           <div className={styles.numbers_container}>
-            <OrderNumbersColumn
+            <OrderColumn
               orderNumbers={inProgressFirstColumn}
               linkStyle={styles.in_progress_order_link}
             />
-            <OrderNumbersColumn
+            <OrderColumn
               orderNumbers={inProgressSecondColumn}
               linkStyle={styles.in_progress_order_link}
             />
@@ -108,8 +90,8 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
       </div>
 
       {/* Статистика выполнения */}
-      <section className={styles.section}>
-        <p className="text text_type_main-medium">Выполнено за все время:</p>
+      <section>
+        <p className="text text_type_main-medium">{naming.OrderStatus.all}</p>
         <p
           className={`${styles.highlighted_text} text text_type_digits-large pb-8`}
         >
@@ -117,8 +99,8 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
         </p>
       </section>
 
-      <section className={styles.section}>
-        <p className="text text_type_main-medium">Выполнено за сегодня:</p>
+      <section>
+        <p className="text text_type_main-medium">{naming.OrderStatus.today}</p>
         <p
           className={`${styles.highlighted_text} text text_type_digits-large pb-8`}
         >

@@ -9,7 +9,7 @@ import {
   resetPassword,
 } from "../../../data/api/auth";
 import { deleteCookie, getCookie } from "../../../data/api/useCookie";
-import { AppDispatch } from "../../../data/types/types"; // Добавьте этот импорт
+import { AppDispatch } from "../../../data/types/types";
 import { AUTH_ACTIONS, createAuthAction } from "./auth-helper";
 
 export const authRegisterAction = createAuthAction(
