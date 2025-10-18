@@ -2,12 +2,11 @@ import { TIngredient, TIngredientConstructor } from "../../data/types/types";
 import {
   CONSTRUCTOR_ACTIONS,
   TBurgerConstructorActions,
-} from "../actions/index";
+} from "../actions/burger-constuctor";
 
 export type TBurgerConstructorState = {
   bun: TIngredient | null;
   ingredients: Array<TIngredientConstructor>;
-  // sum: number;
 };
 
 const initialState: TBurgerConstructorState = {

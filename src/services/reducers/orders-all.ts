@@ -20,10 +20,10 @@ const initialState: TOrdersAllState = {
   error: null,
 };
 
-export function ordersAllReducer(
+export const ordersAllReducer = (
   state = initialState,
   action: TOrdersAllActions
-): TOrdersAllState {
+): TOrdersAllState => {
   switch (action.type) {
     case ORDERS_ALL_ACTIONS.SUCCESS:
       return { ...state, error: null, isLoadedData: true };
@@ -40,4 +40,4 @@ export function ordersAllReducer(
     default:
       return state;
   }
-}
+};

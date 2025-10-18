@@ -16,7 +16,6 @@ export const AUTH_ACTIONS = {
   PATCH_USER: "AUTH_PATCH_USER",
 } as const;
 
-// Типы для операций
 type AuthOperation = (typeof AUTH_ACTIONS)[keyof typeof AUTH_ACTIONS];
 
 interface IAuthStartAction {
@@ -32,7 +31,6 @@ interface IAuthSuccessAction {
     user?: TUser;
     accessToken?: string;
     refreshToken?: string;
-    // [key: string]: any; // Для других полей в ответе
   };
   meta: {
     operation: AuthOperation;
@@ -66,7 +64,6 @@ interface ApiResponse {
   [key: string]: any;
 }
 
-// Тип для функции API call
 type ApiCallFunction = (data?: any) => Promise<ApiResponse>;
 
 const handleTokens = (result: ApiResponse): ApiResponse => {
@@ -132,9 +129,6 @@ export const createAuthAction =
 
       return processedResult;
     } catch (error) {
-      // const errorMessage =
-      //   error?.message || error?.toString() || "Неизвестная ошибка";
-
       const errorMessage =
         error instanceof Error
           ? error.message

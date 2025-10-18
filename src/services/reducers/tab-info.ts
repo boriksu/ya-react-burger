@@ -1,5 +1,5 @@
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
-import { TAB_ACTIONS, TTabInfoActions } from "../actions/index";
+import { TAB_ACTIONS, TTabInfoActions } from "../actions//tab-info";
 
 type TTabInfoState = {
   tab: string;

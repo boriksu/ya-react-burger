@@ -6,18 +6,22 @@ import { FC, useCallback, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router";
 import { URL_LOGIN } from "../../../data/routes";
 import naming from "../../../data/ru.json";
+import { TIngredient } from "../../../data/types/types";
 import { authGetUserAction } from "../../../services/actions/auth/auth";
-import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
+import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/burger-constuctor";
 import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
 import { useDispatch, useSelector } from "../../../services/hook";
-import { getAuth, getConstructor, getOrder } from "../../../services/selectors";
+import {
+  createOrder,
+  getAuth,
+  getConstructor,
+} from "../../../services/selectors";
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
-import { TIngredient } from "../../../data/types/types";
 
 type TProps = {
   totalPrice: number;
@@ -25,7 +29,7 @@ type TProps = {
 
 const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
   const { bun, ingredients } = useSelector(getConstructor);
-  const { orderNumber, orderLoading, orderErrors } = useSelector(getOrder);
+  const { orderNumber, orderLoading, orderErrors } = useSelector(createOrder);
 
   const disabled = useMemo(() => {
     let hasIngredient = (ingredients && ingredients.length > 0) || bun;

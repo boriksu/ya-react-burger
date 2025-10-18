@@ -5,7 +5,7 @@ import {
 import { FC, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { TIngredientConstructor } from "../../../data/types/types";
-import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
+import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/burger-constuctor";
 import { useDispatch } from "../../../services/hook";
 import styles from "./BurgerConstructorIngredient.module.css";
 

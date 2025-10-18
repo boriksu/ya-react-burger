@@ -21,10 +21,10 @@ const initialState: TOrdersUserState = {
   error: null,
 };
 
-export function ordersUserReducer(
+export const ordersUserReducer = (
   state = initialState,
   action: TOrdersUserActions
-): TOrdersUserState {
+): TOrdersUserState => {
   switch (action.type) {
     case ORDERS_USER_ACTIONS.SUCCESS:
       return { ...state, error: null, isLoadedData: true };
@@ -37,4 +37,4 @@ export function ordersUserReducer(
     default:
       return state;
   }
-}
+};

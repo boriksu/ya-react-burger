@@ -2,7 +2,7 @@ import { FC, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
 import { getOrderAction } from "../../services/actions/get-order";
 import { useDispatch, useSelector } from "../../services/hook";
-import { getIngredients, getOrderOne } from "../../services/selectors";
+import { getIngredients, getOrder } from "../../services/selectors";
 
 import {
   CurrencyIcon,
@@ -15,7 +15,7 @@ import styles from "./OrderInfo.module.css";
 const OrderInfo: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { order } = useSelector(getOrderOne);
+  const { order } = useSelector(getOrder);
   const { data: ingredients } = useSelector(getIngredients);
 
   useEffect(() => {

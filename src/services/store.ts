@@ -29,7 +29,6 @@ const rootReducer = combineReducers({
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 
-// Явно создаем массив middleware для лучшей читаемости
 const customMiddlewares = [
   socketMiddleware(wsOrdersAllActions),
   socketMiddleware(wsOrdersUserActions),

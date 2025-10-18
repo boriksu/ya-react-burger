@@ -16,9 +16,6 @@ interface WebSocketState {
   maxReconnectAttempts: number;
 }
 
-export const MESSAGE_LOADING = "Подождите, идет загрузка...";
-export const MESSAGE_ERROR = "Возникла ошибка при получении данных";
-
 const getEventMessage = (e: Event) => {
   if (e instanceof ErrorEvent) {
     return e.message;

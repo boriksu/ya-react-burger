@@ -23,7 +23,6 @@ export const authReducer = (
   state = initialState,
   action: TAuthActions
 ): TAuthState => {
-  // const operation = action.meta?.operation;
   const operation = "meta" in action ? action.meta?.operation : undefined;
 
   switch (action.type) {

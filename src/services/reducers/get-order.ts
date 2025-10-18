@@ -13,10 +13,10 @@ const initialState: TGetOrderState = {
   order: null,
 };
 
-export function getOrderReducer(
+export const getOrderReducer = (
   state = initialState,
   action: TGetOrderActions
-): TGetOrderState {
+): TGetOrderState => {
   switch (action.type) {
     case GET_ORDER_ACTIONS.START:
       return { ...state, requestStart: true, requestError: null };
@@ -38,4 +38,4 @@ export function getOrderReducer(
     default:
       return state;
   }
-}
+};

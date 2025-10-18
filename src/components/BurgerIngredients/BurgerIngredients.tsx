@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
-import { TAB_ACTIONS } from "../../services/actions/index";
+import { TAB_ACTIONS } from "../../services/actions/tab-info";
 import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
 import {
   getConstructor,

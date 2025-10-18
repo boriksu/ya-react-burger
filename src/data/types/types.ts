@@ -11,10 +11,8 @@ import {
   TLoadIngredientsActions,
 } from "../../services/actions/ingredients-action";
 
-import {
-  TBurgerConstructorActions,
-  TTabInfoActions,
-} from "../../services/actions/index";
+import { TBurgerConstructorActions } from "../../services/actions/burger-constuctor";
+import { TTabInfoActions } from "../../services/actions/tab-info";
 
 import { TCreateOrderActions } from "../../services/actions/order-action";
 

@@ -6,7 +6,7 @@ import naming from "../../data/ru.json";
 import {
   CONSTRUCTOR_ACTIONS,
   addIngredient,
-} from "../../services/actions/index";
+} from "../../services/actions/burger-constuctor";
 
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
 import styles from "./BurgerConstructor.module.css";
