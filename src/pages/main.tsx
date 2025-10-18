@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import BurgerConstructor from "../components/BurgerConstructor/BurgerConstructor";
 import BurgerIngredients from "../components/BurgerIngredients/BurgerIngredients";
 import Loader from "../components/Loader/Loader";
 import { ingredientsAction } from "../services/actions/ingredients-action";
+import { useDispatch, useSelector } from "../services/hook";
 import styles from "./main.module.css";
 
 import { getIngredients } from "../services/selectors";

@@ -1,7 +1,9 @@
+import Feed from "./feed";
 import ForgotPassword from "./forgot-password";
 import IngredientPage from "./ingredient";
 import Login from "./login";
 import MainPage from "./main";
+import OrderPage from "./order";
 import Page404 from "./page404";
 import Profile from "./profile";
 import ProfileEdit from "./profile-edit";
@@ -11,10 +13,12 @@ import Register from "./register";
 import ResetPassword from "./reset-password";
 
 export {
+  Feed,
   ForgotPassword,
   IngredientPage,
   Login,
   MainPage,
+  OrderPage,
   Page404,
   Profile,
   ProfileEdit,

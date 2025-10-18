@@ -10,7 +10,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
 import {
@@ -21,11 +20,9 @@ import {
   URL_ROOT,
 } from "../data/routes";
 import naming from "../data/ru.json";
-import {
-  authGetUserAction,
-  authLoginAction,
-} from "../services/actions/auth/auth";
+import { authLoginAction } from "../services/actions/auth/auth";
 import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { useDispatch, useSelector } from "../services/hook";
 import styles from "./page.module.css";
 
 import { getAuth } from "../services/selectors";
@@ -41,9 +38,9 @@ const Login = () => {
   });
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
-  useEffect(() => {
-    dispatch(authGetUserAction() as any);
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(authGetUserAction() as any);
+  // }, [dispatch]);
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -57,7 +54,7 @@ const Login = () => {
     (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
-      dispatch(authLoginAction(formData) as any);
+      dispatch(authLoginAction(formData));
     },
     [dispatch, formData]
   );
@@ -72,7 +69,7 @@ const Login = () => {
       }
       navigate(from.pathname, { replace: true });
     } else if (wasSubmitted && authError) {
-      alert(`[Вход] ${authError}`);
+      // alert(`[Вход] ${authError}`);
       dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
       setWasSubmitted(false);
     }

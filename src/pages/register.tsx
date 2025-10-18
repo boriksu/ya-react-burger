@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../services/hook";
 import { Link, useNavigate } from "react-router-dom";
 import {
   authGetUserAction,
@@ -38,7 +38,7 @@ const Register = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction() as any);
+    dispatch(authGetUserAction());
   }, [dispatch]);
 
   const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -72,13 +72,13 @@ const Register = () => {
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && authError) {
-      alert(`Ошибка регистрации: ${authError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
-    } else if (wasSubmitted && authSuccess) {
-      alert("Регистрация успешна! Выполняется вход...");
-      dispatch(authGetUserAction() as any);
+      // } else if (wasSubmitted && authError) {
+      //   // alert(`Ошибка регистрации: ${authError}`);
+      //   dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
+      //   setWasSubmitted(false);
+      // } else if (wasSubmitted && authSuccess) {
+      //   // alert("Регистрация успешна! Выполняется вход...");
+      //   dispatch(authGetUserAction() as any);
     }
   }, [dispatch, wasSubmitted, authLogIn, authError, authSuccess, navigate]);
 
