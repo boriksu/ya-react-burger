@@ -37,6 +37,7 @@ export const authLogoutAction = () => async (dispatch: AppDispatch) => {
 
     dispatch({
       type: AUTH_ACTIONS.SUCCESS,
+      payload: {},
       meta: { operation: AUTH_ACTIONS.LOGOUT },
     });
   } catch (error) {
