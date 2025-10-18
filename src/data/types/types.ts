@@ -1,9 +1,11 @@
 import { Action, ActionCreator } from "redux";
 import { ThunkAction, ThunkDispatch } from "redux-thunk";
+import { TGetOrderActions } from "../../services/actions/get-order";
 import store from "../../services/store";
 import { TOrdersAllActions, TWebSocketOrdersAllActions } from "./order-all";
 import { TOrdersUserActions, TwsOrdersUserActions } from "./orders-user";
 
+import { TAuthActions } from "../../services/actions/auth/auth-helper";
 import {
   TIngredientWindowActions,
   TLoadIngredientsActions,
@@ -34,6 +36,11 @@ export type TIngredient = {
 export type TIngredientConstructor = TIngredient & {
   id: string;
   index: number;
+};
+
+export type TUser = {
+  name: string;
+  email: string;
 };
 
 export type TForgotPassword = {

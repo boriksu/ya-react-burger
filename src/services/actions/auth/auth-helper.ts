@@ -1,5 +1,5 @@
 import { getCookie, setCookie } from "../../../data/api/useCookie";
-import { TUser } from "../../../data/types/types";
+import { AppDispatch, TUser } from "../../../data/types/types";
 
 export const AUTH_ACTIONS = {
   START: "AUTH_START",
@@ -16,10 +16,13 @@ export const AUTH_ACTIONS = {
   PATCH_USER: "AUTH_PATCH_USER",
 } as const;
 
+// Типы для операций
+type AuthOperation = (typeof AUTH_ACTIONS)[keyof typeof AUTH_ACTIONS];
+
 interface IAuthStartAction {
   type: typeof AUTH_ACTIONS.START;
-  meta?: {
-    operation: string;
+  meta: {
+    operation: AuthOperation;
   };
 }
 
@@ -27,9 +30,12 @@ interface IAuthSuccessAction {
   type: typeof AUTH_ACTIONS.SUCCESS;
   payload: {
     user?: TUser;
+    accessToken?: string;
+    refreshToken?: string;
+    // [key: string]: any; // Для других полей в ответе
   };
-  meta?: {
-    operation: string;
+  meta: {
+    operation: AuthOperation;
   };
 }
 
@@ -37,7 +43,7 @@ interface IAuthErrorAction {
   type: typeof AUTH_ACTIONS.ERROR;
   payload: string;
   meta?: {
-    operation: string;
+    operation: AuthOperation;
   };
 }
 
@@ -51,12 +57,24 @@ export type TAuthActions =
   | IAuthErrorAction
   | IAuthClearErrorsAction;
 
-const handleTokens = (result) => {
+interface ApiResponse {
+  success: boolean;
+  message?: string;
+  user?: TUser;
+  accessToken?: string;
+  refreshToken?: string;
+  [key: string]: any;
+}
+
+// Тип для функции API call
+type ApiCallFunction = (data?: any) => Promise<ApiResponse>;
+
+const handleTokens = (result: ApiResponse): ApiResponse => {
   if (result.accessToken) {
     const accessToken = result.accessToken.split("Bearer ")[1];
     const refreshToken = result.refreshToken;
 
-    if (accessToken) {
+    if (accessToken && refreshToken) {
       setCookie("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
     }
@@ -65,9 +83,9 @@ const handleTokens = (result) => {
 };
 
 export const createAuthAction =
-  (apiCall, actionType, tokenHandler = false) =>
+  (apiCall: ApiCallFunction, actionType: AuthOperation, tokenHandler = false) =>
   (data = {}) =>
-  async (dispatch) => {
+  async (dispatch: AppDispatch) => {
     try {
       if (
         actionType === AUTH_ACTIONS.GET_USER ||
@@ -91,7 +109,7 @@ export const createAuthAction =
       dispatch({
         type: AUTH_ACTIONS.START,
         meta: { operation: actionType },
-      });
+      } as IAuthStartAction);
 
       const result = await apiCall(data);
 
@@ -100,7 +118,7 @@ export const createAuthAction =
           type: AUTH_ACTIONS.ERROR,
           payload: result.message,
           meta: { operation: actionType },
-        });
+        } as IAuthErrorAction);
         return;
       }
 
@@ -110,12 +128,19 @@ export const createAuthAction =
         type: AUTH_ACTIONS.SUCCESS,
         payload: processedResult,
         meta: { operation: actionType },
-      });
+      } as IAuthSuccessAction);
 
       return processedResult;
     } catch (error) {
+      // const errorMessage =
+      //   error?.message || error?.toString() || "Неизвестная ошибка";
+
       const errorMessage =
-        error?.message || error?.toString() || "Неизвестная ошибка";
+        error instanceof Error
+          ? error.message
+          : typeof error === "string"
+          ? error
+          : "Неизвестная ошибка";
 
       if (
         errorMessage.includes("jwt") ||
@@ -131,7 +156,7 @@ export const createAuthAction =
         type: AUTH_ACTIONS.ERROR,
         payload: errorMessage,
         meta: { operation: actionType },
-      });
+      } as IAuthErrorAction);
 
       throw errorMessage;
     }

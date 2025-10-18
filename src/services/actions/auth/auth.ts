@@ -8,8 +8,8 @@ import {
   registerUser,
   resetPassword,
 } from "../../../data/api/auth";
-import { deleteCookie } from "../../../data/api/useCookie";
-
+import { deleteCookie, getCookie } from "../../../data/api/useCookie";
+import { AppDispatch } from "../../../data/types/types"; // Добавьте этот импорт
 import { AUTH_ACTIONS, createAuthAction } from "./auth-helper";
 
 export const authRegisterAction = createAuthAction(
@@ -22,7 +22,7 @@ export const authLoginAction = createAuthAction(
   AUTH_ACTIONS.LOGIN,
   true
 );
-export const authLogoutAction = (data) => async (dispatch) => {
+export const authLogoutAction = () => async (dispatch: AppDispatch) => {
   try {
     dispatch({
       type: AUTH_ACTIONS.START,
@@ -32,16 +32,18 @@ export const authLogoutAction = (data) => async (dispatch) => {
     localStorage.removeItem("refreshToken");
     deleteCookie("accessToken");
 
-    await logoutUser(data);
+    // await logoutUser(data);
+    await logoutUser();
 
     dispatch({
       type: AUTH_ACTIONS.SUCCESS,
       meta: { operation: AUTH_ACTIONS.LOGOUT },
     });
   } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : String(error);
     dispatch({
       type: AUTH_ACTIONS.ERROR,
-      payload: error.message,
+      payload: errorMessage,
       meta: { operation: AUTH_ACTIONS.LOGOUT },
     });
     throw error;
@@ -73,3 +75,9 @@ export const authPatchUserAction = createAuthAction(
 export const clearAuthErrors = () => ({
   type: AUTH_ACTIONS.CLEAR_ERRORS,
 });
+
+export const authCheckUserAction = () => (dispatch: AppDispatch) => {
+  if (getCookie("accessToken")) {
+    dispatch(authGetUserAction());
+  }
+};

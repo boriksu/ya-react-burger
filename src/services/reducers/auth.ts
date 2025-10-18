@@ -1,5 +1,5 @@
-import { AUTH_ACTIONS, TAuthActions } from "../actions/auth/auth-helper";
 import { TUser } from "../../data/types/types";
+import { AUTH_ACTIONS, TAuthActions } from "../actions/auth/auth-helper";
 
 type TAuthState = {
   authLoading: boolean;
@@ -23,17 +23,21 @@ export const authReducer = (
   state = initialState,
   action: TAuthActions
 ): TAuthState => {
-  const operation = action.meta?.operation;
+  // const operation = action.meta?.operation;
+  const operation = "meta" in action ? action.meta?.operation : undefined;
 
   switch (action.type) {
     case AUTH_ACTIONS.START:
-      const startUpdates = {
+      const startUpdates: Partial<TAuthState> = {
         authLoading: true,
         authError: null,
         authSuccess: false,
       };
 
-      if (operation === AUTH_ACTIONS.FORGOT_PASSWORD) {
+      if (
+        operation === AUTH_ACTIONS.FORGOT_PASSWORD ||
+        operation === AUTH_ACTIONS.RESET_PASSWORD
+      ) {
         startUpdates.forgotPassword = false;
       }
       if (operation === AUTH_ACTIONS.GET_USER) {
@@ -43,7 +47,7 @@ export const authReducer = (
       return { ...state, ...startUpdates };
 
     case AUTH_ACTIONS.SUCCESS:
-      const successUpdates = {
+      const successUpdates: Partial<TAuthState> = {
         authLoading: false,
         authError: null,
         authSuccess: true,
@@ -68,6 +72,9 @@ export const authReducer = (
           successUpdates.forgotPassword = true;
           break;
 
+        case AUTH_ACTIONS.RESET_PASSWORD:
+          break;
+
         case AUTH_ACTIONS.GET_USER:
           if (action.payload.user) {
             successUpdates.user = action.payload.user;
@@ -86,7 +93,7 @@ export const authReducer = (
       return { ...state, ...successUpdates };
 
     case AUTH_ACTIONS.ERROR:
-      const errorUpdates = {
+      const errorUpdates: Partial<TAuthState> = {
         authLoading: false,
         authError: action.payload,
         authSuccess: false,
@@ -100,6 +107,10 @@ export const authReducer = (
           break;
 
         case AUTH_ACTIONS.FORGOT_PASSWORD:
+          errorUpdates.forgotPassword = false;
+          break;
+
+        case AUTH_ACTIONS.RESET_PASSWORD:
           errorUpdates.forgotPassword = false;
           break;
 
