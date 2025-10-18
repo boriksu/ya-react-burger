@@ -1,5 +1,5 @@
 import { FC, useCallback, useMemo, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hook";
 import { useNavigate } from "react-router-dom";
 
 import { URL_ROOT } from "../../data/routes";

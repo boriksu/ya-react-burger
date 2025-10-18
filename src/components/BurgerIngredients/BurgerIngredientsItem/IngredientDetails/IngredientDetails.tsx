@@ -1,9 +1,9 @@
 import { FC, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import naming from "../../../../data/ru.json";
 import { TIngredient } from "../../../../data/types/types";
 import { ingredientsAction } from "../../../../services/actions/ingredients-action";
+import { useDispatch, useSelector } from "../../../../services/hook";
 import Loader from "../../../Loader/Loader";
 import styles from "./IngredientDetails.module.css";
 

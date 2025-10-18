@@ -1,7 +1,7 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/hook";
 import naming from "../../data/ru.json";
 import {
   CONSTRUCTOR_ACTIONS,
@@ -13,7 +13,7 @@ import styles from "./BurgerConstructor.module.css";
 import BurgerConstructorIngredient from "./BurgerConstructorIngredient/BurgerConstructorIngredient";
 import BurgerConstructorOrder from "./BurgerConstructorOrder/BurgerConstructorOrder";
 
-import { TIngredientConstructor } from "../../data/types/types";
+import { TIngredient, TIngredientConstructor } from "../../data/types/types";
 import { getConstructor } from "../../services/selectors";
 
 const BurgerConstructor: FC = () => {
@@ -34,21 +34,21 @@ const BurgerConstructor: FC = () => {
 
   const [, dropTargetBunUp] = useDrop({
     accept: INGREDIENT_TYPES.BUN,
-    drop(item) {
+    drop(item: TIngredient) {
       dispatch({ type: CONSTRUCTOR_ACTIONS.SELECT_BUN, item: item });
     },
   });
 
   const [, dropTargetBunDown] = useDrop({
     accept: INGREDIENT_TYPES.BUN,
-    drop(item) {
+    drop(item: TIngredient) {
       dispatch({ type: CONSTRUCTOR_ACTIONS.SELECT_BUN, item: item });
     },
   });
 
   const [, dropTargetIngredient] = useDrop({
     accept: [INGREDIENT_TYPES.SAUCE, INGREDIENT_TYPES.MAIN],
-    drop(item) {
+    drop(item: TIngredient) {
       dispatch(addIngredient(item));
     },
   });

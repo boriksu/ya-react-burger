@@ -38,7 +38,6 @@ export type TIngredientQty = TIngredient & {
 
 export type TIngredientConstructor = TIngredient & {
   id: string;
-  index: number;
 };
 
 export type TUser = {

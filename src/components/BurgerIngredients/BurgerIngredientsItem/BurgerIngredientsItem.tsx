@@ -2,13 +2,13 @@ import {
   Counter,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import React, { FC, useCallback } from "react";
+import React, { FC, SyntheticEvent, useCallback } from "react";
 import { useDrag } from "react-dnd";
-import { useDispatch } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { URL_INGREDIENTS } from "../../../data/routes";
 import { TIngredient } from "../../../data/types/types";
 import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
+import { useDispatch } from "../../../services/hook";
 import styles from "./BurgerIngredientsItem.module.css";
 
 type TProps = {
@@ -21,13 +21,17 @@ const BurgerIngredientItem: FC<TProps> = ({ ingredient, count }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const showIngredientDetails = useCallback(() => {
-    navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
-      replace: true,
-      state: { location: location, item: ingredient },
-    });
-    dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
-  }, [dispatch, navigate, location, ingredient]);
+  const showIngredientDetails = useCallback(
+    (e: SyntheticEvent) => {
+      e.preventDefault();
+      navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
+        replace: true,
+        state: { location: location, item: ingredient },
+      });
+      dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
+    },
+    [dispatch, navigate, location, ingredient]
+  );
 
   const [, dragRef] = useDrag({
     type: ingredient.type,
@@ -35,29 +39,32 @@ const BurgerIngredientItem: FC<TProps> = ({ ingredient, count }) => {
   });
 
   return (
-    <li
-      className={`${styles.container} mt-6 mb-8 ml-3 mr-2`}
+    <Link
+      className={styles.link}
+      to={`${URL_INGREDIENTS}/${ingredient._id}`}
       onClick={showIngredientDetails}
       ref={dragRef}
     >
-      <img
-        className={`${styles.image} ml-4 mr-4 mb-1`}
-        src={ingredient.image}
-        alt={ingredient.name}
-      />
-      <div className={`${styles.price} mb-1`}>
-        <span className="mr-2 text text_type_digits-default">
-          {ingredient.price}
-        </span>
-        <CurrencyIcon type="primary" />
-      </div>
-      <div className={`${styles.name} text text_type_main-default`}>
-        {ingredient.name}
-      </div>
-      {count > 0 && (
-        <Counter count={count} size="default" extraClass={styles.count} />
-      )}
-    </li>
+      <li className={`${styles.container} mt-6 mb-8 ml-3 mr-2`}>
+        <img
+          className={`${styles.image} ml-4 mr-4 mb-1`}
+          src={ingredient.image}
+          alt={ingredient.name}
+        />
+        <div className={`${styles.price} mb-1`}>
+          <span className="mr-2 text text_type_digits-default">
+            {ingredient.price}
+          </span>
+          <CurrencyIcon type="primary" />
+        </div>
+        <div className={`${styles.name} text text_type_main-default`}>
+          {ingredient.name}
+        </div>
+        {count > 0 && (
+          <Counter count={count} size="default" extraClass={styles.count} />
+        )}
+      </li>
+    </Link>
   );
 };
 

@@ -32,7 +32,6 @@ export interface IReorderIngredientAction {
 
 export interface ICleanOrderAction {
   type: typeof CONSTRUCTOR_ACTIONS.CLEAN_ORDER;
-  sum: number;
 }
 
 export type TBurgerConstructorActions =
