@@ -32,6 +32,9 @@ export type TIngredient = {
   image_large: string;
   __v: number;
 };
+export type TIngredientQty = TIngredient & {
+  qty: number;
+};
 
 export type TIngredientConstructor = TIngredient & {
   id: string;

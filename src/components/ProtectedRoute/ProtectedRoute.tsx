@@ -1,37 +1,33 @@
-import { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { URL_LOGIN } from "../../data/routes";
-import { authGetUserAction } from "../../services/actions/auth/auth";
+import { FC } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from "../../services/hook";
 import { getAuth } from "../../services/selectors";
-import Loader from "../Loader/Loader";
 
 type TProps = {
-  children: React.ReactElement;
+  element: React.ReactElement;
+  anonymous?: boolean;
 };
 
-const ProtectedRoute: FC<TProps> = ({ children }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { authLoading, user } = useSelector(getAuth);
+const ProtectedRoute: FC<TProps> = ({ element, anonymous = false }) => {
+  const { authLogIn } = useSelector(getAuth);
+  const location = useLocation();
 
-  useEffect(() => {
-    if (!user.name) {
-      dispatch(authGetUserAction() as any);
-    }
-  }, [dispatch, user.name]);
+  const from = location.state?.from || "/";
 
-  useEffect(() => {
-    if (!authLoading && !user.name) {
-      navigate(URL_LOGIN, { replace: true });
-    }
-  }, [authLoading, user.name, navigate]);
-
-  if (authLoading || !user.name) {
-    return <Loader />;
+  // Если разрешен неавторизованный доступ, а пользователь авторизован
+  if (anonymous && authLogIn) {
+    // то отправляем его на предыдущую страницу
+    return <Navigate to={from} replace />;
   }
 
-  return children;
+  // Если требуется авторизация, а пользователь не авторизован
+  if (!anonymous && !authLogIn) {
+    // то отправляем его на страницу логина
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  // Если все ок, то рендерим внутреннее содержимое
+  return element;
 };
 
 export default ProtectedRoute;

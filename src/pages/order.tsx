@@ -1,4 +1,4 @@
-import OrderInfo from "../components/OrderInfo";
+import OrderInfo from "../components/OrderInfo/OrderInfo";
 
 const OrderPage = () => {
   return (
