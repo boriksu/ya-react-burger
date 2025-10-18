@@ -128,13 +128,16 @@ export const createAuthAction =
       } as IAuthSuccessAction);
 
       return processedResult;
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : typeof error === "string"
-          ? error
-          : "Неизвестная ошибка";
+    } catch (error: any) {
+      let errorMessage = "Неизвестная ошибка";
+
+      if (error?.message && typeof error.message === "string") {
+        errorMessage = error.message;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === "string") {
+        errorMessage = error;
+      }
 
       if (
         errorMessage.includes("jwt") ||
@@ -151,7 +154,5 @@ export const createAuthAction =
         payload: errorMessage,
         meta: { operation: actionType },
       } as IAuthErrorAction);
-
-      throw errorMessage;
     }
   };

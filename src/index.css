@@ -15,3 +15,7 @@ code {
 .text-center {
   text-align: center;
 }
+.error-text {
+  color: var(--colors-interface-error);
+  max-width: 500px;
+}
