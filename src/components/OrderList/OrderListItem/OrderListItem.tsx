@@ -8,6 +8,7 @@ import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
 import { getIngredients } from "../../../services/selectors";
 
+import naming from "../../../data/ru.json";
 import { TIngredient, TOrder } from "../../../data/types/types";
 import styles from "./OrderListItem.module.css";
 
@@ -24,11 +25,11 @@ const OrdersListItem: FC<TProps> = ({ order, isPerson = false }) => {
   const orderStatus = useMemo(() => {
     switch (order.status) {
       case "done":
-        return "Выполнен";
+        return naming.OrderListItem.done;
       case "created":
-        return "Создан";
+        return naming.OrderListItem.created;
       default:
-        return "Готовится";
+        return naming.OrderListItem.pending;
     }
   }, [order.status]);
 
@@ -66,12 +67,12 @@ const OrdersListItem: FC<TProps> = ({ order, isPerson = false }) => {
 
   return (
     <Link
-      className={styles.order}
+      className={styles.container}
       to={`${location.pathname}/${order.number}`}
       state={{ location }}
     >
       <div className="m-6">
-        <div className={styles.order_header}>
+        <div className={styles.header}>
           <p className="text text_type_digits-default">#{order.number}</p>
           <FormattedDate
             date={new Date(order.createdAt)}
@@ -80,25 +81,25 @@ const OrdersListItem: FC<TProps> = ({ order, isPerson = false }) => {
         </div>
       </div>
 
-      <p className={`${styles.title_order} text text_type_main-medium`}>
+      <p className={`${styles.title} text text_type_main-medium`}>
         {order.name}
       </p>
 
       {isPerson && (
         <p
-          className={`${styles.status_order} ${orderColor} text text_type_main-default`}
+          className={`${styles.status} ${orderColor} text text_type_main-default`}
         >
           {orderStatus}
         </p>
       )}
 
-      <div className={styles.filling}>
-        <ul className={styles.images_selection}>
+      <div className={styles.content}>
+        <ul className={styles.list}>
           {limitItems.map((item, index) => (
             <li
               key={index}
               style={{ marginRight: -20 }}
-              className={styles.image_fill}
+              className={styles.ingredient}
             >
               <img
                 style={{
@@ -106,11 +107,11 @@ const OrdersListItem: FC<TProps> = ({ order, isPerson = false }) => {
                 }}
                 src={item.image_mobile}
                 alt={item.name}
-                className={styles.image_position}
+                className={styles.icon}
               />
               {hideCount > 0 && index === limitCount - 1 && (
                 <span
-                  className={`${styles.count_hidden} text text_type_main-default`}
+                  className={`${styles.hidden} text text_type_main-default`}
                 >
                   +{hideCount}
                 </span>

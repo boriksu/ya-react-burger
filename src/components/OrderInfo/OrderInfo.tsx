@@ -1,34 +1,29 @@
-import { useMemo, FC, useEffect } from "react";
-import { useDispatch, useSelector } from "../../services/hook";
+import { FC, useEffect, useMemo } from "react";
 import { useParams } from "react-router";
-import { getIngredients, getOrderOne } from "../../services/selectors";
 import { getOrderAction } from "../../services/actions/get-order";
+import { useDispatch, useSelector } from "../../services/hook";
+import { getIngredients, getOrderOne } from "../../services/selectors";
 
-import styles from "./OrderInfo.module.css";
-import { TIngredient, TIngredientQty } from "../../data/types/types";
 import {
   CurrencyIcon,
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import naming from "../../data/ru.json";
+import { TIngredient, TIngredientQty } from "../../data/types/types";
+import styles from "./OrderInfo.module.css";
 
-type TProps = {
-  item?: TIngredient;
-};
-
-const OrderInfo: FC<TProps> = ({ item }) => {
+const OrderInfo: FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
   const { order } = useSelector(getOrderOne);
   const { data: ingredients } = useSelector(getIngredients);
 
-  // Загрузка данных заказа
   useEffect(() => {
     if (id) {
       dispatch(getOrderAction(id));
     }
   }, [dispatch, id]);
 
-  // Группировка и подсчет ингредиентов
   const orderIngredients = useMemo(() => {
     if (!order?.ingredients) return null;
 
@@ -46,7 +41,6 @@ const OrderInfo: FC<TProps> = ({ item }) => {
       }
     });
 
-    // Сохраняем порядок из исходного массива
     return order.ingredients
       .map((ingredientId) => ingredientMap[ingredientId])
       .filter(Boolean)
@@ -55,7 +49,6 @@ const OrderInfo: FC<TProps> = ({ item }) => {
       );
   }, [ingredients, order]);
 
-  // Подсчет общей суммы
   const orderAmount = useMemo(() => {
     return (
       orderIngredients?.reduce(
@@ -65,53 +58,51 @@ const OrderInfo: FC<TProps> = ({ item }) => {
     );
   }, [orderIngredients]);
 
-  // Статус заказа
   const orderStatus = useMemo(() => {
     const statusMap = {
-      done: "Выполнен",
-      created: "Создан",
-      pending: "Готовится",
+      done: naming.OrderInfo.done,
+      created: naming.OrderInfo.created,
+      pending: naming.OrderInfo.pending,
     };
     return order?.status
       ? statusMap[order.status as keyof typeof statusMap]
       : null;
   }, [order]);
 
-  // Если заказ не загружен
   if (!order) {
     return (
       <main className={styles.main_container}>
-        <p className="text text_type_main-default">Загрузка заказа...</p>
+        <p className="text text_type_main-default">
+          {naming.OrderInfo.loading}
+        </p>
       </main>
     );
   }
 
   return (
-    <main className={styles.main_container}>
-      <p
-        className={`text text_type_digits-default mb-10 ${styles.number_order}`}
-      >
-        #{order.number}
-      </p>
+    <main className={styles.container}>
+      <p className="text text_type_digits-default mb-10">#{order.number}</p>
 
       <p className="text text_type_main-medium mb-3">{order.name}</p>
 
-      <p className={`text text_type_main-default mb-10 ${styles.status_order}`}>
+      <p className={`text text_type_main-default mb-10 ${styles.status}`}>
         {orderStatus}
       </p>
 
-      <p className="text text_type_main-medium mb-2">Состав:</p>
+      <p className="text text_type_main-medium mb-2">
+        {naming.OrderInfo.ingredients}
+      </p>
 
-      <section className={styles.fill_order}>
+      <section className={styles.content}>
         {orderIngredients?.map((item, index) => (
           <li key={`${item._id}-${index}`} className="mt-4 mr-6">
-            <div className={styles.row_fill}>
-              <div className={styles.image_name}>
-                <div className={styles.image_fill}>
+            <div className={styles.ingredient}>
+              <div className={styles.icon_title}>
+                <div className={styles.icon}>
                   <img src={item.image_mobile} alt={item.name} />
                 </div>
                 <p
-                  className={`text text_type_main-default ml-4 ${styles.pname}`}
+                  className={`text text_type_main-default ml-4 ${styles.title}`}
                 >
                   {item.name}
                 </p>
@@ -129,7 +120,7 @@ const OrderInfo: FC<TProps> = ({ item }) => {
       </section>
 
       <section
-        className={`text text_type_main-default mt-10 mb-6 ${styles.food_order}`}
+        className={`text text_type_main-default mt-10 mb-6 ${styles.footer}`}
       >
         <p className="text text_type_main-default text_color_inactive">
           <FormattedDate

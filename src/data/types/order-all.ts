@@ -38,7 +38,6 @@ export interface IOrdersAllMessageAction {
   readonly message: TOrdersList;
 }
 
-// Union type
 export type TOrdersAllActions =
   | IOrdersAllStartAction
   | IOrdersAllOpenAction
@@ -48,7 +47,6 @@ export type TOrdersAllActions =
   | IOrdersAllClosedAction
   | IOrdersAllMessageAction;
 
-// WebSocket actions configuration
 export type TWebSocketOrdersAllActions = {
   onStart: typeof ORDERS_ALL_ACTIONS.START;
   onOpen: typeof ORDERS_ALL_ACTIONS.OPEN;

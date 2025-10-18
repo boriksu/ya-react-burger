@@ -27,12 +27,6 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
   const { bun, ingredients } = useSelector(getConstructor);
   const { orderNumber, orderLoading, orderErrors } = useSelector(getOrder);
 
-  // useEffect(() => {
-  //   if (orderErrors) {
-  //     alert(naming.BurgerConstructorOrder.error);
-  //   }
-  // }, [orderErrors]);
-
   const disabled = useMemo(() => {
     let hasIngredient = (ingredients && ingredients.length > 0) || bun;
     let hasOrder = orderNumber !== null || orderLoading;
@@ -77,7 +71,7 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
         <p
           className={`mt-2 page-container-inner error-text text text_type_main-default`}
         >
-          Ошибка при создании заказа
+          {naming.BurgerConstructorOrder.error}
         </p>
       )}
       <div className={`${styles.totalPrice} mr-4 mt-10`}>

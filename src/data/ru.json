@@ -23,6 +23,23 @@
     "cooking": "Ваш заказ начали готовить",
     "waiting": "Дождитесь готовности на орбитальной станции"
   },
+  "OrderListItem": {
+    "done": "Выполнен",
+    "created": "Создан",
+    "pending": "Готовится"
+  },
+  "OrderInfo": {
+    "done": "Выполнен",
+    "created": "Создан",
+    "pending": "Готовится",
+    "loading": "Загрузка заказа...",
+    "ingredients": "Состав:"
+  },
+  "OrderStatus": {
+    "done": "Выполнен",
+    "created": "Создан",
+    "pending": "Готовится"
+  },
   "IngredientDetails": {
     "title": "Детали ингредиента",
     "calories": "Калории,ккал",

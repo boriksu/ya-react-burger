@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { WS_URL } from "../data/api/api-data";
+import { WSS_URL } from "../data/api/api-data";
 import { ORDERS_ALL_ACTIONS } from "../services/actions/index";
 import { useDispatch, useSelector } from "../services/hook";
 import { getOrdersAll } from "../services/selectors";
@@ -14,7 +14,7 @@ const FeedPage = () => {
   const { connected, error, message } = useSelector(getOrdersAll);
 
   useEffect(() => {
-    const websocketUrl = `${WS_URL}/orders/all`;
+    const websocketUrl = `${WSS_URL}/orders/all`;
     dispatch({ type: ORDERS_ALL_ACTIONS.START, url: websocketUrl });
 
     return () => {

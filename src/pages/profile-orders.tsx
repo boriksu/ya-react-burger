@@ -1,7 +1,7 @@
 import naming from "../data/ru.json";
 
 import { useEffect, useMemo } from "react";
-import { WS_URL } from "../data/api/api-data";
+import { WSS_URL } from "../data/api/api-data";
 import { ORDERS_USER_ACTIONS } from "../services/actions";
 import { useDispatch, useSelector } from "../services/hook";
 import { getOrdersUser } from "../services/selectors";
@@ -34,7 +34,7 @@ const ProfileOrders = () => {
     // Запуск WebSocket соединения для заказов пользователя
     dispatch({
       type: ORDERS_USER_ACTIONS.START,
-      url: `${WS_URL}/orders`,
+      url: `${WSS_URL}/orders`,
       addToken: true,
     });
 

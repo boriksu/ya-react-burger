@@ -18,7 +18,7 @@ import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
 import { useDispatch } from "../../services/hook";
 
 import {
-  Feed,
+  FeedPage,
   ForgotPassword,
   IngredientPage,
   Login,
@@ -56,7 +56,7 @@ const App: FC = () => {
     dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: item });
   }, [dispatch, item]);
 
-  const handleCloseModalDetail = () => {
+  const closeModal = () => {
     navigate(-1);
   };
 
@@ -66,7 +66,7 @@ const App: FC = () => {
       <div className={styles.main}>
         <Routes location={stateLocation || location}>
           <Route path={URL_ROOT} element={<MainPage />} />
-          <Route path={URL_FEED} element={<Feed />} />
+          <Route path={URL_FEED} element={<FeedPage />} />
           <Route path={`${URL_INGREDIENTS}/:id`} element={<IngredientPage />} />
           <Route path={`${URL_FEED}/:id`} element={<OrderPage />} />
           <Route path={URL_LOGIN} element={<Login />} />
@@ -99,7 +99,7 @@ const App: FC = () => {
             <Route
               path={`${URL_FEED}/:id`}
               element={
-                <Modal onClose={handleCloseModalDetail}>
+                <Modal onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               }
@@ -107,7 +107,7 @@ const App: FC = () => {
             <Route
               path={`${URL_PROFILE}/${URL_PROFILE_ORDERS}/:id`}
               element={
-                <Modal onClose={handleCloseModalDetail}>
+                <Modal onClose={closeModal}>
                   <OrderInfo />
                 </Modal>
               }

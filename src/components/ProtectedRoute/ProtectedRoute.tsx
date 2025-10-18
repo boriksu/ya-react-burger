@@ -14,19 +14,14 @@ const ProtectedRoute: FC<TProps> = ({ element, anonymous = false }) => {
 
   const from = location.state?.from || "/";
 
-  // Если разрешен неавторизованный доступ, а пользователь авторизован
   if (anonymous && authLogIn) {
-    // то отправляем его на предыдущую страницу
     return <Navigate to={from} replace />;
   }
 
-  // Если требуется авторизация, а пользователь не авторизован
   if (!anonymous && !authLogIn) {
-    // то отправляем его на страницу логина
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  // Если все ок, то рендерим внутреннее содержимое
   return element;
 };
 

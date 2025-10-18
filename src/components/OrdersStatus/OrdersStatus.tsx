@@ -13,7 +13,6 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
   const location = useLocation();
   const ordersPerColumn = 10;
 
-  // Группируем заказы по статусам
   const { completedOrders, inProgressOrders } = useMemo(() => {
     const completed = orders
       .filter((order: TOrder) => order.status === "done")
@@ -29,7 +28,6 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
     };
   }, [orders]);
 
-  // Разделяем заказы на колонки для отображения
   const {
     completedFirstColumn,
     completedSecondColumn,
@@ -51,7 +49,6 @@ const OrdersStatus: FC<TProps> = ({ orders, total, totalToday }) => {
     [completedOrders, inProgressOrders]
   );
 
-  // Компонент для отображения колонки с номерами заказов
   const OrderNumbersColumn = ({
     orderNumbers,
     linkStyle,

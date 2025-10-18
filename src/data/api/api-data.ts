@@ -1,7 +1,7 @@
 import { refreshToken } from "./auth/refreshToken";
 import { setCookie } from "./useCookie";
 
-export const WS_URL = "wss://norma.nomoreparties.space";
+export const WSS_URL = "wss://norma.nomoreparties.space";
 export const DOMAIN = "https://norma.nomoreparties.space";
 export const API_LOAD = "/api/ingredients";
 export const API_ORDER = "/api/orders";

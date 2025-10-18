@@ -1,4 +1,4 @@
-import Feed from "./feed";
+import FeedPage from "./feed";
 import ForgotPassword from "./forgot-password";
 import IngredientPage from "./ingredient";
 import Login from "./login";
@@ -13,7 +13,7 @@ import Register from "./register";
 import ResetPassword from "./reset-password";
 
 export {
-  Feed,
+  FeedPage,
   ForgotPassword,
   IngredientPage,
   Login,

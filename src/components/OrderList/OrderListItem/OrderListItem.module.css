@@ -1,23 +1,28 @@
-.order {
+.container {
   text-decoration: none;
   color: var(--text-primary-color);
   background-color: var(--background);
   border-radius: 40px;
 }
 
-.order_header {
+.header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.title_order {
+.title {
   min-height: 30px;
   line-height: 30px;
   padding: 0px 0px 12px 24px;
   margin: 0;
   z-index: 123123;
+}
+
+.status {
+  padding: 0px 0px 0px 24px;
+  margin: 12px 0px 0px 0px;
 }
 
 .time_order {
@@ -29,11 +34,6 @@
 .number_order {
   max-width: 20vh;
   line-height: 24px;
-}
-
-.status_order {
-  padding: 0px 0px 0px 24px;
-  margin: 12px 0px 0px 0px;
 }
 
 .status_done {
@@ -50,7 +50,7 @@ li {
   margin: 0;
 }
 
-.filling {
+.content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -60,7 +60,14 @@ li {
   margin: 12px 24px 24px 24px;
 }
 
-.image_fill {
+.list {
+  display: flex;
+  flex-direction: row;
+  background: #1c1c21;
+  height: 64px;
+}
+
+.ingredient {
   display: flex;
   justify-content: center;
   box-sizing: border-box;
@@ -73,15 +80,15 @@ li {
   width: 64px;
 }
 
-.image_position {
+.icon {
   position: relative;
 }
 
-.images_selection {
-  display: flex;
-  flex-direction: row;
-  background: #1c1c21;
-  height: 64px;
+.hidden {
+  left: 40%;
+  top: 30%;
+  position: absolute;
+  line-height: 24px;
 }
 
 .price {
@@ -94,11 +101,4 @@ li {
   max-width: 25vw;
   padding: 0px;
   text-decoration: none;
-}
-
-.count_hidden {
-  left: 40%;
-  top: 30%;
-  position: absolute;
-  line-height: 24px;
 }
