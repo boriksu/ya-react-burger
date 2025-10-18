@@ -5,13 +5,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "../services/hook";
 import { Link, useNavigate } from "react-router-dom";
 import {
   authGetUserAction,
   authRegisterAction,
 } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { useDispatch, useSelector } from "../services/hook";
+// import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import { URL_LOGIN, URL_ROOT } from "../data/routes";
 

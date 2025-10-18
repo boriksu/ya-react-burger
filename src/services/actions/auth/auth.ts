@@ -29,11 +29,10 @@ export const authLogoutAction = () => async (dispatch: AppDispatch) => {
       meta: { operation: AUTH_ACTIONS.LOGOUT },
     });
 
+    await logoutUser();
+
     localStorage.removeItem("refreshToken");
     deleteCookie("accessToken");
-
-    // await logoutUser(data);
-    await logoutUser();
 
     dispatch({
       type: AUTH_ACTIONS.SUCCESS,
