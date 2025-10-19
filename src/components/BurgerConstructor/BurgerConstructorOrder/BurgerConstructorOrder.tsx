@@ -79,20 +79,30 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
         </p>
       )}
       <div className={`${styles.totalPrice} mr-4 mt-10`}>
-        <div className="mr-2 mb-1 text text_type_digits-medium">
-          {totalPrice}
-        </div>
-        <div className={`${styles.currency} mr-10`}>
-          <CurrencyIcon type="primary" />
-        </div>
-        <Button
-          htmlType="button"
-          type="primary"
-          onClick={showOrderDetails}
-          disabled={disabled}
-        >
-          {naming.BurgerConstructorOrder.order}
-        </Button>
+        {orderLoading ? (
+          <p
+            className={`mt-2 page-container-inner text text_type_main-default`}
+          >
+            {naming.BurgerConstructorOrder.loading}
+          </p>
+        ) : (
+          <>
+            <div className="mr-2 mb-1 text text_type_digits-medium">
+              {totalPrice}
+            </div>
+            <div className={`${styles.currency} mr-10`}>
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button
+              htmlType="button"
+              type="primary"
+              onClick={showOrderDetails}
+              disabled={disabled}
+            >
+              {naming.BurgerConstructorOrder.order}
+            </Button>
+          </>
+        )}
         {orderNumber && (
           <Modal onClose={hideOrderDetails}>
             <OrderDetails orderNumber={orderNumber} />

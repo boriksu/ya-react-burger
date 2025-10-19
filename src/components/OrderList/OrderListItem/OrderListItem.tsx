@@ -3,9 +3,9 @@ import {
   FormattedDate,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useMemo } from "react";
-import { useSelector } from "react-redux";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useSelector } from "../../../services/hook";
 import { getIngredients } from "../../../services/selectors";
 
 import naming from "../../../data/ru.json";
