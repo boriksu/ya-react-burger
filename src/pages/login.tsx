@@ -24,7 +24,6 @@ import {
   authGetUserAction,
   authLoginAction,
 } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
 import styles from "./page.module.css";
 
@@ -71,10 +70,6 @@ const Login = () => {
         from.pathname = URL_ROOT;
       }
       navigate(from.pathname, { replace: true });
-    } else if (wasSubmitted && authError) {
-      alert(`${naming.Login.entry} ${authError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
     }
   }, [dispatch, location.state, wasSubmitted, authLogIn, navigate, authError]);
 
@@ -87,6 +82,11 @@ const Login = () => {
           <Loader />
         ) : (
           <>
+            {!!authError && wasSubmitted && (
+              <p className={`mb-2 error-text text text_type_main-default`}>
+                {authError}
+              </p>
+            )}
             <h1 className="text text_type_main-medium mb-6">
               {naming.Login.entry}
             </h1>

@@ -11,7 +11,6 @@ import {
   authRegisterAction,
 } from "../services/actions/auth/auth";
 import { useDispatch, useSelector } from "../services/hook";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import { URL_LOGIN, URL_ROOT } from "../data/routes";
 
@@ -72,10 +71,6 @@ const Register = () => {
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && authError) {
-      alert(`Ошибка регистрации: ${authError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       alert("Регистрация успешна! Выполняется вход...");
       dispatch(authGetUserAction() as any);
@@ -92,6 +87,11 @@ const Register = () => {
           <Loader />
         ) : (
           <>
+            {!!authError && wasSubmitted && (
+              <p className={`mb-2 error-text text text_type_main-default`}>
+                {authError}
+              </p>
+            )}
             <h1 className="text text_type_main-medium mb-6">
               {naming.Register.registry}
             </h1>

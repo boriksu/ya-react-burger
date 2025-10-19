@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { authPatchUserAction } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 import { useDispatch, useSelector } from "../services/hook";
 
 import {
@@ -109,18 +108,13 @@ const ProfileEdit = () => {
       formData.email !== user.email ||
       formData.password.length > 0);
 
-  useEffect(() => {
-    if (authError) {
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-    }
-
-    if (authSuccess) {
-      setFormData((prev) => ({ ...prev, password: "" }));
-    }
-  }, [dispatch, authError, authSuccess]);
-
   return (
     <div className={styles.containerRight}>
+      {!!authError && wasSubmitted && (
+        <p className={`mb-2 error-text text text_type_main-default`}>
+          {authError}
+        </p>
+      )}
       <form
         className={styles.content}
         onSubmit={handleSubmit}
