@@ -69,7 +69,7 @@ const OrdersListItem: FC<TProps> = ({ order, isPerson = false }) => {
     <Link
       className={styles.container}
       to={`${location.pathname}/${order.number}`}
-      state={{ location }}
+      state={{ background: location }}
     >
       <div className="m-6">
         <div className={styles.header}>

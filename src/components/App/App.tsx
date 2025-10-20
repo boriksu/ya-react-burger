@@ -1,6 +1,12 @@
 import { FC, useEffect } from "react";
 
-import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+} from "react-router-dom";
 import {
   URL_ANY,
   URL_FEED,
@@ -43,14 +49,21 @@ import { ingredientsAction } from "../../services/actions/ingredients-action";
 const App: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const navigationType = useNavigationType();
 
   useEffect(() => {
     dispatch(ingredientsAction());
     dispatch(authCheckUserAction());
   }, [dispatch]);
 
-  const location = useLocation();
-  const stateLocation = location.state && location.state.location;
+  let stateLocation;
+  if (navigationType === "PUSH" || navigationType === "REPLACE") {
+    stateLocation = location.state && location.state.background;
+  } else {
+    stateLocation = undefined;
+  }
+
   const item = location.state && location.state.item;
   useEffect(() => {
     dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: item });
@@ -83,12 +96,15 @@ const App: FC = () => {
             element={<ProtectedRoute anonymous element={<ForgotPassword />} />}
           />
           <Route
+            path={`${URL_PROFILE}/${URL_PROFILE_ORDERS}/:id`}
+            element={<ProtectedRoute element={<OrderPage />} />}
+          />
+          <Route
             path={URL_PROFILE}
             element={<ProtectedRoute element={<Profile />} />}
           >
             <Route index element={<ProfileEdit />} />
             <Route path={URL_PROFILE_ORDERS} element={<ProfileOrders />} />
-            <Route path={`${URL_PROFILE_ORDERS}/:id`} element={<OrderPage />} />
             <Route path={URL_PROFILE_LOGOUT} element={<ProfileLogout />} />
             <Route path={URL_ANY} element={<Page404 />} />
           </Route>
