@@ -1,4 +1,3 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
@@ -6,20 +5,19 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
   authGetUserAction,
   authRegisterAction,
 } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { useDispatch, useSelector } from "../services/hook";
 
 import { URL_LOGIN, URL_ROOT } from "../data/routes";
 
 import {
   Button,
   EmailInput,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
@@ -39,12 +37,12 @@ const Register = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction() as any);
+    dispatch(authGetUserAction());
   }, [dispatch]);
 
-  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
-  // }, []);
+  const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, name: e.target.value }));
+  }, []);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
@@ -73,10 +71,6 @@ const Register = () => {
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && authError) {
-      alert(`Ошибка регистрации: ${authError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       alert("Регистрация успешна! Выполняется вход...");
       dispatch(authGetUserAction() as any);
@@ -93,17 +87,22 @@ const Register = () => {
           <Loader />
         ) : (
           <>
+            {!!authError && wasSubmitted && (
+              <p className={`mb-2 error-text text text_type_main-default`}>
+                {authError}
+              </p>
+            )}
             <h1 className="text text_type_main-medium mb-6">
               {naming.Register.registry}
             </h1>
 
-            {/* <Input
+            <Input
               placeholder={naming.Register.name}
               extraClass="mb-6"
               name="name"
               value={formData.name}
               onChange={handleNameChange}
-            /> */}
+            />
 
             <EmailInput
               extraClass="mb-6"

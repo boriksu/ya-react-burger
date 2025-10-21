@@ -2,8 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 200px);
   overflow-y: hidden;
+}
+
+.containerRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 16px;
+  overflow: auto;
+  padding-right: 8px;
+  width: 850px;
+  margin-top: 20px;
 }
 
 .content {
@@ -12,6 +22,7 @@
 
 .containerProfile {
   justify-content: flex-start;
+  margin-top: 20px;
 }
 
 .containerProfileContent {

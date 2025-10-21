@@ -1,12 +1,20 @@
-import { ORDER_ACTIONS } from "../actions/order-action";
+import { ORDER_ACTIONS, TCreateOrderActions } from "../actions/order-action";
 
-const initialState = {
+type TCreateOrderState = {
+  orderLoading: boolean;
+  orderErrors: boolean;
+  orderNumber: number | null;
+};
+const initialState: TCreateOrderState = {
   orderLoading: false,
   orderErrors: false,
   orderNumber: null,
 };
 
-export const createOrderReducer = (state = initialState, action) => {
+export const createOrderReducer = (
+  state = initialState,
+  action: TCreateOrderActions
+): TCreateOrderState => {
   switch (action.type) {
     case ORDER_ACTIONS.CREATE_REQUEST:
       return { ...state, orderLoading: true, orderErrors: false };

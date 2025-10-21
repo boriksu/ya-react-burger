@@ -3,17 +3,22 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { URL_LOGIN } from "../../../data/routes";
 import naming from "../../../data/ru.json";
+import { TIngredient } from "../../../data/types/types";
 import { authGetUserAction } from "../../../services/actions/auth/auth";
-import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
+import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/burger-constuctor";
 import {
   ORDER_ACTIONS,
   orderAction,
 } from "../../../services/actions/order-action";
-import { getAuth, getConstructor, getOrder } from "../../../services/selectors";
+import { useDispatch, useSelector } from "../../../services/hook";
+import {
+  createOrder,
+  getAuth,
+  getConstructor,
+} from "../../../services/selectors";
 import Modal from "../../Modal/Modal";
 import styles from "./BurgerConstructorOrder.module.css";
 import OrderDetails from "./OrderDetails/OrderDetails";
@@ -24,13 +29,7 @@ type TProps = {
 
 const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
   const { bun, ingredients } = useSelector(getConstructor);
-  const { orderNumber, orderLoading, orderErrors } = useSelector(getOrder);
-
-  useEffect(() => {
-    if (orderErrors) {
-      alert(naming.BurgerConstructorOrder.error);
-    }
-  }, [orderErrors]);
+  const { orderNumber, orderLoading, orderErrors } = useSelector(createOrder);
 
   const disabled = useMemo(() => {
     let hasIngredient = (ingredients && ingredients.length > 0) || bun;
@@ -45,7 +44,7 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
 
   useEffect(() => {
     if (!authLogIn) {
-      dispatch(authGetUserAction() as any);
+      dispatch(authGetUserAction());
     }
   }, [authLogIn, dispatch]);
 
@@ -57,11 +56,11 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
     if (!authLogIn) {
       navigate(URL_LOGIN, { replace: true });
     } else {
-      const orderIngredients = [...ingredients];
+      const orderIngredients: Array<TIngredient> = [...ingredients];
       if (bun) {
         orderIngredients.push(bun, bun);
       }
-      dispatch(orderAction(orderIngredients) as any);
+      dispatch(orderAction(orderIngredients));
     }
   }, [authLoading, authLogIn, navigate, ingredients, bun, dispatch]);
 
@@ -71,25 +70,46 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
   };
 
   return (
-    <div className={`${styles.totalPrice} mr-4 mt-10`}>
-      <div className="mr-2 mb-1 text text_type_digits-medium">{totalPrice}</div>
-      <div className={`${styles.currency} mr-10`}>
-        <CurrencyIcon type="primary" />
-      </div>
-      <Button
-        htmlType="button"
-        type="primary"
-        onClick={showOrderDetails}
-        disabled={disabled}
-      >
-        {naming.BurgerConstructorOrder.order}
-      </Button>
-      {orderNumber && (
-        <Modal onClose={hideOrderDetails}>
-          <OrderDetails orderNumber={orderNumber} />
-        </Modal>
+    <>
+      {orderErrors && (
+        <p
+          className={`mt-2 page-container-inner error-text text text_type_main-default`}
+        >
+          {naming.BurgerConstructorOrder.error}
+        </p>
       )}
-    </div>
+      <div className={`${styles.totalPrice} mr-4 mt-10`}>
+        {orderLoading ? (
+          <p
+            className={`mt-2 page-container-inner text text_type_main-default`}
+          >
+            {naming.BurgerConstructorOrder.loading}
+          </p>
+        ) : (
+          <>
+            <div className="mr-2 mb-1 text text_type_digits-medium">
+              {totalPrice}
+            </div>
+            <div className={`${styles.currency} mr-10`}>
+              <CurrencyIcon type="primary" />
+            </div>
+            <Button
+              htmlType="button"
+              type="primary"
+              onClick={showOrderDetails}
+              disabled={disabled}
+            >
+              {naming.BurgerConstructorOrder.order}
+            </Button>
+          </>
+        )}
+        {orderNumber && (
+          <Modal onClose={hideOrderDetails}>
+            <OrderDetails orderNumber={orderNumber} />
+          </Modal>
+        )}
+      </div>
+    </>
   );
 };
 

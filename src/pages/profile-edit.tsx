@@ -1,37 +1,45 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { authPatchUserAction } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { useDispatch, useSelector } from "../services/hook";
 
 import {
   Button,
   EmailInput,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
 import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
+import { authGetUserAction } from "../services/actions/auth/auth";
 import { getAuth } from "../services/selectors";
 
 const ProfileEdit = () => {
   const dispatch = useDispatch();
 
-  const { authLoading, authError, authSuccess, user } = useSelector(getAuth);
+  const { authLoading, authSuccess, authError, user } = useSelector(getAuth);
 
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
   });
+
+  const [wasSubmitted, setWasSubmitted] = useState(false);
+  const [nameDisabled, setNameDisabled] = useState(true);
+  const nameRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    dispatch(authGetUserAction() as any);
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -43,9 +51,9 @@ const ProfileEdit = () => {
     }
   }, [user]);
 
-  // const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, name: e.target.value }));
-  // }, []);
+  const handleNameChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, name: e.target.value }));
+  }, []);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, email: e.target.value }));
@@ -62,6 +70,7 @@ const ProfileEdit = () => {
     (e: FormEvent) => {
       e.preventDefault();
       dispatch(authPatchUserAction(formData) as any);
+      setNameDisabled(true);
     },
     [dispatch, formData]
   );
@@ -74,9 +83,24 @@ const ProfileEdit = () => {
         email: user?.email || "",
         password: "",
       });
+      setNameDisabled(true);
     },
     [user]
   );
+
+  const nameClick = useCallback(() => {
+    setNameDisabled(false);
+    setTimeout(() => {
+      nameRef.current?.focus();
+    }, 0);
+  }, []);
+
+  useEffect(() => {
+    if (authSuccess && wasSubmitted) {
+      setFormData((prev) => ({ ...prev, password: "" }));
+      setWasSubmitted(false);
+    }
+  }, [authSuccess, wasSubmitted]);
 
   const hasChanges =
     user &&
@@ -84,72 +108,59 @@ const ProfileEdit = () => {
       formData.email !== user.email ||
       formData.password.length > 0);
 
-  useEffect(() => {
-    if (authError) {
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-    }
-
-    if (authSuccess) {
-      setFormData((prev) => ({ ...prev, password: "" }));
-    }
-  }, [dispatch, authError, authSuccess]);
-
-  // const [nameDisabled, setNameDisabled] = useState<boolean>(true);
-  // const nameRef = useRef<HTMLInputElement>(null);
-
-  // const nameClick = useCallback(() => {
-  //   setNameDisabled(false);
-  //   setTimeout(() => {
-  //     nameRef.current?.focus();
-  //   }, 0);
-  // }, [setNameDisabled, nameRef]);
-
   return (
-    <form
-      className={styles.content}
-      onSubmit={handleSubmit}
-      onReset={handleReset}
-    >
-      {/* <Input
-        extraClass="mb-6"
-        name="name"
-        placeholder={naming.ProfileEdit.name}
-        value={formData.name}
-        onChange={handleNameChange}
-        icon="EditIcon"
-        disabled={nameDisabled}
-        onIconClick={nameClick}
-        ref={nameRef}
-      /> */}
-      <EmailInput
-        extraClass="mb-6"
-        name="email"
-        value={formData.email}
-        onChange={handleEmailChange}
-        isIcon
-      />
-      <PasswordInput
-        extraClass="mb-6"
-        name="password"
-        value={formData.password}
-        onChange={handlePasswordChange}
-        icon="EditIcon"
-        placeholder={naming.ProfileEdit.newPassword}
-      />
+    <div className={styles.containerRight}>
+      {!!authError && wasSubmitted && (
+        <p className={`mb-2 error-text text text_type_main-default`}>
+          {authError}
+        </p>
+      )}
+      <form
+        className={styles.content}
+        onSubmit={handleSubmit}
+        onReset={handleReset}
+      >
+        <Input
+          extraClass="mb-6"
+          name="name"
+          placeholder={naming.ProfileEdit.name}
+          value={formData.name}
+          onChange={handleNameChange}
+          icon="EditIcon"
+          disabled={nameDisabled}
+          onIconClick={nameClick}
+          ref={nameRef}
+        />
+        <EmailInput
+          extraClass="mb-6"
+          name="email"
+          value={formData.email}
+          onChange={handleEmailChange}
+          isIcon
+        />
+        <PasswordInput
+          extraClass="mb-6"
+          name="password"
+          value={formData.password}
+          onChange={handlePasswordChange}
+          icon="EditIcon"
+          placeholder={naming.ProfileEdit.newPassword}
+        />
 
-      {authLoading ? (
-        <Loader />
-      ) : hasChanges ? (
-        <div>
-          <Button type="primary" htmlType="reset">
-            {naming.ProfileEdit.cancel}
-          </Button>
-          <Button type="primary" extraClass="ml-5" htmlType="submit">
-            {naming.ProfileEdit.save}
-          </Button>
-        </div>
-      ) : null}
-    </form>
+        {authLoading ? (
+          <Loader />
+        ) : hasChanges ? (
+          <div>
+            <Button type="primary" htmlType="reset">
+              {naming.ProfileEdit.cancel}
+            </Button>
+            <Button type="primary" extraClass="ml-5" htmlType="submit">
+              {naming.ProfileEdit.save}
+            </Button>
+          </div>
+        ) : null}
+      </form>
+    </div>
   );
 };
 

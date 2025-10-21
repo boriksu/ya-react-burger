@@ -4,9 +4,9 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
-import { useDispatch } from "react-redux";
 import { TIngredientConstructor } from "../../../data/types/types";
-import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/index";
+import { CONSTRUCTOR_ACTIONS } from "../../../services/actions/burger-constuctor";
+import { useDispatch } from "../../../services/hook";
 import styles from "./BurgerConstructorIngredient.module.css";
 
 type TProps = {
@@ -24,7 +24,7 @@ const BurgerConstructorIngredient: FC<TProps> = ({ item, index, onRemove }) => {
     item: { index },
   });
 
-  const [, drop] = useDrop<TIngredientConstructor>({
+  const [, drop] = useDrop<{ index: number }>({
     accept: "sort",
     drop(item) {
       if (index !== item.index) {

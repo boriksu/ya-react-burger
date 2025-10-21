@@ -1,8 +1,8 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../../services/hook";
 import { INGREDIENT_TYPES } from "../../../data/ingredientType";
 import naming from "../../../data/ru.json";
-import { TAB_ACTIONS } from "../../../services/actions/index";
+import { TAB_ACTIONS } from "../../../services/actions//tab-info";
 import styles from "./BurgerIngredientsTabs.module.css";
 import { getTab } from "../../../services/selectors";
 import { FC } from "react";

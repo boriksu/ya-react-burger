@@ -5,14 +5,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { URL_LOGIN, URL_RESET_PASSWORD, URL_ROOT } from "../data/routes";
 import {
   authForgotPasswordAction,
   authGetUserAction,
 } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
+import { useDispatch, useSelector } from "../services/hook";
 
 import {
   Button,
@@ -32,7 +31,7 @@ const ForgotPassword = () => {
   const [wasSubmitted, setWasSubmitted] = useState(false);
 
   useEffect(() => {
-    dispatch(authGetUserAction() as any);
+    dispatch(authGetUserAction());
   }, [dispatch]);
 
   const handleEmailChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +42,7 @@ const ForgotPassword = () => {
     (e: FormEvent) => {
       e.preventDefault();
       setWasSubmitted(true);
-      dispatch(authForgotPasswordAction({ email }) as any);
+      dispatch(authForgotPasswordAction({ email }));
     },
     [dispatch, email]
   );
@@ -54,10 +53,6 @@ const ForgotPassword = () => {
   useEffect(() => {
     if (authLogIn) {
       navigate(URL_ROOT, { replace: true });
-    } else if (wasSubmitted && authError) {
-      alert(`${naming.ForgotPassword.passwordRecovery} ${authError}`);
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       navigate(URL_RESET_PASSWORD, { replace: true });
     }
@@ -72,6 +67,11 @@ const ForgotPassword = () => {
           <Loader />
         ) : (
           <>
+            {!!authError && wasSubmitted && (
+              <p className={`mb-2 error-text text text_type_main-default`}>
+                {authError}
+              </p>
+            )}
             <h1 className="text text_type_main-medium mb-6">
               {naming.ForgotPassword.passwordRecovery}
             </h1>

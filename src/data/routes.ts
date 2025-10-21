@@ -1,4 +1,5 @@
 export const URL_ANY = "*";
+export const URL_FEED = "/feed";
 export const URL_FORGOT_PASSWORD = "/forgot-password";
 export const URL_INGREDIENTS = "/ingredients";
 export const URL_LOGIN = "/login";

@@ -1,9 +1,15 @@
 import { FC, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+  useNavigationType,
+} from "react-router-dom";
 import {
   URL_ANY,
+  URL_FEED,
   URL_FORGOT_PASSWORD,
   URL_INGREDIENTS,
   URL_LOGIN,
@@ -15,12 +21,15 @@ import {
   URL_ROOT,
 } from "../../data/routes";
 import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
+import { useDispatch } from "../../services/hook";
 
 import {
+  FeedPage,
   ForgotPassword,
   IngredientPage,
   Login,
   MainPage,
+  OrderPage,
   Page404,
   Profile,
   ProfileEdit,
@@ -30,18 +39,39 @@ import {
   ResetPassword,
 } from "../../pages";
 import AppHeader from "../AppHeader/AppHeader";
+import Modal from "../Modal/Modal";
+import OrderInfo from "../OrderInfo/OrderInfo";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import styles from "./App.module.css";
 
+import { authCheckUserAction } from "../../services/actions/auth/auth";
+import { ingredientsAction } from "../../services/actions/ingredients-action";
 const App: FC = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const location = useLocation();
-  const stateLocation = location.state && location.state.location;
+  const navigationType = useNavigationType();
+
+  useEffect(() => {
+    dispatch(ingredientsAction());
+    dispatch(authCheckUserAction());
+  }, [dispatch]);
+
+  let stateLocation;
+  if (navigationType === "PUSH" || navigationType === "REPLACE") {
+    stateLocation = location.state && location.state.background;
+  } else {
+    stateLocation = undefined;
+  }
+
   const item = location.state && location.state.item;
   useEffect(() => {
     dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: item });
   }, [dispatch, item]);
+
+  const closeModal = () => {
+    navigate(-1);
+  };
 
   return (
     <div className={styles.container}>
@@ -49,18 +79,29 @@ const App: FC = () => {
       <div className={styles.main}>
         <Routes location={stateLocation || location}>
           <Route path={URL_ROOT} element={<MainPage />} />
+          <Route path={URL_FEED} element={<FeedPage />} />
           <Route path={`${URL_INGREDIENTS}/:id`} element={<IngredientPage />} />
+          <Route path={`${URL_FEED}/:id`} element={<OrderPage />} />
           <Route path={URL_LOGIN} element={<Login />} />
-          <Route path={URL_REGISTER} element={<Register />} />
-          <Route path={URL_RESET_PASSWORD} element={<ResetPassword />} />
-          <Route path={URL_FORGOT_PASSWORD} element={<ForgotPassword />} />
+          <Route
+            path={URL_REGISTER}
+            element={<ProtectedRoute anonymous element={<Register />} />}
+          />
+          <Route
+            path={URL_RESET_PASSWORD}
+            element={<ProtectedRoute anonymous element={<ResetPassword />} />}
+          />
+          <Route
+            path={URL_FORGOT_PASSWORD}
+            element={<ProtectedRoute anonymous element={<ForgotPassword />} />}
+          />
+          <Route
+            path={`${URL_PROFILE}/${URL_PROFILE_ORDERS}/:id`}
+            element={<ProtectedRoute element={<OrderPage />} />}
+          />
           <Route
             path={URL_PROFILE}
-            element={
-              <ProtectedRoute>
-                <Profile />
-              </ProtectedRoute>
-            }
+            element={<ProtectedRoute element={<Profile />} />}
           >
             <Route index element={<ProfileEdit />} />
             <Route path={URL_PROFILE_ORDERS} element={<ProfileOrders />} />
@@ -69,6 +110,26 @@ const App: FC = () => {
           </Route>
           <Route path={URL_ANY} element={<Page404 />} />
         </Routes>
+        {stateLocation && (
+          <Routes>
+            <Route
+              path={`${URL_FEED}/:id`}
+              element={
+                <Modal onClose={closeModal}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+            <Route
+              path={`${URL_PROFILE}/${URL_PROFILE_ORDERS}/:id`}
+              element={
+                <Modal onClose={closeModal}>
+                  <OrderInfo />
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
       </div>
     </div>
   );

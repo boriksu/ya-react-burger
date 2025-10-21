@@ -1,9 +1,23 @@
-import { NavLink, Outlet } from "react-router-dom";
-import { URL_PROFILE_LOGOUT, URL_PROFILE_ORDERS } from "../data/routes";
+import { matchPath, NavLink, Outlet, useLocation } from "react-router-dom";
+import {
+  URL_PROFILE,
+  URL_PROFILE_LOGOUT,
+  URL_PROFILE_ORDERS,
+} from "../data/routes";
 import naming from "../data/ru.json";
 import styles from "./page.module.css";
 
 const Profile = () => {
+  const { pathname } = useLocation();
+
+  let info = naming.Profile.changeProfileData;
+
+  if (matchPath(pathname, `${URL_PROFILE}/${URL_PROFILE_ORDERS}`)) {
+    info = naming.Profile.viewOrderHistory;
+  } else if (matchPath(pathname, URL_PROFILE)) {
+    info = naming.Profile.changeProfileData;
+  }
+
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
     `text text_type_main-medium ${
       isActive ? "text_color_primary" : "text_color_inactive"
@@ -31,7 +45,7 @@ const Profile = () => {
             </li>
           </ul>
           <p className="text text_type_main-default text_color_dark mt-20">
-            {naming.Profile.changeProfileData}
+            {info}
           </p>
         </nav>
 

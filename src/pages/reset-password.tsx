@@ -1,4 +1,3 @@
-// FIXME
 import {
   ChangeEvent,
   FormEvent,
@@ -6,17 +5,16 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "../services/hook";
 
 import { authResetPasswordAction } from "../services/actions/auth/auth";
-import { AUTH_ACTIONS } from "../services/actions/auth/auth-helper";
 
 import { URL_FORGOT_PASSWORD, URL_LOGIN, URL_ROOT } from "../data/routes";
 
 import {
   Button,
-  // Input,
+  Input,
   PasswordInput,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import Loader from "../components/Loader/Loader";
@@ -44,9 +42,9 @@ const ResetPassword = () => {
     []
   );
 
-  // const handleTokenChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, token: e.target.value }));
-  // }, []);
+  const handleTokenChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, token: e.target.value }));
+  }, []);
 
   const handleSubmit = useCallback(
     (e: FormEvent) => {
@@ -62,9 +60,6 @@ const ResetPassword = () => {
       navigate(URL_ROOT, { replace: true });
     } else if (!forgotPassword) {
       navigate(URL_FORGOT_PASSWORD, { replace: true });
-    } else if (wasSubmitted && authError) {
-      dispatch({ type: AUTH_ACTIONS.CLEAR_ERRORS });
-      setWasSubmitted(false);
     } else if (wasSubmitted && authSuccess) {
       navigate(URL_LOGIN, { replace: true });
     }
@@ -83,6 +78,11 @@ const ResetPassword = () => {
   return (
     <main className={styles.container}>
       <form className={styles.content} onSubmit={handleSubmit}>
+        {!!authError && wasSubmitted && (
+          <p className={`mb-2 error-text text text_type_main-default`}>
+            {authError}
+          </p>
+        )}
         <h1 className="text text_type_main-medium mb-6">
           {naming.ResetPassword.passwordRecovery}
         </h1>
@@ -95,13 +95,13 @@ const ResetPassword = () => {
           extraClass="mb-6"
         />
 
-        {/* <Input
+        <Input
           placeholder={naming.ResetPassword.code}
           name="token"
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
-        /> */}
+        />
 
         {authLoading ? (
           <Loader />
