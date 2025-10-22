@@ -72,7 +72,7 @@ const ForgotPassword = () => {
                 {authError}
               </p>
             )}
-            <h1 className="text text_type_main-medium mb-6">
+            <h1 className="text text_type_main-medium mb-6 mt-10">
               {naming.ForgotPassword.passwordRecovery}
             </h1>
             <EmailInput
