@@ -1,0 +1,198 @@
+import { TOrder } from "../../../data/types/types";
+import { ORDERS_USER_ACTIONS } from "../../actions";
+import { ordersUserReducer } from "../orders-user";
+
+// Моки для тестовых данных
+const mockOrder: TOrder = {
+  _id: "1",
+  ingredients: ["bun", "sauce", "bun"],
+  status: "done",
+  name: "Test Order",
+  createdAt: "2025-10-22T00:00:00.000Z",
+  updatedAt: "2025-10-22T00:00:00.000Z",
+  number: 1,
+};
+
+const mockOrdersList = {
+  orders: [mockOrder],
+  total: 100,
+  totalToday: 5,
+};
+
+describe("ordersUserReducer", () => {
+  const initialState = {
+    isLoadedData: false,
+    message: null,
+    error: null,
+  };
+
+  describe("initial state", () => {
+    it("should return initial state when no state provided", () => {
+      expect(ordersUserReducer(undefined, {} as any)).toEqual(initialState);
+    });
+
+    it("should return current state for unknown action", () => {
+      const currentState = {
+        isLoadedData: true,
+        message: mockOrdersList,
+        error: null,
+      };
+      const action = { type: "UNKNOWN_ACTION" };
+
+      expect(ordersUserReducer(currentState, action as any)).toEqual(
+        currentState
+      );
+    });
+  });
+
+  describe("SUCCESS", () => {
+    it("should handle SUCCESS action", () => {
+      const action = { type: ORDERS_USER_ACTIONS.SUCCESS };
+      const currentState = { ...initialState, error: "Previous error" };
+
+      const result = ordersUserReducer(currentState, action);
+
+      expect(result).toEqual({
+        isLoadedData: true,
+        message: null,
+        error: null,
+      });
+    });
+
+    it("should clear error and set isLoadedData to true", () => {
+      const action = { type: ORDERS_USER_ACTIONS.SUCCESS };
+      const stateWithError = {
+        isLoadedData: false,
+        message: mockOrdersList,
+        error: "Connection error",
+      };
+
+      const result = ordersUserReducer(stateWithError, action);
+
+      expect(result.error).toBeNull();
+      expect(result.isLoadedData).toBe(true);
+      expect(result.message).toEqual(mockOrdersList);
+    });
+  });
+
+  describe("ERROR", () => {
+    it("should handle ERROR action", () => {
+      const errorMessage = "WebSocket connection failed";
+      const action = {
+        type: ORDERS_USER_ACTIONS.ERROR,
+        error: errorMessage,
+      };
+
+      const result = ordersUserReducer(initialState, action);
+
+      expect(result).toEqual({
+        isLoadedData: false,
+        message: null,
+        error: errorMessage,
+      });
+    });
+
+    it("should overwrite existing error and reset isLoadedData", () => {
+      const newError = "New error message";
+      const action = {
+        type: ORDERS_USER_ACTIONS.ERROR,
+        error: newError,
+      };
+      const stateWithData = {
+        isLoadedData: true,
+        message: mockOrdersList,
+        error: "Old error",
+      };
+
+      const result = ordersUserReducer(stateWithData, action);
+
+      expect(result.error).toBe(newError);
+      expect(result.isLoadedData).toBe(false);
+      expect(result.message).toEqual(mockOrdersList);
+    });
+  });
+
+  describe("CLOSED", () => {
+    it("should handle CLOSED action", () => {
+      const action = { type: ORDERS_USER_ACTIONS.CLOSED };
+      const stateWithData = {
+        isLoadedData: true,
+        message: mockOrdersList,
+        error: "Some error",
+      };
+
+      const result = ordersUserReducer(stateWithData, action);
+
+      expect(result).toEqual({
+        isLoadedData: false,
+        message: mockOrdersList,
+        error: null,
+      });
+    });
+
+    it("should reset loading state and clear error", () => {
+      const action = { type: ORDERS_USER_ACTIONS.CLOSED };
+
+      const result = ordersUserReducer(initialState, action);
+
+      expect(result.isLoadedData).toBe(false);
+      expect(result.error).toBeNull();
+    });
+  });
+
+  describe("MESSAGE", () => {
+    it("should handle MESSAGE action", () => {
+      const action = {
+        type: ORDERS_USER_ACTIONS.MESSAGE,
+        message: mockOrdersList,
+      };
+
+      const result = ordersUserReducer(initialState, action);
+
+      expect(result).toEqual({
+        isLoadedData: false,
+        message: mockOrdersList,
+        error: null,
+      });
+    });
+
+    it("should clear error when receiving message", () => {
+      const action = {
+        type: ORDERS_USER_ACTIONS.MESSAGE,
+        message: mockOrdersList,
+      };
+      const stateWithError = {
+        isLoadedData: false,
+        message: null,
+        error: "Previous error",
+      };
+
+      const result = ordersUserReducer(stateWithError, action);
+
+      expect(result.message).toEqual(mockOrdersList);
+      expect(result.error).toBeNull();
+    });
+
+    it("should replace existing message", () => {
+      const newMessage = {
+        orders: [mockOrder, { ...mockOrder, _id: "2", number: 2 }],
+        total: 200,
+        totalToday: 10,
+      };
+      const action = {
+        type: ORDERS_USER_ACTIONS.MESSAGE,
+        message: newMessage,
+      };
+      const stateWithMessage = {
+        isLoadedData: true,
+        message: mockOrdersList,
+        error: null,
+      };
+
+      const result = ordersUserReducer(stateWithMessage, action);
+
+      expect(result.message).toEqual(newMessage);
+      expect(result.isLoadedData).toBe(true);
+    });
+  });
+});
