@@ -31,8 +31,8 @@ export type TCreateOrderActions =
   | ICreateOrderErrorAction
   | IClearOrderAction;
 
-export function orderAction(ingredients: Array<TIngredient>) {
-  return function (dispatch: AppDispatch) {
+export const orderAction = (ingredients: Array<TIngredient>) => {
+  return (dispatch: AppDispatch) => {
     dispatch({ type: ORDER_ACTIONS.CREATE_REQUEST });
     createOrder(ingredients)
       .then((data) => {
@@ -45,4 +45,4 @@ export function orderAction(ingredients: Array<TIngredient>) {
         dispatch({ type: ORDER_ACTIONS.CREATE_FAILURE });
       });
   };
-}
+};

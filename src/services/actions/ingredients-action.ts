@@ -25,8 +25,8 @@ export type TLoadIngredientsActions =
   | ILoadDataSuccessAction
   | ILoadDataErrorAction;
 
-export function ingredientsAction() {
-  return function (dispatch: AppDispatch) {
+export const ingredientsAction = () => {
+  return (dispatch: AppDispatch) => {
     dispatch({ type: INGREDIENTS_ACTIONS.FETCH_REQUEST });
     loadIngredients()
       .then((data) => {
@@ -36,7 +36,7 @@ export function ingredientsAction() {
         dispatch({ type: INGREDIENTS_ACTIONS.FETCH_FAILURE });
       });
   };
-}
+};
 
 export interface SetDisplayedIngredientAction {
   type: typeof INGREDIENTS_ACTIONS.SHOW_DETAILS;
