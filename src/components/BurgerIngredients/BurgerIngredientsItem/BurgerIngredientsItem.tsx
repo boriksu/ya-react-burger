@@ -7,8 +7,6 @@ import { useDrag } from "react-dnd";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { URL_INGREDIENTS } from "../../../data/routes";
 import { TIngredient } from "../../../data/types/types";
-import { INGREDIENTS_ACTIONS } from "../../../services/actions/ingredients-action";
-import { useDispatch } from "../../../services/hook";
 import styles from "./BurgerIngredientsItem.module.css";
 
 type TProps = {
@@ -17,7 +15,6 @@ type TProps = {
 };
 
 const BurgerIngredientItem: FC<TProps> = ({ ingredient, count }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,12 +22,10 @@ const BurgerIngredientItem: FC<TProps> = ({ ingredient, count }) => {
     (e: SyntheticEvent) => {
       e.preventDefault();
       navigate(`${URL_INGREDIENTS}/${ingredient._id}`, {
-        replace: true,
-        state: { location: location, item: ingredient },
+        state: { background: location },
       });
-      dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: ingredient });
     },
-    [dispatch, navigate, location, ingredient]
+    [navigate, location, ingredient]
   );
 
   const [, dragRef] = useDrag({

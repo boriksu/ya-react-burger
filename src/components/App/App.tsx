@@ -22,6 +22,7 @@ import {
 } from "../../data/routes";
 import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
 import { useDispatch } from "../../services/hook";
+import IngredientDetails from "../BurgerIngredients/BurgerIngredientsItem/IngredientDetails/IngredientDetails";
 
 import {
   FeedPage,
@@ -112,6 +113,14 @@ const App: FC = () => {
         </Routes>
         {stateLocation && (
           <Routes>
+            <Route
+              path={`${URL_INGREDIENTS}/:id`}
+              element={
+                <Modal onClose={closeModal}>
+                  <IngredientDetails />
+                </Modal>
+              }
+            />
             <Route
               path={`${URL_FEED}/:id`}
               element={
