@@ -37,4 +37,42 @@ describe("Страница конструктора", () => {
       cy.get('[data-testid="modal-window"]').should("not.exist");
     });
   });
+
+  describe("Конструктор заказа", () => {
+    const login = {
+      email: "unusualemerald@tiffincrane.com",
+      password: "1234567",
+    };
+
+    before(() => {
+      cy.visit("http://localhost:3000/login");
+      cy.get("[name=email]").type(login.email);
+      cy.get("[name=password]").type(login.password);
+      cy.contains("button", "Войти").click();
+    });
+
+    it("должен показать перетаскиваемые ингредиенты в конструкторе и открывать модальное окно при заказе", () => {
+      cy.get('[class*="BurgerIngredientsItem_link"]').first().as("bun");
+
+      cy.get('[data-testid="burger-constuctor-bun-top"]')
+        .first()
+        .as("bunTarget");
+
+      cy.get("@bun").trigger("dragstart");
+      cy.get("@bunTarget").trigger("drop");
+
+      cy.get('[data-testid="burger-constuctor-bun-top"]').should(
+        "contain.text",
+        "(верх)"
+      );
+      cy.get('[data-testid="burger-constuctor-bun-bottom"]').should(
+        "contain.text",
+        "(низ)"
+      );
+
+      cy.get('[data-testid="burger-constructor-order"]').click();
+      cy.wait(20000);
+      cy.get('[data-testid="modal-window"]').should("be.visible");
+    });
+  });
 });

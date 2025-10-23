@@ -63,7 +63,7 @@ const BurgerConstructor: FC = () => {
   return (
     <section className={styles.container}>
       <div className="mt-25 ml-4">
-        <div ref={dropTargetBunUp}>
+        <div ref={dropTargetBunUp} data-testid="burger-constuctor-bun-top">
           {bun ? (
             <ConstructorElement
               type="top"
@@ -103,7 +103,7 @@ const BurgerConstructor: FC = () => {
             </div>
           )}
         </ul>
-        <div ref={dropTargetBunDown}>
+        <div ref={dropTargetBunDown} data-testid="burger-constuctor-bun-bottom">
           {bun ? (
             <ConstructorElement
               type="bottom"

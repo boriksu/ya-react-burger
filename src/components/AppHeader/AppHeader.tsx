@@ -38,6 +38,7 @@ const AppHeader: FC = () => {
             url={URL_PROFILE}
             icon={ProfileIcon}
             title={naming.AppHeader.profileSection}
+            data-testid="profile"
           />
         </div>
       </div>

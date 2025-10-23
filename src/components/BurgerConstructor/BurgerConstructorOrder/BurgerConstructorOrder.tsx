@@ -98,6 +98,7 @@ const BurgerConstructorOrder: FC<TProps> = ({ totalPrice }) => {
               type="primary"
               onClick={showOrderDetails}
               disabled={disabled}
+              data-testid="burger-constructor-order"
             >
               {naming.BurgerConstructorOrder.order}
             </Button>
