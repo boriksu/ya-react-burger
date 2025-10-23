@@ -130,6 +130,8 @@ const ProfileEdit = () => {
           disabled={nameDisabled}
           onIconClick={nameClick}
           ref={nameRef}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
         <EmailInput
           extraClass="mb-6"

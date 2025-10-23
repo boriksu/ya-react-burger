@@ -102,6 +102,8 @@ const Register = () => {
               name="name"
               value={formData.name}
               onChange={handleNameChange}
+              onPointerEnterCapture={undefined}
+              onPointerLeaveCapture={undefined}
             />
 
             <EmailInput

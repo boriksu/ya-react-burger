@@ -101,6 +101,8 @@ const ResetPassword = () => {
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
 
         {authLoading ? (
