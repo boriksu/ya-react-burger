@@ -39,6 +39,7 @@ const BurgerIngredientItem: FC<TProps> = ({ ingredient, count }) => {
       to={`${URL_INGREDIENTS}/${ingredient._id}`}
       onClick={showIngredientDetails}
       ref={dragRef}
+      data-testid="burger-ingredient-item"
     >
       <li className={`${styles.container} mt-6 mb-8 ml-3 mr-2`}>
         <img

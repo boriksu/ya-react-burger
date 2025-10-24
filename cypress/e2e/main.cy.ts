@@ -1,16 +1,21 @@
+Cypress.Commands.add("login", (userData) => {
+  cy.get('[data-testid="email-login"]').type(userData.email);
+  cy.get('[data-testid="password-login"]').type(userData.password);
+});
+
 describe("Страница конструктора", () => {
   describe("Модальное окно ингредиента", () => {
     beforeEach(() => {
-      cy.visit("http://localhost:3000");
+      cy.visit("/");
     });
 
     it("должно открываться при клике на ингредиент", () => {
-      cy.get('[class*="BurgerIngredientsItem_link"]').first().click();
+      cy.get('[data-testid="burger-ingredient-item"]').first().click();
       cy.get('[data-testid="modal-window"]').should("be.visible");
     });
 
     it("должно отображать данные ингредиента", () => {
-      cy.get('[class*="BurgerIngredientsItem_link"]').first().click();
+      cy.get('[data-testid="burger-ingredient-item"]').first().click();
 
       cy.get('[data-testid="modal-window"]').should("be.visible");
 
@@ -29,7 +34,7 @@ describe("Страница конструктора", () => {
     });
 
     it("должно закрываться при клике на кнопку закрытия", () => {
-      cy.get('[class*="BurgerIngredientsItem_link"]').first().click();
+      cy.get('[data-testid="burger-ingredient-item"]').first().click();
       cy.get('[data-testid="modal-window"]').should("be.visible");
 
       cy.get('[data-testid="modal-window-btn-close"]').click();
@@ -39,20 +44,19 @@ describe("Страница конструктора", () => {
   });
 
   describe("Конструктор заказа", () => {
-    const login = {
+    const userData = {
       email: "unusualemerald@tiffincrane.com",
       password: "1234567",
     };
 
     before(() => {
-      cy.visit("http://localhost:3000/login");
-      cy.get("[name=email]").type(login.email);
-      cy.get("[name=password]").type(login.password);
-      cy.contains("button", "Войти").click();
+      cy.visit("login");
+      cy.login(userData);
+      cy.get('[data-testid="button-login"]').click();
     });
 
     it("должен показать перетаскиваемые ингредиенты в конструкторе и открывать модальное окно при заказе", () => {
-      cy.get('[class*="BurgerIngredientsItem_link"]').first().as("bun");
+      cy.get('[data-testid="burger-ingredient-item"]').first().as("bun");
 
       cy.get('[data-testid="burger-constuctor-bun-top"]')
         .first()
