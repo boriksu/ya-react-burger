@@ -1,13 +1,7 @@
 import { ORDER_ACTIONS } from "../../actions/order-action";
-import { createOrderReducer } from "../create-order";
+import { createOrderReducer, initialState } from "../create-order";
 
 describe("createOrderReducer", () => {
-  const initialState = {
-    orderLoading: false,
-    orderErrors: false,
-    orderNumber: null,
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(createOrderReducer(undefined, {} as any)).toEqual(initialState);

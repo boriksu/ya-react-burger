@@ -1,13 +1,8 @@
 import { TIngredient, TIngredientConstructor } from "../../../data/types/types";
 import { CONSTRUCTOR_ACTIONS } from "../../actions/burger-constuctor";
-import { burgerConstructorReducer } from "../burger-constructor";
+import { burgerConstructorReducer, initialState } from "../burger-constructor";
 
 describe("burgerConstructorReducer", () => {
-  const initialState = {
-    bun: null,
-    ingredients: [],
-  };
-
   const mockBun: TIngredient = {
     _id: "bun1",
     name: "Test Bun",

@@ -1,6 +1,6 @@
 import { TIngredient } from "../../../data/types/types";
 import { INGREDIENTS_ACTIONS } from "../../actions/ingredients-action";
-import { ingredientWindowReducer } from "../ingredient-window";
+import { ingredientWindowReducer, initialState } from "../ingredient-window";
 
 // Моки для тестовых данных
 const mockIngredient: TIngredient = {
@@ -19,10 +19,6 @@ const mockIngredient: TIngredient = {
 };
 
 describe("ingredientWindowReducer", () => {
-  const initialState = {
-    displayedIngredient: null,
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(ingredientWindowReducer(undefined, {} as any)).toEqual(

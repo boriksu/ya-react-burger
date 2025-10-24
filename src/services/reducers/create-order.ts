@@ -5,7 +5,8 @@ type TCreateOrderState = {
   orderErrors: boolean;
   orderNumber: number | null;
 };
-const initialState: TCreateOrderState = {
+
+export const initialState: TCreateOrderState = {
   orderLoading: false,
   orderErrors: false,
   orderNumber: null,

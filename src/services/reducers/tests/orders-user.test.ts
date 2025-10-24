@@ -1,6 +1,6 @@
 import { TOrder } from "../../../data/types/types";
 import { ORDERS_USER_ACTIONS } from "../../actions";
-import { ordersUserReducer } from "../orders-user";
+import { initialState, ordersUserReducer } from "../orders-user";
 
 // Моки для тестовых данных
 const mockOrder: TOrder = {
@@ -20,12 +20,6 @@ const mockOrdersList = {
 };
 
 describe("ordersUserReducer", () => {
-  const initialState = {
-    isLoadedData: false,
-    message: null,
-    error: null,
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(ordersUserReducer(undefined, {} as any)).toEqual(initialState);

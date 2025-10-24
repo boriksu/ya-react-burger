@@ -1,12 +1,8 @@
 import { INGREDIENT_TYPES } from "../../../data/ingredientType";
 import { TAB_ACTIONS } from "../../actions/tab-info";
-import { tabInfoReducer } from "../tab-info";
+import { initialState, tabInfoReducer } from "../tab-info";
 
 describe("tabInfoReducer", () => {
-  const initialState = {
-    tab: INGREDIENT_TYPES.BUN,
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(tabInfoReducer(undefined, {} as any)).toEqual(initialState);

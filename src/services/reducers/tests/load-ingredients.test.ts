@@ -1,6 +1,6 @@
 import { TIngredient } from "../../../data/types/types";
 import { INGREDIENTS_ACTIONS } from "../../actions/ingredients-action";
-import { loadIngredientsReducer } from "../load-ingredients";
+import { initialState, loadIngredientsReducer } from "../load-ingredients";
 
 // Моки для тестовых данных
 const mockIngredient: TIngredient = {
@@ -37,12 +37,6 @@ const mockIngredientsData: TIngredient[] = [
 ];
 
 describe("loadIngredientsReducer", () => {
-  const initialState = {
-    dataLoading: false,
-    dataErrors: false,
-    data: [],
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(loadIngredientsReducer(undefined, {} as any)).toEqual(

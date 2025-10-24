@@ -1,6 +1,6 @@
 import { TOrder } from "../../../data/types/types";
 import { GET_ORDER_ACTIONS } from "../../actions/get-order";
-import { getOrderReducer } from "../get-order";
+import { getOrderReducer, initialState } from "../get-order";
 
 // Моки для тестовых данных
 const mockOrder: TOrder = {
@@ -24,12 +24,6 @@ const mockOrder2: TOrder = {
 };
 
 describe("getOrderReducer", () => {
-  const initialState = {
-    requestStart: false,
-    requestError: null,
-    order: null,
-  };
-
   describe("initial state", () => {
     it("should return initial state when no state provided", () => {
       expect(getOrderReducer(undefined, {} as any)).toEqual(initialState);

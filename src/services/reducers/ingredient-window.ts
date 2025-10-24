@@ -8,7 +8,7 @@ type TIngredientWindowsState = {
   displayedIngredient: TIngredient | null;
 };
 
-const initialState: TIngredientWindowsState = {
+export const initialState: TIngredientWindowsState = {
   displayedIngredient: null,
 };
 

@@ -1,16 +1,7 @@
 import { AUTH_ACTIONS, TAuthActions } from "../../actions/auth/auth-helper";
-import { authReducer } from "../auth";
+import { authReducer, initialState } from "../auth";
 
 describe("authReducer", () => {
-  const initialState = {
-    authLoading: false,
-    authError: null,
-    authSuccess: false,
-    authLogIn: false,
-    forgotPassword: false,
-    user: null,
-  };
-
   const mockUser = {
     email: "test@test.com",
     name: "Test User",
