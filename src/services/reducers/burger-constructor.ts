@@ -9,7 +9,7 @@ export type TBurgerConstructorState = {
   ingredients: Array<TIngredientConstructor>;
 };
 
-const initialState: TBurgerConstructorState = {
+export const initialState: TBurgerConstructorState = {
   bun: null,
   ingredients: [],
 };

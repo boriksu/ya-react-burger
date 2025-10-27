@@ -5,7 +5,7 @@ type TTabInfoState = {
   tab: string;
 };
 
-const initialState: TTabInfoState = {
+export const initialState: TTabInfoState = {
   tab: INGREDIENT_TYPES.BUN,
 };
 

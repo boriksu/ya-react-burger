@@ -1,21 +1,15 @@
 import { FC, useCallback, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "../../services/hook";
-import { useNavigate } from "react-router-dom";
 
-import { URL_ROOT } from "../../data/routes";
 import naming from "../../data/ru.json";
 import { TAB_ACTIONS } from "../../services/actions/tab-info";
-import { INGREDIENTS_ACTIONS } from "../../services/actions/ingredients-action";
 import {
   getConstructor,
-  getDisplayedIngredient,
   getIngredients,
   getTab,
 } from "../../services/selectors";
-import Modal from "../Modal/Modal";
 import styles from "./BurgerIngredients.module.css";
 import BurgerIngredientsItem from "./BurgerIngredientsItem/BurgerIngredientsItem";
-import IngredientDetails from "./BurgerIngredientsItem/IngredientDetails/IngredientDetails";
 import BurgerIngredientsTabs from "./BurgerIngredientsTabs/BurgerIngredientsTabs";
 
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
@@ -25,7 +19,6 @@ const BurgerIngredients: FC = () => {
   const { data } = useSelector(getIngredients);
   const tab = useSelector(getTab);
   const { bun, ingredients } = useSelector(getConstructor);
-  const displayedIngredient = useSelector(getDisplayedIngredient);
 
   const ingredientsCount = useMemo(() => {
     const countMap: Record<string, number> = {};
@@ -42,7 +35,6 @@ const BurgerIngredients: FC = () => {
   }, [bun, ingredients]);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const sectionRefs = useRef<Record<string, HTMLElement | null>>({
     [INGREDIENT_TYPES.BUN]: null,
@@ -95,17 +87,6 @@ const BurgerIngredients: FC = () => {
     [tab, dispatch]
   );
 
-  const hideIngredientDetails = useCallback(
-    (e?: KeyboardEvent) => {
-      navigate(URL_ROOT, { replace: true });
-      dispatch({ type: INGREDIENTS_ACTIONS.SHOW_DETAILS, item: null });
-      if (e) {
-        e.stopPropagation();
-      }
-    },
-    [dispatch, navigate]
-  );
-
   return (
     <section className={styles.container}>
       <h1 className="mt-10 mb-5 text text_type_main-large">
@@ -130,14 +111,6 @@ const BurgerIngredients: FC = () => {
           </section>
         ))}
       </div>
-      {displayedIngredient && (
-        <Modal
-          title={naming.IngredientDetails.title}
-          onClose={hideIngredientDetails}
-        >
-          <IngredientDetails item={displayedIngredient} />
-        </Modal>
-      )}
     </section>
   );
 };

@@ -83,7 +83,7 @@ const ResetPassword = () => {
             {authError}
           </p>
         )}
-        <h1 className="text text_type_main-medium mb-6">
+        <h1 className="text text_type_main-medium mb-6 mt-10">
           {naming.ResetPassword.passwordRecovery}
         </h1>
 
@@ -101,6 +101,8 @@ const ResetPassword = () => {
           value={formData.token}
           onChange={handleTokenChange}
           extraClass="mb-6"
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
         />
 
         {authLoading ? (

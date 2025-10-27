@@ -14,8 +14,8 @@ const OrderColumn: FC<TProps> = ({ orderNumbers, linkStyle }) => {
       {orderNumbers.map((orderNumber, index) => (
         <li key={index} className="mt-2 mr-8">
           <Link
-            to={`${orderNumber}`}
-            state={{ location }}
+            to={`${location.pathname}/${orderNumber}`}
+            state={{ background: location }}
             className={linkStyle}
           >
             <span className="text text_type_digits-default">{orderNumber}</span>

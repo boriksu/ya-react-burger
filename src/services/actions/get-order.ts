@@ -27,8 +27,8 @@ export type TGetOrderActions =
   | IGetOrderSuccessAction
   | IGetOrderErrorAction;
 
-export function getOrderAction(orderNum?: string) {
-  return function (dispatch: AppDispatch) {
+export const getOrderAction = (orderNum?: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({ type: GET_ORDER_ACTIONS.START });
     getOrder(orderNum)
       .then((result) => {
@@ -38,4 +38,4 @@ export function getOrderAction(orderNum?: string) {
         dispatch({ type: GET_ORDER_ACTIONS.ERROR, message: err.message });
       });
   };
-}
+};

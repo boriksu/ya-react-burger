@@ -29,13 +29,13 @@ const Modal: FC<TProps> = ({ title, children, onClose }) => {
   }, [handleEscapeKey]);
 
   return ReactDOM.createPortal(
-    <div className={styles.container}>
+    <div className={styles.container} data-testid="modal-window">
       <div className={styles.header}>
         <div className={`${styles.headerTitle} ml-10 mt-10 mr-10`}>
           <div className={`${styles.title} text text_type_main-large`}>
             {title}
           </div>
-          <div className={styles.btn}>
+          <div className={styles.btn} data-testid="modal-window-btn-close">
             <CloseIcon type="primary" onClick={onClose} />
           </div>
         </div>

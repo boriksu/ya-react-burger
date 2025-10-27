@@ -87,7 +87,7 @@ const Login = () => {
                 {authError}
               </p>
             )}
-            <h1 className="text text_type_main-medium mb-6">
+            <h1 className="text text_type_main-medium mb-6 mt-10">
               {naming.Login.entry}
             </h1>
             <EmailInput
@@ -95,12 +95,14 @@ const Login = () => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              data-testid="email-login"
             />
             <PasswordInput
               extraClass="mb-6"
               name="password"
               value={formData.password}
               onChange={handleInputChange}
+              data-testid="password-login"
             />
             {authLoading ? (
               <Loader />
@@ -110,6 +112,7 @@ const Login = () => {
                 extraClass="mb-20"
                 htmlType="submit"
                 disabled={!isFormValid}
+                data-testid="button-login"
               >
                 {naming.Login.login}
               </Button>

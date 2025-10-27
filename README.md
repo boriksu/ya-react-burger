@@ -1,11 +1,19 @@
-## Available Scripts
+# Космическая бургерная
 
-In the project directory, you can run:
+![img](src/images/logo.svg)
 
-### `npm start`
+Проект размещен по ссылке https://burger.project.nomorepartiessbs.ru
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Проект выполнен в рамках курса [React-разработчик](https://practicum.yandex.ru/react/) от Яндекс.практикума.
+[Mакет](https://www.figma.com/design/zFGN2O5xktHl9VmoOieq5E/React-_-Проектные-задачи_external_link?node-id=0-1&p=f).
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Запуск проекта
+
+```
+git clone https://github.com/boriksu/ya-react-burger.git
+cd ya-react-burger
+npm install
+npm start
+```
+
+Откройте [http://localhost:3000](http://localhost:3000), чтобы просмотреть его в браузере.

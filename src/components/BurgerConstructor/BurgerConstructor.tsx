@@ -1,12 +1,12 @@
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { FC, useCallback, useMemo } from "react";
 import { useDrop } from "react-dnd";
-import { useDispatch, useSelector } from "../../services/hook";
 import naming from "../../data/ru.json";
 import {
   CONSTRUCTOR_ACTIONS,
   addIngredient,
 } from "../../services/actions/burger-constuctor";
+import { useDispatch, useSelector } from "../../services/hook";
 
 import { INGREDIENT_TYPES } from "../../data/ingredientType";
 import styles from "./BurgerConstructor.module.css";
@@ -62,8 +62,8 @@ const BurgerConstructor: FC = () => {
 
   return (
     <section className={styles.container}>
-      <div className="mt-25 ml-4">
-        <div ref={dropTargetBunUp}>
+      <div className="mt-25 ml-4 p-0">
+        <div ref={dropTargetBunUp} data-testid="burger-constuctor-bun-top">
           {bun ? (
             <ConstructorElement
               type="top"
@@ -83,7 +83,10 @@ const BurgerConstructor: FC = () => {
             </div>
           )}
         </div>
-        <ul className={`${styles.scroll} mt-4 mb-4`} ref={dropTargetIngredient}>
+        <ul
+          className={`${styles.scrollBar} mt-4 mb-4`}
+          ref={dropTargetIngredient}
+        >
           {ingredients && ingredients.length > 0 ? (
             ingredients.map(
               (ingredient: TIngredientConstructor, index: number) => (
@@ -103,7 +106,7 @@ const BurgerConstructor: FC = () => {
             </div>
           )}
         </ul>
-        <div ref={dropTargetBunDown}>
+        <div ref={dropTargetBunDown} data-testid="burger-constuctor-bun-bottom">
           {bun ? (
             <ConstructorElement
               type="bottom"

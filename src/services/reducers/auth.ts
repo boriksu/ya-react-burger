@@ -10,7 +10,7 @@ type TAuthState = {
   forgotPassword: boolean;
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   authLoading: false,
   authError: null,
   authSuccess: false,

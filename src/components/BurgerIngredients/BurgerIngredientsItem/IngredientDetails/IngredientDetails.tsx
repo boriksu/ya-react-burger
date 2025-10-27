@@ -45,9 +45,11 @@ const IngredientDetails: FC<TProps> = ({ item }) => {
         className={`${styles.image} mb-4`}
         src={currentItem.image_large}
         alt={currentItem.name}
+        data-testid="ingredient-details-image"
       />
       <p
         className={`${styles.name} mb-8 text-center text text_type_main-medium`}
+        data-testid="ingredient-details-name"
       >
         {currentItem.name}
       </p>
@@ -56,7 +58,10 @@ const IngredientDetails: FC<TProps> = ({ item }) => {
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.calories}
           </div>
-          <div className="text-center text text_type_digits-default text_color_inactive">
+          <div
+            className="text-center text text_type_digits-default text_color_inactive"
+            data-testid="ingredient-details-calories"
+          >
             {currentItem.calories}
           </div>
         </div>
@@ -64,7 +69,10 @@ const IngredientDetails: FC<TProps> = ({ item }) => {
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.proteins}
           </div>
-          <div className="text-center text text_type_digits-default text_color_inactive">
+          <div
+            className="text-center text text_type_digits-default text_color_inactive"
+            data-testid="ingredient-details-proteins"
+          >
             {currentItem.proteins}
           </div>
         </div>
@@ -72,7 +80,10 @@ const IngredientDetails: FC<TProps> = ({ item }) => {
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.fat}
           </div>
-          <div className="text-center text text_type_digits-default text_color_inactive">
+          <div
+            className="text-center text text_type_digits-default text_color_inactive"
+            data-testid="ingredient-details-fat"
+          >
             {currentItem.fat}
           </div>
         </div>
@@ -80,7 +91,10 @@ const IngredientDetails: FC<TProps> = ({ item }) => {
           <div className="mb-2 text text_type_main-default text_color_inactive">
             {naming.IngredientDetails.carbohydrates}
           </div>
-          <div className="text-center text text_type_digits-default text_color_inactive">
+          <div
+            className="text-center text text_type_digits-default text_color_inactive"
+            data-testid="ingredient-details-carbohydrates"
+          >
             {currentItem.carbohydrates}
           </div>
         </div>
